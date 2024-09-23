@@ -1,0 +1,21 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:vmContents="clr-namespace:POSWPF.View.ViewModels.Contents"
+                    xmlns:vContents="clr-namespace:POSWPF.View.Views.Contents"
+                    xmlns:tabs ="clr-namespace:POSWPF.View.ViewModels.Tabs"
+                    xmlns:usercontrol="clr-namespace:POSWPF.View.Views"
+                    xmlns:views="clr-namespace:POSWPF.View.Views">
+    <DataTemplate DataType="{x:Type vmContents:MainContentViewModel}">
+        <vContents:MainContentView />
+        <!--<views:SignatureCaptureView></views:SignatureCaptureView>-->
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type vmContents:LoginViewModel}">
+        <vContents:LoginView />
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type tabs:RecordTabs}">
+        <views:RecordsView />
+    </DataTemplate>
+
+</ResourceDictionary>

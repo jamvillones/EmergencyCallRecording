@@ -1,0 +1,22 @@
+﻿<UserControl x:Class="POSWPF.View.Views.UserControls.ErrorMessageUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:POSWPF.View.Views.UserControls"
+             mc:Ignorable="d">
+    <StackPanel Orientation="Horizontal"
+                Margin="10,0">
+
+        <TextBlock Foreground="#FF5555"
+                   Margin="5,0"
+                   TextTrimming="CharacterEllipsis">
+         
+             <Run Text="⚠"
+                  FontSize="9" />
+             <Run Text="{Binding ErrorContent}" />
+        </TextBlock>
+        <!--FontStyle="Italic" />-->
+
+    </StackPanel>
+</UserControl>

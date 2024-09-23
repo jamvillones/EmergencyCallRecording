@@ -1,0 +1,99 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+    <ApplicationIcon>icons8_dashboard_layout.ico</ApplicationIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Images\Add Male User Group_30px.png" />
+    <None Remove="Images\Audio Wave_50px.png" />
+    <None Remove="Images\background.jpg" />
+    <None Remove="Images\cash_register_30px.png" />
+    <None Remove="Images\Check Mark_50px.png" />
+    <None Remove="Images\clipart3022007.png" />
+    <None Remove="Images\closed_eye_20px.png" />
+    <None Remove="Images\Eye_20px.png" />
+    <None Remove="Images\find_user_male_25px.png" />
+    <None Remove="Images\GridButtons\edit_property_20px.png" />
+    <None Remove="Images\GridButtons\minus_20px.png" />
+    <None Remove="Images\GridButtons\Play Button Circled_50px.png" />
+    <None Remove="Images\Ibajaylogo.png" />
+    <None Remove="Images\Lock_20px.png" />
+    <None Remove="Images\MDRRMO logo.png" />
+    <None Remove="Images\menu_20px.png" />
+    <None Remove="Images\NavButtons\back_30px.png" />
+    <None Remove="Images\NavButtons\double_left_30px.png" />
+    <None Remove="Images\NavButtons\double_right_30px.png" />
+    <None Remove="Images\NavButtons\forward_30px.png" />
+    <None Remove="Images\NavButtons\refresh_30px.png" />
+    <None Remove="Images\person_20px.png" />
+    <None Remove="Images\refresh_25px.png" />
+    <None Remove="Images\sample_male.jpg" />
+    <None Remove="Images\shutdown_50px.png" />
+    <None Remove="Images\SideButtons\automation_50px.png" />
+    <None Remove="Images\SideButtons\location_50px.png" />
+    <None Remove="Images\SideButtons\member_50px.png" />
+    <None Remove="Images\SideButtons\moleskine_50px.png" />
+    <None Remove="Images\SideButtons\related_companies_50px.png" />
+    <None Remove="Images\Signals\signal_50px.png" />
+    <None Remove="Images\Thumbnail.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="icons8_dashboard_layout.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Options" Version="8.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PlaceholderTextBox\PlaceholderTextBox.csproj" />
+    <ProjectReference Include="..\POSWPF.Domain\POSWPF.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\Add Male User Group_30px.png" />
+    <Resource Include="Images\Audio Wave_50px.png" />
+    <Resource Include="Images\background.jpg" />
+    <Resource Include="Images\cash_register_30px.png" />
+    <Resource Include="Images\Check Mark_50px.png" />
+    <Resource Include="Images\clipart3022007.png" />
+    <Resource Include="Images\closed_eye_20px.png" />
+    <Resource Include="Images\Eye_20px.png" />
+    <Resource Include="Images\find_user_male_25px.png" />
+    <Resource Include="Images\GridButtons\edit_property_20px.png" />
+    <Resource Include="Images\GridButtons\minus_20px.png" />
+    <Resource Include="Images\GridButtons\Play Button Circled_50px.png" />
+    <Resource Include="Images\Ibajaylogo.png" />
+    <Resource Include="Images\Lock_20px.png" />
+    <Resource Include="Images\MDRRMO logo.png" />
+    <Resource Include="Images\menu_20px.png" />
+    <Resource Include="Images\NavButtons\back_30px.png" />
+    <Resource Include="Images\NavButtons\double_left_30px.png" />
+    <Resource Include="Images\NavButtons\double_right_30px.png" />
+    <Resource Include="Images\NavButtons\forward_30px.png" />
+    <Resource Include="Images\NavButtons\refresh_30px.png" />
+    <Resource Include="Images\person_20px.png" />
+    <Resource Include="Images\refresh_25px.png" />
+    <Resource Include="Images\sample_male.jpg" />
+    <Resource Include="Images\shutdown_50px.png" />
+    <Resource Include="Images\SideButtons\automation_50px.png" />
+    <Resource Include="Images\SideButtons\location_50px.png" />
+    <Resource Include="Images\SideButtons\member_50px.png" />
+    <Resource Include="Images\SideButtons\moleskine_50px.png" />
+    <Resource Include="Images\SideButtons\related_companies_50px.png" />
+    <Resource Include="Images\Signals\signal_50px.png" />
+    <Resource Include="Images\Thumbnail.png" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,8 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:converter="clr-namespace:POSWPF.View.Utilities.Converters">
+    <BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+    <converter:BoolInvertConverter x:Key="BoolInvertConverter" />
+    <converter:ValueDividerConverter x:Key="ValueDividerConverter" />
+
+</ResourceDictionary>
