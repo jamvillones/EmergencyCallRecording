@@ -7,6 +7,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
     <ApplicationIcon>icons8_dashboard_layout.ico</ApplicationIcon>
+    <StartupObject>POSWPF.View.App</StartupObject>
   </PropertyGroup>
 
   <ItemGroup>
@@ -58,7 +59,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\PlaceholderTextBox\PlaceholderTextBox.csproj" />
-    <ProjectReference Include="..\POSWPF.Domain\POSWPF.Domain.csproj" />
+    <ProjectReference Include="..\POSWPF.Domain\ECR.Domain.csproj" />
   </ItemGroup>
 
   <ItemGroup>

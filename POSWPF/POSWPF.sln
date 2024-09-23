@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34714.143
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "POSWPF.View", "POSWPF.View\POSWPF.View.csproj", "{549FD039-A4A1-4A7B-AB83-70FD151E7057}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ECR.WPF", "POSWPF.View\ECR.WPF.csproj", "{549FD039-A4A1-4A7B-AB83-70FD151E7057}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "POSWPF.Domain", "POSWPF.Domain\POSWPF.Domain.csproj", "{E9D446E7-2ECF-4FCD-B34C-881732D7A5B3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ECR.Domain", "POSWPF.Domain\ECR.Domain.csproj", "{E9D446E7-2ECF-4FCD-B34C-881732D7A5B3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlaceholderTextBox", "PlaceholderTextBox\PlaceholderTextBox.csproj", "{A0DC2C09-B513-49D9-9CC8-5AB085FA66D9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PlaceholderTextBox", "PlaceholderTextBox\PlaceholderTextBox.csproj", "{A0DC2C09-B513-49D9-9CC8-5AB085FA66D9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
