@@ -1,4 +1,4 @@
-﻿namespace POSWPF.Domain.Models {
+﻿namespace ECR.Domain.Models {
     public sealed class Record {
         public int Id { get; set; }
         /// <summary>

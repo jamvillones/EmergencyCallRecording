@@ -7,7 +7,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
     <ApplicationIcon>icons8_dashboard_layout.ico</ApplicationIcon>
-    <StartupObject>POSWPF.View.App</StartupObject>
+    <!--<StartupObject>POSWPF.View.App</StartupObject>-->
   </PropertyGroup>
 
   <ItemGroup>

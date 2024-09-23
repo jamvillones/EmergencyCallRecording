@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace POSWPF.View.Views {
+namespace ECR.View.Views {
     /// <summary>
     /// Interaction logic for BindablePasswordBox.xaml
     /// </summary>

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
 
-namespace POSWPF.View.Utilities.Converters {
+namespace ECR.View.Utilities.Converters {
     public class ValueConverterGroup : List<IValueConverter>, IValueConverter {
         #region IValueConverter Members
 

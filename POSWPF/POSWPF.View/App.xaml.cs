@@ -1,10 +1,10 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using POSWPF.View.Utilities;
-using POSWPF.View.ViewModels;
+using ECR.View.Utilities;
+using ECR.View.ViewModels;
 using System.Windows;
 
-namespace POSWPF.View {
+namespace ECR.View {
     /// <summary>
     /// Interaction logic for App.xaml
     /// </summary>

@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace POSWPF.View.ViewModels {
+namespace ECR.View.ViewModels {
     public sealed partial class RecordViewModel : ObservableObject {
 
         [ObservableProperty]

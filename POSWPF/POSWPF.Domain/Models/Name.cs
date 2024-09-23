@@ -1,4 +1,4 @@
-﻿namespace POSWPF.Domain.Models {
+﻿namespace ECR.Domain.Models {
     public sealed class Name {
         public string First { get; set; } = null!;
         public string? Middle { get; set; } = null;

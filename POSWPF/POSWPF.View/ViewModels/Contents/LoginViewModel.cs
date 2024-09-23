@@ -1,7 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
-namespace POSWPF.View.ViewModels.Contents {
+namespace ECR.View.ViewModels.Contents {
     sealed partial class LoginViewModel : ObservableObject {
 
         public event EventHandler? OnLoginSuccessful;

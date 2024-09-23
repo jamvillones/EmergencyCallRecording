@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace POSWPF.View.Views.Popups
+namespace ECR.View.Views.Popups
 {
     /// <summary>
     /// Interaction logic for UserOptionsUserControl.xaml

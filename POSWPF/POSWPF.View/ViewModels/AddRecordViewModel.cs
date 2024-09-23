@@ -3,7 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using System.ComponentModel.DataAnnotations;
 using System.Windows;
 
-namespace POSWPF.View.ViewModels {
+namespace ECR.View.ViewModels {
     public interface ICloseableObject {
         event EventHandler OnClose;
         void Close();

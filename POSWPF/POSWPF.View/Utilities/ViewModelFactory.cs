@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace POSWPF.View.Utilities {
+namespace ECR.View.Utilities {
     interface IViewModelFactory {
         T Get<T>() where T : ObservableObject;
     }

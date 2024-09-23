@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace POSWPF.View.Views.Contents {
+namespace ECR.View.Views.Contents {
     /// <summary>
     /// Interaction logic for LoginView.xaml
     /// </summary>

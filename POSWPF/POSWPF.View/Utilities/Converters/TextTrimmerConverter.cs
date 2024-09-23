@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
 
-namespace POSWPF.View.Utilities.Converters {
+namespace ECR.View.Utilities.Converters {
     internal class TextTrimmerConverter : IValueConverter {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
             if (value is string original) {

@@ -2,7 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
 
-namespace POSWPF.View.ViewModels.Tabs {
+namespace ECR.View.ViewModels.Tabs {
 
     sealed partial class RecordTabs : ObservableObject {
         public RecordTabs() {

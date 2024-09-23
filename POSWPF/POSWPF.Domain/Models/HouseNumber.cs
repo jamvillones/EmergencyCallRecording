@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace POSWPF.Domain.Models;
+namespace ECR.Domain.Models;
 
 public partial class HouseNumber
 {

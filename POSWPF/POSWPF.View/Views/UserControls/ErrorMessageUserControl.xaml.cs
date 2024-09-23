@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace POSWPF.View.Views.UserControls {
+namespace ECR.View.Views.UserControls {
     /// <summary>
     /// Interaction logic for ErrorMessageUserControl.xaml
     /// </summary>

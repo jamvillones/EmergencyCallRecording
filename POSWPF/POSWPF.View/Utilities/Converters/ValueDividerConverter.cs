@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 
-namespace POSWPF.View.Utilities.Converters {
+namespace ECR.View.Utilities.Converters {
     class ValueDividerConverter : IValueConverter {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
             double valueDecimal = (double)value;

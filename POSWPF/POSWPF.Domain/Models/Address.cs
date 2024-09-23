@@ -1,4 +1,4 @@
-﻿namespace POSWPF.Domain.Models {
+﻿namespace ECR.Domain.Models {
     public sealed class Address {
         public HouseNumber? HouseNumber { get; set; } = null;
         public Street? Street { get; set; } = null;

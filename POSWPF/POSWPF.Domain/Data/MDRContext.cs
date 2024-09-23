@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using POSWPF.Domain.Models;
+using ECR.Domain.Models;
 
-namespace POSWPF.Domain.Data;
+namespace ECR.Domain.Data;
 
 public partial class MDRContext : DbContext {
     public MDRContext() {

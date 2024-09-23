@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace POSWPF.Domain.Models {
+namespace ECR.Domain.Models {
     public sealed class Caller {
         public int Id { get; set; }
         public string? ContactDetails { get; set; }

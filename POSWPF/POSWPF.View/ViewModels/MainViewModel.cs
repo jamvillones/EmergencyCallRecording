@@ -1,7 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using POSWPF.View.ViewModels.Contents;
+using ECR.View.ViewModels.Contents;
 
-namespace POSWPF.View.ViewModels {
+namespace ECR.View.ViewModels {
     sealed partial class MainViewModel : ObservableObject {
 
         [ObservableProperty]
