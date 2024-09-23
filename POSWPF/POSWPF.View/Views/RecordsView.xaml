@@ -418,7 +418,6 @@
 
             <DataGrid x:Name="membersDataGrid"
                       Grid.Row="3"
-                      FontSize="11"
                       Margin="0"
                       ItemsSource="{Binding Records}"
                       RowStyle="{DynamicResource DataGridRowStyle1}"
@@ -447,7 +446,7 @@
 
                     </DataGridCheckBoxColumn>
 
-                    <DataGridTemplateColumn Header="* Priority Level"
+                    <DataGridTemplateColumn Header="● Priority Level"
                                             IsReadOnly="True"
                                             Width="auto">
                         <DataGridTemplateColumn.CellTemplate>
@@ -461,7 +460,7 @@
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
 
-                    <DataGridTemplateColumn Header="* Call Details"
+                    <DataGridTemplateColumn Header="● Call Details"
                                             IsReadOnly="True"
                                             Width="*">
 
@@ -504,12 +503,12 @@
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
 
-                    <DataGridTextColumn Header="* Location Information"
+                    <DataGridTextColumn Header="● Location Information"
                                         IsReadOnly="True"
                                         Width="*"
                                         Binding="{Binding PlaceOfIncident}" />
-                    
-                    <DataGridTextColumn Header="* Summary"
+
+                    <DataGridTextColumn Header="● Summary"
                                         Binding="{Binding Title}"
                                         IsReadOnly="True"
                                         Width="*">
@@ -522,7 +521,7 @@
                         </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>
 
-                    <DataGridTemplateColumn Header="* Forwarded To"
+                    <DataGridTemplateColumn Header="● Forwarded To"
                                             IsReadOnly="True"
                                             Width="*">
                         <DataGridTemplateColumn.CellTemplate>
@@ -549,8 +548,8 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    
-                    <DataGridTemplateColumn Header="* Operations"
+
+                    <DataGridTemplateColumn Header=""
                                             IsReadOnly="True"
                                             
                                             Width="auto">

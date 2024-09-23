@@ -1,5 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using ECR.Domain.Models;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.Windows;
 
@@ -11,6 +13,15 @@ namespace ECR.View.ViewModels {
 
     public enum Level { One, Two, Three, Four, Five, Six }
     abstract partial class BaseRecordForm_ViewModel : ObservableValidator, ICloseableObject {
+        protected BaseRecordForm_ViewModel() {
+            for (int i = 1; i <= 10; i++)
+                Audios.Add(new AudioViewModel() {
+                    Name = "audio_11034_234234_223321_" + i + ".ogg",
+                    Duration = 170 + i,
+                    DateTimeRecorded = DateTime.Now
+                });
+        }
+
         public event EventHandler? OnClose;
         [RelayCommand]
         public void Close() {
@@ -67,6 +78,8 @@ namespace ECR.View.ViewModels {
         [NotifyDataErrorInfo]
         [Required(ErrorMessage = REQUIRED_FIELD_STRING)]
         private string? _details;
+
+        public ObservableCollection<AudioViewModel> Audios { get; private set; } = [];
     }
     partial class AddRecordForm_ViewModel : BaseRecordForm_ViewModel {
         public override async Task<bool> Save() {
@@ -85,5 +98,20 @@ namespace ECR.View.ViewModels {
     partial class EditRecordForm_ViewModel : BaseRecordForm_ViewModel {
         protected override void Reset() {
         }
+    }
+
+    partial class AudioViewModel : ObservableObject {
+        [ObservableProperty]
+        string name = string.Empty;
+
+        [ObservableProperty]
+        int duration = 0;
+
+        [ObservableProperty]
+        DateTime dateTimeRecorded = DateTime.Now;
+
+        [ObservableProperty]
+        bool isChecked = false;
+
     }
 }

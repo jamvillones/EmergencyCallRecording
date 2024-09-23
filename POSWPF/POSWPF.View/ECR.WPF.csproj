@@ -13,6 +13,7 @@
   <ItemGroup>
     <None Remove="Images\Add Male User Group_30px.png" />
     <None Remove="Images\Audio Wave_50px.png" />
+    <None Remove="Images\audio_wave_50px.png" />
     <None Remove="Images\background.jpg" />
     <None Remove="Images\cash_register_30px.png" />
     <None Remove="Images\Check Mark_50px.png" />
@@ -65,6 +66,7 @@
   <ItemGroup>
     <Resource Include="Images\Add Male User Group_30px.png" />
     <Resource Include="Images\Audio Wave_50px.png" />
+    <Resource Include="Images\audio_wave_50px.png" />
     <Resource Include="Images\background.jpg" />
     <Resource Include="Images\cash_register_30px.png" />
     <Resource Include="Images\Check Mark_50px.png" />

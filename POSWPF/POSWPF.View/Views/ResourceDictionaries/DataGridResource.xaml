@@ -222,12 +222,12 @@
                         </SelectiveScrollingGrid>
                     </Border>
                     <ControlTemplate.Triggers>
-                        <DataTrigger Binding="{Binding IsChecked}"
+                        <!--<DataTrigger Binding="{Binding IsChecked}"
                                      Value="true">
                             <Setter Property="BorderBrush"
                                     TargetName="DGR_Border"
                                     Value="#247FFF" />
-                        </DataTrigger>
+                        </DataTrigger>-->
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>

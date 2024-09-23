@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:ECR.View.Views.UserControls"
              xmlns:ph="clr-namespace:PlaceholderTextBox;assembly=PlaceholderTextBox"
              xmlns:vm="clr-namespace:ECR.View.ViewModels"
+             xmlns:converter="clr-namespace:ECR.WPF.Utilities.Converters"
              mc:Ignorable="d"
              FocusManager.FocusedElement="{Binding ElementName=firstControl}"
              d:DataContext="{d:DesignInstance Type=vm:AddRecordForm_ViewModel, IsDesignTimeCreatable=True}"
@@ -33,7 +34,7 @@
     <Grid Background="#cfffffff">
 
         <Grid Margin="40"
-              MaxWidth="600">
+              MaxWidth="800">
             <Border Background="#EFF2F7"
                     BorderThickness="0.5"
                     BorderBrush="Black"
@@ -67,9 +68,9 @@
                             <Setter Property="HorizontalContentAlignment"
                                     Value="Center" />
                             <Setter Property="Padding"
-                                    Value="15,5" />
+                                    Value="15,10" />
                             <Setter Property="Width"
-                                    Value="100" />
+                                    Value="150" />
                             <Setter Property="Cursor"
                                     Value="Hand" />
                             <Setter Property="Template">
@@ -103,18 +104,28 @@
                             </Setter>
                         </Style>
                     </StackPanel.Resources>
-                    <RadioButton x:Name="detailsRB"
-                                 IsChecked="True">Details</RadioButton>
-                    <RadioButton x:Name="audioRB">Audio Clips</RadioButton>
+                    <RadioButton x:Name="detailsRB">Details</RadioButton>
+                    <RadioButton x:Name="audioRB"
+                                 IsChecked="True">
+                        <TextBlock>                            
+                            <Run> Audio Clips </Run>
+                            <Run FontWeight="Regular">[</Run>
+                            <Run FontWeight="Regular"
+                                 Foreground="Black"
+                                 Text="{Binding Audios.Count, Mode=OneWay}" />
+                            <Run FontWeight="Regular">]</Run>
+                        </TextBlock>
+                    </RadioButton>
                 </StackPanel>
 
                 <ScrollViewer Grid.Row="2"
                               Margin="0,10"
                               Padding="0,0,5,0"
+                              Visibility="{Binding ElementName=detailsRB, Path=IsChecked, Converter={StaticResource BoolToVisibilityConverter}}"
                               VerticalScrollBarVisibility="Visible"
                               HorizontalScrollBarVisibility="Disabled">
 
-                    <StackPanel Visibility="{Binding ElementName=detailsRB, Path=IsChecked, Converter={StaticResource BoolToVisibilityConverter}}">
+                    <StackPanel>
                         <StackPanel.Resources>
                             <Style TargetType="TextBlock">
                                 <Setter Property="Margin"
@@ -227,6 +238,153 @@
 
                     </StackPanel>
                 </ScrollViewer>
+
+                <Grid Grid.Row="2"
+                      Margin="0,0,10,10"
+                      Visibility="{Binding ElementName=audioRB,Path=IsChecked, Converter={StaticResource BoolToVisibilityConverter}}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Grid.Resources>
+                        <ResourceDictionary>
+                            <ResourceDictionary.MergedDictionaries>
+
+                                <ResourceDictionary Source="/Views/ResourceDictionaries/DataGridResource.xaml" />
+                            </ResourceDictionary.MergedDictionaries>
+
+                            <converter:SecondsToHoursMinutesSeconds x:Key="secondsConverter" />
+
+                        </ResourceDictionary>
+                    </Grid.Resources>
+                    <Grid Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition   Width="20" />
+                            <ColumnDefinition Width="auto" />
+                        </Grid.ColumnDefinitions>
+                        <!--<Slider VerticalAlignment="Bottom"></Slider>
+                        <Border Background="White"
+                                CornerRadius="4"
+                                Padding="10"
+                                Height="auto">
+                            <UniformGrid Columns="6">
+                                <UniformGrid.Resources>
+                                    <Style TargetType="Button">
+                                        <Setter Property="Width"
+                                                Value="30" />
+                                        <Setter Property="Height"
+                                                Value="30" />
+                                        <Setter Property="Margin"
+                                                Value="2,0" />
+
+                                    </Style>
+                                </UniformGrid.Resources>
+                                <Button></Button>
+                                <Button></Button>
+                                <Button></Button>
+                                <Button></Button>
+                                <Button></Button>
+                                <Button></Button>
+                            </UniformGrid>
+                        </Border>-->
+
+                        <Button Grid.Column="2"
+                                BorderThickness="0"
+                                Background="{StaticResource AccentColor.Primary}"
+                                Foreground="white"
+                                VerticalAlignment="Stretch"
+                                Width="auto"
+                                Padding="10,0"
+                                Margin="0">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto" />
+                                    <ColumnDefinition Width="10" />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <Image Width="15"
+                                       Source="/Images/audio_wave_50px.png" />
+
+                                <TextBlock Grid.Column="2"
+                                           VerticalAlignment="Center">
+                                     Add Recording
+                                </TextBlock>
+                            </Grid>
+                        </Button>
+                    </Grid>
+
+                    <Rectangle Grid.Row="1"
+                               Fill="Gray"
+                               VerticalAlignment="Center"
+                               Margin="0,10"
+                               Height="0.5" />
+                    <DataGrid ItemsSource="{Binding Audios}"
+                              Grid.Row="2"
+                              Margin="0,0,0,0"
+                              Style="{StaticResource DataGridStyle1}"
+                              RowStyle="{StaticResource DataGridRowStyle1}"
+                              CellStyle="{StaticResource DataGridCellStyle1}"
+                              ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle1}">
+                        <DataGrid.Columns>
+
+                            <DataGridTextColumn Header="● Audio Name"
+                                                IsReadOnly="True"
+                                                Binding="{Binding Name, Mode=OneWay, StringFormat={}♪ {0}}">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="{x:Type TextBlock}"
+                                           BasedOn="{StaticResource {x:Type TextBlock}}">
+                                        <Setter Property="TextTrimming"
+                                                Value="CharacterEllipsis" />
+                                        <Setter Property="ToolTip"
+                                                Value="{Binding Name, Mode=OneWay}" />
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                            <DataGridTextColumn Header="● Duration"
+                                                IsReadOnly="True"
+                                                Binding="{Binding Duration, Mode=OneWay,Converter={StaticResource secondsConverter}, StringFormat={}⏱︎ {0}}" />
+                            <DataGridTextColumn Header="● Date/Time Recorded"
+                                                CanUserResize="False"
+                                                IsReadOnly="True"
+                                                Binding="{Binding DateTimeRecorded, Mode=OneWay,StringFormat={}📅 {0}}" />
+                            <DataGridTemplateColumn Header=""
+                                                    IsReadOnly="True"
+                                                    Width="auto">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal"
+                                                    Margin="0"
+                                                    HorizontalAlignment="Right"
+                                                    Width="auto">
+                                            <StackPanel.Resources>
+                                                <Style TargetType="Image">
+                                                    <Setter Property="Width"
+                                                            Value="15" />
+                                                </Style>
+                                            </StackPanel.Resources>
+
+                                            <Button Style="{StaticResource gridEditButton}">
+                                                <Image Source="/Images/GridButtons/Play Button Circled_50px.png" />
+                                                <!--<Icon:PackIconMaterial Kind="PencilOutline"
+                                           Style="{StaticResource gridButtonIcon}" />-->
+                                            </Button>
+                                            <Button Margin="5 0 0 0"
+                                                    Style="{StaticResource gridRemoveButton}">
+                                                <Image Source="/Images/GridButtons/minus_20px.png" />
+                                                <!--<Icon:PackIconMaterial Kind="DeleteOutline"
+                                           Style="{StaticResource gridButtonIcon}" />-->
+                                            </Button>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+
+                    </DataGrid>
+
+                </Grid>
                 <!--<Border Background="#E0EAFA"
                         BorderBrush="Gray"
                         BorderThickness="1"
@@ -268,9 +426,13 @@
 
                     <Button Foreground="#E0EAFA"
                             Background="{StaticResource AccentColor.Primary}"
+                            BorderThickness="1"
+                            BorderBrush="Black"
                             Template="{StaticResource Template.Button.Submit}"
-                            Command="{Binding SaveCommand}">Proceed</Button>
-                    <Button Command="{Binding ResetCommand}">Reset</Button>
+                            Command="{Binding SaveCommand}">Save</Button>
+                    <Button BorderThickness="1"
+                            BorderBrush="Black"
+                            Command="{Binding ResetCommand}">Reset</Button>
 
                 </StackPanel>
 
