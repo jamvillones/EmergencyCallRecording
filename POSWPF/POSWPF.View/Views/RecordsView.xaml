@@ -15,14 +15,14 @@
              d:DesignWidth="1200"
              d:DataContext="{d:DesignInstance Type= tabs:RecordTabs,IsDesignTimeCreatable=True}"
              FocusManager.FocusedElement="{Binding ElementName=searchControl}">
-    
+
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Views/ResourceDictionaries/DataGridResource.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
-            <Style TargetType="Button">
+            <!--<Style TargetType="Button">
                 <Setter Property="Cursor"
                         Value="Hand" />
                 <Setter Property="Padding"
@@ -35,7 +35,7 @@
                         Value="0" />
                 <Setter Property="Background"
                         Value="{StaticResource Button.Static.Background}" />
-            </Style>
+            </Style>-->
 
             <SolidColorBrush x:Key="Button.MouseOver.Background"
                              Color="#FFBEE6FD" />
@@ -231,6 +231,7 @@
                 </DataTemplate>
             </ContentControl.Resources>
         </ContentControl>
+
         <Grid x:Name="mainContent"
               Grid.Row="1"
               Margin="15,15,15,0">
@@ -296,10 +297,10 @@
                     </Border>
                 </Grid>
 
-                <Button Template="{StaticResource Template.Button.Submit}"
-                        Command="{Binding OpenRegistrationFormCommand}"
+                <Button Command="{Binding OpenRegistrationFormCommand}"
                         Foreground="White"
                         Background="{StaticResource AccentColor.Primary}"
+                        BorderThickness="0"
                         HorizontalAlignment="Right"
                         Padding="10,0,15,0"
                         Width="auto"
@@ -487,7 +488,6 @@
                                     <StackPanel Grid.Column="1">
 
                                         <TextBlock Text="{Binding CallerDetails}"
-                                                   FontWeight="Bold"
                                                    TextTrimming="CharacterEllipsis"
                                                    VerticalAlignment="Center" />
                                         <TextBlock FontSize="9"
@@ -551,7 +551,6 @@
 
                     <DataGridTemplateColumn Header=""
                                             IsReadOnly="True"
-                                            
                                             Width="auto">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
@@ -563,7 +562,7 @@
                                                     Value="15" />
                                         </Style>
                                     </StackPanel.Resources>
-                                   
+
                                     <Button Style="{StaticResource gridEditButton}"
                                             Margin="5 0 0 0">
                                         <Image Source="/Images/GridButtons/edit_property_20px.png" />

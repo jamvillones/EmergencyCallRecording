@@ -10,7 +10,7 @@
              mc:Ignorable="d"
              FocusManager.FocusedElement="{Binding ElementName=firstControl}"
              d:DataContext="{d:DesignInstance Type=vm:AddRecordForm_ViewModel, IsDesignTimeCreatable=True}"
-             d:DesignHeight="784.5"
+             d:DesignHeight="1061.5"
              d:DesignWidth="1080">
     <UserControl.Resources>
         <Thickness x:Key="Vertical.Spacing">0,0,0,20</Thickness>
@@ -46,7 +46,7 @@
                 </Border.Effect>
             </Border>
 
-            <Grid Margin="25,20,2,20">
+            <Grid Margin="25">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto" />
                     <RowDefinition Height="AUTO" />
@@ -231,7 +231,7 @@
                         <TextBlock>Details of the Report:</TextBlock>
                         <ph:PlaceholderTextbox AcceptsReturn="True"
                                                TextWrapping="Wrap"
-                                               MinHeight="270"
+                                               MinHeight="250"
                                                Margin="0"
                                                BorderBrush="{StaticResource AccentColor.Primary}"
                                                Text="{Binding Details,UpdateSourceTrigger=PropertyChanged}" />
@@ -258,50 +258,23 @@
 
                         </ResourceDictionary>
                     </Grid.Resources>
-                    <Grid Grid.Row="0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition />
-                            <ColumnDefinition   Width="20" />
-                            <ColumnDefinition Width="auto" />
-                        </Grid.ColumnDefinitions>
-                        <!--<Slider VerticalAlignment="Bottom"></Slider>
-                        <Border Background="White"
-                                CornerRadius="4"
-                                Padding="10"
-                                Height="auto">
-                            <UniformGrid Columns="6">
-                                <UniformGrid.Resources>
-                                    <Style TargetType="Button">
-                                        <Setter Property="Width"
-                                                Value="30" />
-                                        <Setter Property="Height"
-                                                Value="30" />
-                                        <Setter Property="Margin"
-                                                Value="2,0" />
-
-                                    </Style>
-                                </UniformGrid.Resources>
-                                <Button></Button>
-                                <Button></Button>
-                                <Button></Button>
-                                <Button></Button>
-                                <Button></Button>
-                                <Button></Button>
-                            </UniformGrid>
-                        </Border>-->
+                    <StackPanel Orientation="Horizontal"
+                                HorizontalAlignment="Right"
+                                Grid.Row="0">
 
                         <Button Grid.Column="2"
                                 BorderThickness="0"
                                 Background="{StaticResource AccentColor.Primary}"
                                 Foreground="white"
                                 VerticalAlignment="Stretch"
-                                Width="auto"
+                                HorizontalContentAlignment="Left"
+                                Width="130"
                                 Padding="10,0"
-                                Margin="0">
+                                Margin="0 0 10 0">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="auto" />
-                                    <ColumnDefinition Width="10" />
+                                    <ColumnDefinition Width="8" />
                                     <ColumnDefinition />
                                 </Grid.ColumnDefinitions>
                                 <Image Width="15"
@@ -313,7 +286,31 @@
                                 </TextBlock>
                             </Grid>
                         </Button>
-                    </Grid>
+                        <Button Grid.Column="2"
+                                BorderThickness="0"
+                                Background="Maroon"
+                                Foreground="white"
+                                VerticalAlignment="Stretch"
+                                Width="130"
+                                Padding="10,0"
+                                HorizontalContentAlignment="Left"
+                                Margin="0">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto" />
+                                    <ColumnDefinition Width="8" />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <Image Width="15"
+                                       Source="/Images/GridButtons/minus_20px.png" />
+
+                                <TextBlock Grid.Column="2"
+                                           VerticalAlignment="Center">
+                                    Clear All
+                                </TextBlock>
+                            </Grid>
+                        </Button>
+                    </StackPanel>
 
                     <Rectangle Grid.Row="1"
                                Fill="Gray"
@@ -428,7 +425,6 @@
                             Background="{StaticResource AccentColor.Primary}"
                             BorderThickness="1"
                             BorderBrush="Black"
-                            Template="{StaticResource Template.Button.Submit}"
                             Command="{Binding SaveCommand}">Save</Button>
                     <Button BorderThickness="1"
                             BorderBrush="Black"
@@ -442,9 +438,8 @@
                         Foreground="Maroon"
                         Height="30"
                         Width="30"
-                        Margin="15,0"
                         Padding="0"
-                        Template="{StaticResource Template.Button.Close}"
+                        Margin="0"
                         Command="{Binding CloseCommand}">✖</Button>
 
             </Grid>

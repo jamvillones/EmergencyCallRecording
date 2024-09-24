@@ -16,7 +16,7 @@ namespace ECR.View.ViewModels {
         protected BaseRecordForm_ViewModel() {
             for (int i = 1; i <= 10; i++)
                 Audios.Add(new AudioViewModel() {
-                    Name = "audio_11034_234234_223321_" + i + ".ogg",
+                    Name = "audio_11034_234234_" + i + ".ogg",
                     Duration = 170 + i,
                     DateTimeRecorded = DateTime.Now
                 });

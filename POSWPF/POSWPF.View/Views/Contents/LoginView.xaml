@@ -39,53 +39,6 @@
                     Value="12" />
         </Style>-->
 
-        <Style TargetType="Button">
-            <Style.Resources>
-                <Style TargetType="Border">
-                    <Setter Property="CornerRadius"
-                            Value="3" />
-                </Style>
-            </Style.Resources>
-            <Setter Property="IsTabStop"
-                    Value="False" />
-            <Setter Property="Margin"
-                    Value="0,0,0,2" />
-            <Setter Property="Padding"
-                    Value="0,15" />
-            <Setter Property="FontSize"
-                    Value="9" />
-            <Setter Property="FontWeight"
-                    Value="Bold" />
-            <Setter Property="BorderThickness"
-                    Value="0" />
-
-            <!--<Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border x:Name="templateRoot"
-                                Background="{TemplateBinding Background}"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="{TemplateBinding BorderThickness}">
-                            <ContentPresenter x:Name="contentPresenter"
-                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                              Margin="{TemplateBinding Padding}" />
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsEnabled"
-                                     Value="False">
-                                <Setter Property="Background"
-                                        TargetName="templateRoot"
-                                        Value="#6DA9FF" />
-                                <Setter Property="TextElement.Foreground"
-                                        TargetName="contentPresenter"
-                                        Value="Black" />
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>-->
-        </Style>
     </UserControl.Resources>
 
     <Grid VerticalAlignment="Center"
@@ -163,14 +116,14 @@
                 <Button BorderBrush="{StaticResource AccentColor.Primary}"
                         Background="{StaticResource AccentColor.Primary}"
                         Foreground="White"
-                        Template="{StaticResource Template.Button.Submit}"
+                        BorderThickness="0"
                         Command="{Binding LoginCommand}"
                         Margin="0,0,0,5"
                         Content="LOG IN" />
 
                 <Button Background="Transparent"
+                        BorderThickness="0"
                         FontWeight="Normal"
-                        Template="{StaticResource Template.Round.Button}"
                         Content="SIGN UP" />
 
             </StackPanel>
