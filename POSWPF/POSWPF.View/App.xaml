@@ -680,21 +680,21 @@
                              Value="true">
                         <Setter Property="Opacity"
                                 TargetName="hoverIndicator"
-                                Value="0.3" />
+                                Value="0.2" />
 
                     </Trigger>
                     <Trigger Property="IsPressed"
                              Value="true">
                         <Setter Property="Opacity"
                                 TargetName="hoverIndicator"
-                                Value="0.5" />
+                                Value="0.4" />
                     </Trigger>
 
                     <Trigger Property="IsEnabled"
                              Value="false">
-                        <!--<Setter Property="Background"
-                                TargetName="border"
-                                Value="{StaticResource Button.Disabled.Background}" />-->
+                        <Setter Property="Opacity"
+                                TargetName="hoverIndicator"
+                                Value="0.6" />
                         <Setter Property="BorderBrush"
                                 TargetName="border"
                                 Value="{StaticResource Button.Disabled.Border}" />

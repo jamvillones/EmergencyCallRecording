@@ -19,6 +19,7 @@
     <None Remove="Images\Check Mark_50px.png" />
     <None Remove="Images\clipart3022007.png" />
     <None Remove="Images\closed_eye_20px.png" />
+    <None Remove="Images\delete_receipt_50px.png" />
     <None Remove="Images\Eye_20px.png" />
     <None Remove="Images\find_user_male_25px.png" />
     <None Remove="Images\GridButtons\edit_property_20px.png" />
@@ -36,6 +37,7 @@
     <None Remove="Images\person_20px.png" />
     <None Remove="Images\refresh_25px.png" />
     <None Remove="Images\sample_male.jpg" />
+    <None Remove="Images\save_close_50px.png" />
     <None Remove="Images\shutdown_50px.png" />
     <None Remove="Images\SideButtons\automation_50px.png" />
     <None Remove="Images\SideButtons\location_50px.png" />
@@ -48,6 +50,11 @@
 
   <ItemGroup>
     <Content Include="icons8_dashboard_layout.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\delete_receipt_50px.png" />
+    <Resource Include="Images\save_close_50px.png" />
   </ItemGroup>
 
   <ItemGroup>

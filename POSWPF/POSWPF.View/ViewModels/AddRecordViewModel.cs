@@ -72,6 +72,11 @@ namespace ECR.View.ViewModels {
         [ObservableProperty]
         [NotifyDataErrorInfo]
         [Required(ErrorMessage = REQUIRED_FIELD_STRING)]
+        private string? _callType;
+
+        [ObservableProperty]
+        [NotifyDataErrorInfo]
+        [Required(ErrorMessage = REQUIRED_FIELD_STRING)]
         private string? _title;
 
         [ObservableProperty]
@@ -92,7 +97,7 @@ namespace ECR.View.ViewModels {
         }
 
         protected override void Reset() {
-            CallerName = CallAddresss = CallContactDetails = Severity = EndorseTo = Details = Title = string.Empty;
+            CallerName = CallAddresss = CallContactDetails = Severity = EndorseTo = Details = Title = CallType = string.Empty;
         }
     }
     partial class EditRecordForm_ViewModel : BaseRecordForm_ViewModel {
