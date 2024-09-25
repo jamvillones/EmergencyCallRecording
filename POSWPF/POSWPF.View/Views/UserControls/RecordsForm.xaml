@@ -34,7 +34,7 @@
     <Grid Background="#cfffffff">
 
         <Grid Margin="40"
-              MaxWidth="800">
+              MaxWidth="1000">
             <Border Background="#EFF2F7"
                     BorderThickness="0.5"
                     BorderBrush="Black"
@@ -64,13 +64,13 @@
                     <StackPanel.Resources>
                         <Style TargetType="RadioButton">
                             <Setter Property="Margin"
-                                    Value="0,0,0,0" />
+                                    Value="0 0 10 0" />
                             <Setter Property="HorizontalContentAlignment"
                                     Value="Center" />
                             <Setter Property="Padding"
                                     Value="15,10" />
                             <Setter Property="Width"
-                                    Value="150" />
+                                    Value="140" />
                             <Setter Property="Cursor"
                                     Value="Hand" />
                             <Setter Property="Template">
@@ -82,7 +82,7 @@
                                                                   Margin="{TemplateBinding Padding}" />
                                                 <Border x:Name="checkIndicator"
                                                         VerticalAlignment="Bottom"
-                                                        Height="1"
+                                                        Height="2"
                                                         Visibility="Hidden"
                                                         Background="{StaticResource AccentColor.Primary}" />
                                             </Grid>
@@ -104,9 +104,9 @@
                             </Setter>
                         </Style>
                     </StackPanel.Resources>
-                    <RadioButton x:Name="detailsRB"
-                                 IsChecked="True">Details</RadioButton>
-                    <RadioButton x:Name="audioRB">
+                    <RadioButton x:Name="detailsRB">Details</RadioButton>
+                    <RadioButton x:Name="audioRB"
+                                 IsChecked="True">
                         <TextBlock>                            
                             <Run> Audio Clips </Run>
                             <Run FontWeight="Regular">[</Run>
@@ -116,10 +116,14 @@
                             <Run FontWeight="Regular">]</Run>
                         </TextBlock>
                     </RadioButton>
+                    <!--<RadioButton>Lorem</RadioButton>
+                    <RadioButton>Ipsum</RadioButton>
+                    <RadioButton>Dolor</RadioButton>
+                    <RadioButton>Amet</RadioButton>-->
                 </StackPanel>
 
                 <ScrollViewer Grid.Row="2"
-                              Margin="0,10"
+                              Margin="0 10 -23 10"
                               Padding="0,0,5,0"
                               Visibility="{Binding ElementName=detailsRB, Path=IsChecked, Converter={StaticResource BoolToVisibilityConverter}}"
                               VerticalScrollBarVisibility="Visible"
@@ -240,7 +244,7 @@
                 </ScrollViewer>
 
                 <Grid Grid.Row="2"
-                      Margin="0,0,10,10"
+                      Margin="0 10"
                       Visibility="{Binding ElementName=audioRB,Path=IsChecked, Converter={StaticResource BoolToVisibilityConverter}}">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto" />
@@ -259,7 +263,6 @@
                         </ResourceDictionary>
                     </Grid.Resources>
                     <StackPanel Orientation="Horizontal"
-                                HorizontalAlignment="Right"
                                 Grid.Row="0">
 
                         <Button Grid.Column="2"
@@ -268,7 +271,6 @@
                                 Foreground="white"
                                 VerticalAlignment="Stretch"
                                 HorizontalContentAlignment="Stretch"
-                                Width="130"
                                 Padding="10,0"
                                 Margin="0 0 10 0">
                             <Grid>
@@ -291,7 +293,6 @@
                                 Background="Maroon"
                                 Foreground="white"
                                 VerticalAlignment="Stretch"
-                                Width="130"
                                 Padding="10,0"
                                 HorizontalContentAlignment="Stretch"
                                 Margin="0">
@@ -312,14 +313,11 @@
                         </Button>
                     </StackPanel>
 
-                    <Rectangle Grid.Row="1"
-                               Fill="Gray"
-                               VerticalAlignment="Center"
-                               Margin="0,10"
-                               Height="0.5" />
                     <DataGrid ItemsSource="{Binding Audios}"
+                              BorderThickness="0 1 0 1"
+                              BorderBrush="Gray"
                               Grid.Row="2"
-                              Margin="0,0,0,0"
+                              Margin="0 10 0 0"
                               Style="{StaticResource DataGridStyle1}"
                               RowStyle="{StaticResource DataGridRowStyle1}"
                               CellStyle="{StaticResource DataGridCellStyle1}"
@@ -381,62 +379,96 @@
                     </DataGrid>
                 </Grid>
 
-                <StackPanel Grid.Row="3"
-                            Orientation="Horizontal">
+                <Grid Grid.Row="3">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="auto" />
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Orientation="Horizontal">
 
-                    <Button Foreground="#E0EAFA"
-                            Background="{StaticResource AccentColor.Primary}"
-                            BorderThickness="0"
-                            Padding="10 0"
-                            HorizontalContentAlignment="Stretch"
-                            Command="{Binding SaveCommand}">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto" />
-                                <ColumnDefinition />
-                            </Grid.ColumnDefinitions>
-                            <Image Width="15"
-                                   Source="/Images/save_close_50px.png" />
+                        <Button Foreground="#E0EAFA"
+                                Background="{StaticResource AccentColor.Primary}"
+                                BorderThickness="0"
+                                Padding="10 0"
+                                HorizontalContentAlignment="Stretch"
+                                Command="{Binding SaveCommand}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto" />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <Image Width="18"
+                                       Source="/Images/save_close_50px.png" />
 
-                            <TextBlock Grid.Column="2"
-                                       VerticalAlignment="Center"
-                                       HorizontalAlignment="Center">
+                                <TextBlock Grid.Column="2"
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Center">
                                 Save
-                            </TextBlock>
-                        </Grid>
+                                </TextBlock>
+                            </Grid>
 
-                    </Button>
-                    <Button BorderBrush="Black"
+                        </Button>
+                        <Button Background="#878787"
+                                Foreground="White"
+                                HorizontalContentAlignment="Stretch"
+                                Padding="10,0"
+                                Command="{Binding ResetCommand}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto" />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <Image Width="18"
+                                       Source="/Images/delete_receipt_50px.png" />
+
+                                <TextBlock Grid.Column="2"
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Center">
+                                Discard Changes
+                                </TextBlock>
+                            </Grid>
+                        </Button>
+
+                    </StackPanel>
+                    <Button Background="IndianRed"
+                            Foreground="White"
+                            Grid.Column="1"
+                            Margin="0"
                             HorizontalContentAlignment="Stretch"
                             Padding="10,0"
-                            Command="{Binding ResetCommand}">
+                            Command="{Binding CloseCommand}">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="auto" />
                                 <ColumnDefinition />
                             </Grid.ColumnDefinitions>
-                            <Image Width="15"
-                                   Source="/Images/delete_receipt_50px.png" />
+                            <Image Width="18"
+                                   Source="/Images/close_window_50px.png" />
 
                             <TextBlock Grid.Column="2"
                                        VerticalAlignment="Center"
                                        HorizontalAlignment="Center">
-                                Discard Changes
+                                    Close
                             </TextBlock>
                         </Grid>
                     </Button>
+                </Grid>
 
-                </StackPanel>
-
-                <Button x:Name="closeButton"
+                <!--<Button x:Name="closeButton"
                         HorizontalAlignment="Right"
                         Background="Transparent"
+                        FontSize="36"
                         Foreground="Maroon"
                         Height="30"
                         Width="30"
                         Padding="0"
                         Margin="0"
-                        Command="{Binding CloseCommand}">✖</Button>
+                        Command="{Binding CloseCommand}">
+                    -->
+                <!--✖-->
+                <!--
+
+                </Button>-->
 
             </Grid>
 
