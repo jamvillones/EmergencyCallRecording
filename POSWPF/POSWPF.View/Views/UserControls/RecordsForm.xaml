@@ -7,6 +7,7 @@
              xmlns:ph="clr-namespace:PlaceholderTextBox;assembly=PlaceholderTextBox"
              xmlns:vm="clr-namespace:ECR.View.ViewModels"
              xmlns:converter="clr-namespace:ECR.WPF.Utilities.Converters"
+             xmlns:uc="clr-namespace:ECR.WPF.Views.UserControls"
              mc:Ignorable="d"
              FocusManager.FocusedElement="{Binding ElementName=firstControl}"
              d:DataContext="{d:DesignInstance Type=vm:AddRecordForm_ViewModel, IsDesignTimeCreatable=True}"
@@ -73,10 +74,14 @@
                                     Value="140" />
                             <Setter Property="Cursor"
                                     Value="Hand" />
+                            <Setter Property="Background"
+                                    Value="White" />
                             <Setter Property="Template">
                                 <Setter.Value>
                                     <ControlTemplate TargetType="RadioButton">
-                                        <Border x:Name="templateRoot">
+                                        <Border x:Name="templateRoot"
+                                                CornerRadius="4"
+                                                Background="{TemplateBinding Background}">
                                             <Grid>
                                                 <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                                                   Margin="{TemplateBinding Padding}" />
@@ -104,9 +109,9 @@
                             </Setter>
                         </Style>
                     </StackPanel.Resources>
-                    <RadioButton x:Name="detailsRB">Details</RadioButton>
-                    <RadioButton x:Name="audioRB"
-                                 IsChecked="True">
+                    <RadioButton x:Name="detailsRB"
+                                 IsChecked="True">Details</RadioButton>
+                    <RadioButton x:Name="audioRB">
                         <TextBlock>                            
                             <Run> Audio Clips </Run>
                             <Run FontWeight="Regular">[</Run>
@@ -122,262 +127,11 @@
                     <RadioButton>Amet</RadioButton>-->
                 </StackPanel>
 
-                <ScrollViewer Grid.Row="2"
-                              Margin="0 10 -23 10"
-                              Padding="0,0,5,0"
-                              Visibility="{Binding ElementName=detailsRB, Path=IsChecked, Converter={StaticResource BoolToVisibilityConverter}}"
-                              VerticalScrollBarVisibility="Visible"
-                              HorizontalScrollBarVisibility="Disabled">
+                <uc:Record_Form_Details Grid.Row="2"
+                                        Visibility="{Binding ElementName=detailsRB, Path=IsChecked, Converter={StaticResource BoolToVisibilityConverter}}" />
 
-                    <StackPanel>
-                        <StackPanel.Resources>
-                            <Style TargetType="TextBlock">
-                                <Setter Property="Margin"
-                                        Value="5,0,5,5" />
-                                <Setter Property="FontSize"
-                                        Value="11" />
-
-                                <Setter Property="Foreground"
-                                        Value="{StaticResource AccentColor.Primary}" />
-                            </Style>
-                        </StackPanel.Resources>
-
-                        <TextBlock>Caller Information:</TextBlock>
-
-                        <StackPanel Margin="{StaticResource Vertical.Spacing}">
-                            <ph:PlaceholderTextbox x:Name="firstControl"
-                                                   Text="{Binding CallerName, Mode=TwoWay, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged}"
-                                                   PlaceholderText="Name..."></ph:PlaceholderTextbox>
-                            <ph:PlaceholderTextbox Text="{Binding CallContactDetails, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                                   PlaceholderText="Contact Details..."></ph:PlaceholderTextbox>
-                            <ph:PlaceholderTextbox Margin="0"
-                                                   Text="{Binding CallAddresss, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                                   PlaceholderText="Address(optional)..."></ph:PlaceholderTextbox>
-                        </StackPanel>
-
-                        <TextBlock>Call Type:</TextBlock>
-                        <ComboBox Margin="{StaticResource Vertical.Spacing}"
-                                  Text="{Binding CallType,UpdateSourceTrigger=PropertyChanged}"
-                                  Background="White"
-                                  IsEditable="True">
-                            <ComboBoxItem>Emergency</ComboBoxItem>
-                            <ComboBoxItem>Prank</ComboBoxItem>
-                            <ComboBoxItem>Wrong Number</ComboBoxItem>
-                        </ComboBox>
-
-                        <TextBlock>Endorse To:</TextBlock>
-
-                        <ComboBox Margin="{StaticResource Vertical.Spacing}"
-                                  Text="{Binding EndorseTo,UpdateSourceTrigger=PropertyChanged}"
-                                  Background="White"
-                                  IsEditable="True">
-                            <ComboBoxItem>BFP Kalibo FireStation</ComboBoxItem>
-                            <ComboBoxItem>BFP Kalibo FireStation I</ComboBoxItem>
-                            <ComboBoxItem>BFP Kalibo FireStation II</ComboBoxItem>
-                            <ComboBoxItem>BFP Kalibo FireStation III</ComboBoxItem>
-                            <ComboBoxItem>BFP Kalibo FireStation IV</ComboBoxItem>
-                        </ComboBox>
-                        <Grid Margin="{StaticResource Vertical.Spacing}">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition />
-                                <ColumnDefinition Width="20" />
-                                <ColumnDefinition />
-                            </Grid.ColumnDefinitions>
-
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="auto" />
-                                <RowDefinition />
-                            </Grid.RowDefinitions>
-
-                            <TextBlock Grid.Column="0">Location:</TextBlock>
-                            <ph:PlaceholderTextbox Grid.Row="1"
-                                                   Grid.Column="0"
-                                                   Margin="0"
-                                                   Text="{Binding Severity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                            <TextBlock Grid.Column="2">Priority Level:</TextBlock>
-
-                            <Border Grid.Row="1"
-                                    Grid.Column="2"
-                                    BorderBrush="{StaticResource AccentColor.Primary}"
-                                    Background="White"
-                                    VerticalAlignment="Top"
-                                    CornerRadius="3,3,0,0"
-                                    Padding="10.5"
-                                    BorderThickness="0,0,0,1">
-
-                                <UniformGrid Columns="6"
-                                             VerticalAlignment="Center">
-                                    <UniformGrid.Resources>
-                                        <Style TargetType="RadioButton">
-                                            <Setter Property="HorizontalAlignment"
-                                                    Value="Center" />
-
-                                            <Setter Property="Cursor"
-                                                    Value="Hand" />
-                                        </Style>
-
-                                    </UniformGrid.Resources>
-                                    <RadioButton IsChecked="True">I</RadioButton>
-                                    <RadioButton>II</RadioButton>
-                                    <RadioButton>III</RadioButton>
-                                    <RadioButton>IV</RadioButton>
-                                    <RadioButton>V</RadioButton>
-                                    <RadioButton Margin="0">VI</RadioButton>
-
-                                </UniformGrid>
-                            </Border>
-                        </Grid>
-
-                        <TextBlock>Summary:</TextBlock>
-                        <ph:PlaceholderTextbox Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}"
-                                               Margin="{StaticResource Vertical.Spacing}" />
-
-                        <TextBlock>Details of the Report:</TextBlock>
-                        <ph:PlaceholderTextbox AcceptsReturn="True"
-                                               TextWrapping="Wrap"
-                                               MinHeight="250"
-                                               Margin="0"
-                                               BorderBrush="{StaticResource AccentColor.Primary}"
-                                               Text="{Binding Details,UpdateSourceTrigger=PropertyChanged}" />
-
-                    </StackPanel>
-                </ScrollViewer>
-
-                <Grid Grid.Row="2"
-                      Margin="0 10"
-                      Visibility="{Binding ElementName=audioRB,Path=IsChecked, Converter={StaticResource BoolToVisibilityConverter}}">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="auto" />
-                        <RowDefinition Height="auto" />
-                        <RowDefinition />
-                    </Grid.RowDefinitions>
-                    <Grid.Resources>
-                        <ResourceDictionary>
-                            <ResourceDictionary.MergedDictionaries>
-
-                                <ResourceDictionary Source="/Views/ResourceDictionaries/DataGridResource.xaml" />
-                            </ResourceDictionary.MergedDictionaries>
-
-                            <converter:SecondsToHoursMinutesSeconds x:Key="secondsConverter" />
-
-                        </ResourceDictionary>
-                    </Grid.Resources>
-                    <StackPanel Orientation="Horizontal"
-                                Grid.Row="0">
-
-                        <Button Grid.Column="2"
-                                BorderThickness="0"
-                                Background="{StaticResource AccentColor.Primary}"
-                                Foreground="white"
-                                VerticalAlignment="Stretch"
-                                HorizontalContentAlignment="Stretch"
-                                Padding="10,0"
-                                Margin="0 0 10 0">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="auto" />
-                                    <ColumnDefinition />
-                                </Grid.ColumnDefinitions>
-                                <Image Width="15"
-                                       Source="/Images/audio_wave_50px.png" />
-
-                                <TextBlock Grid.Column="2"
-                                           VerticalAlignment="Center"
-                                           HorizontalAlignment="Center">
-                                     Add Recording
-                                </TextBlock>
-                            </Grid>
-                        </Button>
-                        <Button Grid.Column="2"
-                                BorderThickness="0"
-                                Background="Maroon"
-                                Foreground="white"
-                                VerticalAlignment="Stretch"
-                                Padding="10,0"
-                                HorizontalContentAlignment="Stretch"
-                                Margin="0">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="auto" />
-                                    <ColumnDefinition />
-                                </Grid.ColumnDefinitions>
-                                <Image Width="15"
-                                       Source="/Images/GridButtons/minus_20px.png" />
-
-                                <TextBlock Grid.Column="2"
-                                           VerticalAlignment="Center"
-                                           HorizontalAlignment="Center">
-                                    Clear All
-                                </TextBlock>
-                            </Grid>
-                        </Button>
-                    </StackPanel>
-
-                    <DataGrid ItemsSource="{Binding Audios}"
-                              BorderThickness="0 1 0 1"
-                              BorderBrush="Gray"
-                              Grid.Row="2"
-                              Margin="0 10 0 0"
-                              Style="{StaticResource DataGridStyle1}"
-                              RowStyle="{StaticResource DataGridRowStyle1}"
-                              CellStyle="{StaticResource DataGridCellStyle1}"
-                              ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle1}">
-                        <DataGrid.Columns>
-
-                            <DataGridTextColumn Header="● Audio Name"
-                                                IsReadOnly="True"
-                                                Binding="{Binding Name, Mode=OneWay, StringFormat={}♪ {0}}">
-                                <DataGridTextColumn.ElementStyle>
-                                    <Style TargetType="{x:Type TextBlock}"
-                                           BasedOn="{StaticResource {x:Type TextBlock}}">
-                                        <Setter Property="TextTrimming"
-                                                Value="CharacterEllipsis" />
-                                        <Setter Property="ToolTip"
-                                                Value="{Binding Name, Mode=OneWay}" />
-                                    </Style>
-                                </DataGridTextColumn.ElementStyle>
-                            </DataGridTextColumn>
-                            <DataGridTextColumn Header="● Duration"
-                                                IsReadOnly="True"
-                                                Binding="{Binding Duration, Mode=OneWay,Converter={StaticResource secondsConverter}, StringFormat={}⏱︎ {0}}" />
-                            <DataGridTextColumn Header="● Date/Time Recorded"
-                                                CanUserResize="False"
-                                                IsReadOnly="True"
-                                                Binding="{Binding DateTimeRecorded, Mode=OneWay,StringFormat={}📅 {0}}" />
-                            <DataGridTemplateColumn Header=""
-                                                    IsReadOnly="True"
-                                                    Width="auto">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <StackPanel Orientation="Horizontal"
-                                                    Margin="0"
-                                                    HorizontalAlignment="Right"
-                                                    Width="auto">
-                                            <StackPanel.Resources>
-                                                <Style TargetType="Image">
-                                                    <Setter Property="Width"
-                                                            Value="15" />
-                                                </Style>
-                                            </StackPanel.Resources>
-
-                                            <Button Style="{StaticResource gridEditButton}">
-                                                <Image Source="/Images/GridButtons/Play Button Circled_50px.png" />
-                                                <!--<Icon:PackIconMaterial Kind="PencilOutline"
-                                           Style="{StaticResource gridButtonIcon}" />-->
-                                            </Button>
-                                            <Button Margin="5 0 0 0"
-                                                    Style="{StaticResource gridRemoveButton}">
-                                                <Image Source="/Images/GridButtons/minus_20px.png" />
-                                                <!--<Icon:PackIconMaterial Kind="DeleteOutline"
-                                           Style="{StaticResource gridButtonIcon}" />-->
-                                            </Button>
-                                        </StackPanel>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
-                        </DataGrid.Columns>
-                    </DataGrid>
-                </Grid>
+                <uc:Record_Form_Audios Grid.Row="2"
+                                       Visibility="{Binding ElementName=audioRB,Path=IsChecked, Converter={StaticResource BoolToVisibilityConverter}}" />
 
                 <Grid Grid.Row="3">
                     <Grid.ColumnDefinitions>
