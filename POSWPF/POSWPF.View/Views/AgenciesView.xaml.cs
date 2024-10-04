@@ -13,15 +13,12 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ECR.WPF.Views.UserControls
-{
+namespace ECR.WPF.Views {
     /// <summary>
-    /// Interaction logic for RecordsForm.xaml
+    /// Interaction logic for AgenciesView.xaml
     /// </summary>
-    public partial class RecordsForm : UserControl
-    {
-        public RecordsForm()
-        {
+    public partial class AgenciesView : UserControl {
+        public AgenciesView() {
             InitializeComponent();
         }
     }

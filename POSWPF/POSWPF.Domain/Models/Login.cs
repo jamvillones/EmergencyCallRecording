@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ECR.Domain.Models;
-
+[Table(nameof(Login))]
 public partial class Login {
     public int Id { get; set; }
 

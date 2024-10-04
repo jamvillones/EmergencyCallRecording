@@ -7,7 +7,7 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Converters.xaml" />
-                <ResourceDictionary Source="/Views/ResourceDictionaries/RoundScrollbar.xaml" />
+                <!--<ResourceDictionary Source="/Views/ResourceDictionaries/RoundScrollbar.xaml" />-->
             </ResourceDictionary.MergedDictionaries>
 
             <SolidColorBrush x:Key="AccentColor.Primary"

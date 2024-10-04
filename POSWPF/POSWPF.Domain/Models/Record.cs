@@ -1,4 +1,7 @@
-﻿namespace ECR.Domain.Models {
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace ECR.Domain.Models {
+    [Table(nameof(Record))]
     public sealed class Record {
         public int Id { get; set; }
         /// <summary>
@@ -22,7 +25,7 @@
         /// <summary>
         /// place where the incident took place
         /// </summary>
-        public Address IncidentLocationk { get; set; } = null!;
+        public string IncidentLocation { get; set; } = null!;
         /// <summary>
         /// the distinguishing landmark for operations
         /// </summary>
@@ -31,8 +34,11 @@
         public List<Audio> Audios { get; set; } = new();
     }
 
+    [Table(nameof(Audio))]
     public sealed class Audio {
         public int Id { get; set; }
-        public byte[] Clip { get; set; } = [];
+        public string Name { get; set; } = null!;
+        public DateTime DateRecorded { get; set; }
+        public string FilePath { get; set; } = string.Empty;
     }
 }

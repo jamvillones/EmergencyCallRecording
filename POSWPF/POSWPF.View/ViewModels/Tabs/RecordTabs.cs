@@ -1,16 +1,64 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using ECR.Domain.Data;
+using ECR.Domain.Models;
+using ECR.WPF.ViewModels;
 using System.Collections.ObjectModel;
 
 namespace ECR.View.ViewModels.Tabs {
 
     sealed partial class RecordTabs : ObservableObject {
         public RecordTabs() {
+
+            currentTab = callsTab;
+        }
+
+        readonly CallsTab callsTab = new();
+        readonly AgencyTab agencyTab = new();
+
+        [ObservableProperty]
+        IRegistrationOpener currentTab = null!;
+
+        [ObservableProperty]
+        private ObservableObject? _openedForm = null;
+
+        [RelayCommand]
+        private void OpenRegistrationForm() {
+            var regForm = CurrentTab.GetRegistrationForm();
+            SubscribeToCloseEvent(regForm);
+            OpenedForm = regForm as ObservableObject;
+        }
+        void SubscribeToCloseEvent(ICloseableObject closeable) {
+            closeable.OnClose += Closeable_OnClose;
+        }
+        private void Closeable_OnClose(object? sender, EventArgs e) {
+            OpenedForm = null;
+        }
+
+        [RelayCommand]
+        void SwitchToCalls() {
+            CurrentTab = callsTab;
+        }
+
+        [RelayCommand]
+        void SwitchToAgencies() {
+            CurrentTab = agencyTab;
+        }
+
+
+    }
+    interface IRegistrationOpener {
+        ICloseableObject GetRegistrationForm();
+    }
+
+    sealed partial class CallsTab : ObservableObject, IRegistrationOpener {
+        public CallsTab() {
             for (int i = 0; i < 10; i++)
                 AddNewItem(new RecordViewModel());
 
             OnPropertyChanged(nameof(TotalItems));
         }
+        public ObservableCollection<RecordViewModel> Records { get; } = [];
 
         void AddNewItem(RecordViewModel record) {
             Records.Add(record);
@@ -33,24 +81,20 @@ namespace ECR.View.ViewModels.Tabs {
             OnPropertyChanged(nameof(ItemsSelected));
         }
 
-        public ObservableCollection<RecordViewModel> Records { get; } = [];
-
-        [ObservableProperty]
-        private ObservableObject? _openedForm = null;
-
-        [RelayCommand]
-        private void OpenRegistrationForm() {
-            var regForm = new AddRecordForm_ViewModel();
-            SubscribeToCloseEvent(regForm);
-            OpenedForm = regForm;
+        public ICloseableObject GetRegistrationForm() {
+            var newRecordForm = new AddRecordForm_ViewModel(new DbContextFactory());
+            newRecordForm.OnSaveSuccessful += NewRecordForm_OnSaveSuccessful;
+            return newRecordForm;
         }
 
-        void SubscribeToCloseEvent(ICloseableObject closeable) {
-            closeable.OnClose += Closeable_OnClose;
-        }
-
-        private void Closeable_OnClose(object? sender, EventArgs e) {
-            OpenedForm = null;
+        /// <summary>
+        /// handle the addtition of new record 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void NewRecordForm_OnSaveSuccessful(object? sender, object e) {
+            RecordViewModel record = new RecordViewModel();
+            AddNewItem(record);
         }
 
         public int ItemsSelected => Records.Where(x => x.IsChecked).Count();
@@ -64,5 +108,45 @@ namespace ECR.View.ViewModels.Tabs {
         }
 
         public int TotalItems => Records.Count;
+    }
+
+    sealed partial class AgencyTab : ObservableObject, IRegistrationOpener {
+        public AgencyTab() {
+            for (int i = 0; i < 10; i++) {
+                AddNewItem(new AgencyViewModel() { Name = "BFP Kalibo", ContactDetails = "267 9098", Address = "Poblacion, Kalibo, Aklan" });
+            }
+        }
+
+        void AddNewItem(AgencyViewModel item) {
+            Items.Add(item);
+            item.OnSelectionChanged += Item_OnSelectionChanged; ;
+        }
+
+        private void Item_OnSelectionChanged(object? sender, bool e) {
+            OnPropertyChanged(nameof(AllItemsAreChecked));
+            OnPropertyChanged(nameof(ItemsSelected));
+        }
+
+        public ObservableCollection<AgencyViewModel> Items { get; } = [];
+
+        public ICloseableObject GetRegistrationForm() {
+            var newRecordForm = new AddAgencyFormViewModel();
+            newRecordForm.OnSaveSuccessful += NewRecordForm_OnSaveSuccessful;
+            return newRecordForm;
+        }
+
+        private void NewRecordForm_OnSaveSuccessful(object? sender, object e) {
+        }
+
+        public int TotalItems => Items.Count;
+        public int ItemsSelected => Items.Where(x => x.IsChecked).Count();
+
+        public bool AllItemsAreChecked {
+            get => Items.All(x => x.IsChecked);
+            set {
+                foreach (var item in Items) item.IsChecked = value;
+                OnPropertyChanged();
+            }
+        }
     }
 }

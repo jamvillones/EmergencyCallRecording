@@ -5,9 +5,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:ECR.View.Views"
              xmlns:tabs="clr-namespace:ECR.View.ViewModels.Tabs"
-             xmlns:vm="clr-namespace:ECR.View.ViewModels"
+             xmlns:vm="clr-namespace:ECR.WPF.ViewModels"
              xmlns:placeholder="clr-namespace:PlaceholderTextBox;assembly=PlaceholderTextBox"
-             xmlns:uc="clr-namespace:ECR.View.Views.UserControls"
+             xmlns:uc="clr-namespace:ECR.WPF.Views.UserControls"
              xmlns:popup="clr-namespace:ECR.View.Views.Popups"
              mc:Ignorable="d"
              Background="White"
@@ -128,89 +128,6 @@
                     </Trigger>
                 </ControlTemplate.Triggers>
             </ControlTemplate>
-
-            <!--<Style TargetType="TextBox">
-            <Style.Resources>
-                <ResourceDictionary>
-                    <ResourceDictionary.MergedDictionaries>
-                        <ResourceDictionary Source="/Views/RoundCornerBorder_ResourceDictionary.xaml" />
-                    </ResourceDictionary.MergedDictionaries>
-
-                </ResourceDictionary>
-            </Style.Resources>
-            <Setter Property="HorizontalContentAlignment"
-                    Value="Stretch" />
-            <Setter Property="VerticalContentAlignment"
-                    Value="Center" />
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type TextBox}">
-                        <ControlTemplate.Resources>
-                            <SolidColorBrush x:Key="TextBox.MouseOver.Border"
-                                             Color="#FF7EB4EA" />
-                            <SolidColorBrush x:Key="TextBox.Focus.Border"
-                                             Color="#FF569DE5" />
-                        </ControlTemplate.Resources>
-                        <Border x:Name="border"
-                                VerticalAlignment="{TemplateBinding VerticalAlignment}"
-                                HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
-                                Background="{TemplateBinding Background}"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="{TemplateBinding BorderThickness}"
-                                SnapsToDevicePixels="True">
-                            <Grid Width="200">
-
-                                <ScrollViewer x:Name="PART_ContentHost"
-                                              Focusable="false"
-                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                              HorizontalScrollBarVisibility="Hidden"
-                                              VerticalScrollBarVisibility="Hidden" />
-                                <TextBlock x:Name="placeHolder"
-                                           VerticalAlignment="Center"
-                                           HorizontalAlignment="Stretch"
-                                           Foreground="Gray"
-                                           FontStyle="Italic"
-                                           IsHitTestVisible="False"
-                                           Visibility="Collapsed"
-                                           Text="search..."
-                                           Margin="{TemplateBinding Padding}"
-                                           TextTrimming="CharacterEllipsis" />
-                            </Grid>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsEnabled"
-                                     Value="false">
-                                <Setter Property="Opacity"
-                                        TargetName="border"
-                                        Value="0.56" />
-                            </Trigger>
-
-                            <Trigger Property="Text"
-                                     Value="">
-                                <Setter Property="Visibility"
-                                        Value="Visible"
-                                        TargetName="placeHolder" />
-                            </Trigger>
-                            <Trigger Property="IsMouseOver"
-                                     Value="true">
-                                <Setter Property="BorderBrush"
-                                        TargetName="border"
-                                        Value="{StaticResource TextBox.MouseOver.Border}" />
-                            </Trigger>
-                            <Trigger Property="IsKeyboardFocused"
-                                     Value="true">
-                                <Setter Property="BorderBrush"
-                                        TargetName="border"
-                                        Value="{StaticResource TextBox.Focus.Border}" />
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-
-                </Setter.Value>
-            </Setter>
-
-        </Style>-->
         </ResourceDictionary>
 
     </UserControl.Resources>
@@ -222,12 +139,16 @@
                         Panel.ZIndex="10"
                         Validation.ErrorTemplate="{x:Null}">
             <ContentControl.Resources>
-                <DataTemplate DataType="{x:Type vm:AddRecordForm_ViewModel}">
+                <DataTemplate DataType="{x:Type vm:AddRecordForm_ViewModel }">
                     <uc:RecordsForm />
                 </DataTemplate>
 
                 <DataTemplate DataType="{x:Type vm:EditRecordForm_ViewModel}">
                     <uc:RecordsForm />
+                </DataTemplate>
+
+                <DataTemplate DataType="{x:Type vm:AddAgencyFormViewModel}">
+                    <uc:AgencyForm />
                 </DataTemplate>
             </ContentControl.Resources>
         </ContentControl>
@@ -260,7 +181,7 @@
                     <Border Background="#E0EAFA"
                             BorderThickness="0"
                             CornerRadius="4"
-                            Width="440"
+                            Width="420"
                             HorizontalAlignment="Right"
                             BorderBrush="{StaticResource AccentColor.Primary}">
                         <Grid>
@@ -303,7 +224,7 @@
                         BorderThickness="0"
                         HorizontalAlignment="Right"
                         Padding="10,0,15,0"
-                        Width="auto"
+                        Width="150"
                         HorizontalContentAlignment="Stretch"
                         Grid.Column="2">
                     <Grid>
@@ -318,14 +239,16 @@
 
                         <TextBlock Grid.Column="2"
                                    FontSize="10"
+                                   VerticalAlignment="Center"
+                                   HorizontalAlignment="Center"
                                    FontWeight="Bold">
-                        Add New Record
+                            Create New
                         </TextBlock>
                     </Grid>
                 </Button>
             </Grid>
 
-            <Grid Grid.Row="2">
+            <!--<Grid Grid.Row="2">
                 <StackPanel Orientation="Horizontal"
                             VerticalAlignment="Center"
                             Margin="-2,0"
@@ -344,8 +267,10 @@
                                     Value="2,0" />
                             <Setter Property="Padding"
                                     Value="5" />
-                            <!--<Setter Property="Background"
+                            -->
+            <!--<Setter Property="Background"
                                     Value="Red" />-->
+            <!--
                             <Setter Property="Width"
                                     Value="25" />
                             <Setter Property="Height"
@@ -370,10 +295,12 @@
                     <Button ToolTip="Previous Page">
                         <Image Source="/Images/NavButtons/back_30px.png" />
                     </Button>
-                    <!--<TextBlock FontSize="10"
+                    -->
+            <!--<TextBlock FontSize="10"
                                Margin="10,0"
                                Foreground="gray"
                                VerticalAlignment="Center">1 I 100</TextBlock>-->
+            <!--
 
                     <Button ToolTip="Next Page">
                         <Image Source="/Images/NavButtons/forward_30px.png" />
@@ -415,172 +342,393 @@
                              Width="auto"
                              Padding="5,2">1000</TextBox>
                 </StackPanel>
+            </Grid>-->
+
+            <Grid Grid.Row="3">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+
+                <Grid.Resources>
+                    <DataTemplate DataType="{x:Type tabs:CallsTab}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto" />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <StackPanel Orientation="Horizontal"
+                                        VerticalAlignment="Center"
+                                        Margin="-2,5"
+                                        Height="auto">
+                                <StackPanel.Resources>
+                                    <Style TargetType="Button">
+                                        <Setter Property="Background"
+                                                Value="#E0EAFA" />
+                                        <Setter Property="Cursor"
+                                                Value="Hand" />
+                                        <Setter Property="BorderThickness"
+                                                Value="0" />
+                                        <Setter Property="Template"
+                                                Value="{StaticResource Template.Round.Button}" />
+                                        <Setter Property="Margin"
+                                                Value="2,0" />
+                                        <Setter Property="Padding"
+                                                Value="5" />
+                                        <Setter Property="Width"
+                                                Value="25" />
+                                        <Setter Property="Height"
+                                                Value="25" />
+                                    </Style>
+                                    <Style TargetType="Rectangle">
+                                        <Setter Property="Fill"
+                                                Value="Gray" />
+                                        <Setter Property="Width"
+                                                Value="2" />
+                                        <Setter Property="Margin"
+                                                Value="2,6" />
+                                        <Setter Property="HorizontalAlignment"
+                                                Value="Center" />
+                                    </Style>
+
+                                </StackPanel.Resources>
+
+                                <Button ToolTip="First Page">
+                                    <Image Source="/Images/NavButtons/double_left_30px.png" />
+                                </Button>
+                                <Button ToolTip="Previous Page">
+                                    <Image Source="/Images/NavButtons/back_30px.png" />
+                                </Button>
+
+                                <!--<TextBlock FontSize="10"
+                                           Margin="10,0"
+                                           Foreground="gray"
+                                           VerticalAlignment="Center">1 I 100</TextBlock>-->
+
+                                <Button ToolTip="Next Page">
+                                    <Image Source="/Images/NavButtons/forward_30px.png" />
+                                </Button>
+                                <Button ToolTip="Last Page">
+                                    <Image Source="/Images/NavButtons/double_right_30px.png" />
+                                </Button>
+                                <Button ToolTip="Refresh Entries">
+                                    <Image Source="/Images/NavButtons/refresh_30px.png" />
+                                </Button>
+                            </StackPanel>
+                            <StackPanel Grid.Row="0"
+                                        Orientation="Horizontal"
+                                        VerticalAlignment="Bottom"
+                                        HorizontalAlignment="Right">
+                                <StackPanel.Resources>
+                                    <Style TargetType="TextBox">
+                                        <Setter Property="Background"
+                                                Value="Transparent" />
+                                        <Setter Property="BorderThickness"
+                                                Value="0" />
+                                        <Style.Triggers>
+                                            <Trigger Property="IsKeyboardFocused"
+                                                     Value="True">
+                                                <Setter Property="Background"
+                                                        Value="#E0EAFA" />
+                                                <Setter Property="BorderThickness"
+                                                        Value="1" />
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </StackPanel.Resources>
+                                <TextBlock VerticalAlignment="Center"
+                                           FontSize="9"
+                                           Margin="0,0,5,0">Page Size:</TextBlock>
+
+                                <TextBox ToolTip="Number of Entries To Display"
+                                         VerticalAlignment="Center"
+                                         Width="auto"
+                                         Padding="5,2">1000</TextBox>
+                            </StackPanel>
+
+                            <DataGrid x:Name="membersDataGrid"
+                                      Grid.Row="1"
+                                      Margin="0"
+                                      ItemsSource="{Binding Records}"
+                                      RowStyle="{DynamicResource DataGridRowStyle1}"
+                                      ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}"
+                                      CellStyle="{DynamicResource DataGridCellStyle1}"
+                                      Style="{DynamicResource DataGridStyle1}">
+
+                                <DataGrid.Columns>
+                                    <DataGridCheckBoxColumn CanUserResize="False"
+                                                            Width="auto"
+                                                            Binding="{Binding IsChecked,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                            ElementStyle="{StaticResource CheckBoxStyle1}">
+                                        <DataGridCheckBoxColumn.HeaderTemplate>
+                                            <DataTemplate>
+                                                <CheckBox IsChecked="{Binding Path=DataContext.AllItemsAreChecked, Mode=TwoWay, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}, Mode=FindAncestor}}"
+                                                          VerticalContentAlignment="Center"
+                                                          Style="{StaticResource CheckBoxStyle1}">
+                                                    <TextBlock Foreground="Gray">
+                                                        <Run Text="{Binding Path=DataContext.ItemsSelected, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}, Mode=FindAncestor}}" />
+                                                        <Run Text="I" />
+                                                        <Run Text="{Binding Path=DataContext.TotalItems, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}, Mode=FindAncestor}}" />
+                                                    </TextBlock>
+                                                </CheckBox>
+                                            </DataTemplate>
+                                        </DataGridCheckBoxColumn.HeaderTemplate>
+
+                                    </DataGridCheckBoxColumn>
+
+                                    <DataGridTemplateColumn Header="Priority Level"
+                                                            IsReadOnly="True"
+                                                            Width="auto">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+
+                                                <Image Width="20"
+                                                       Margin="0"
+                                                       HorizontalAlignment="Left"
+                                                       Source="/Images/Signals/signal_50px.png" />
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+
+                                    <DataGridTemplateColumn Header="Call Details"
+                                                            IsReadOnly="True"
+                                                            Width="*">
+
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="auto" />
+                                                        <ColumnDefinition />
+                                                    </Grid.ColumnDefinitions>
+                                                    <Border Width="25"
+                                                            Height="25"
+                                                            CornerRadius="50"
+                                                            Margin="0 0 10 0"
+                                                            Background="red">
+                                                        <TextBlock Text="JD"
+                                                                   FontWeight="Bold"
+                                                                   VerticalAlignment="Center"
+                                                                   HorizontalAlignment="Center"
+                                                                   Foreground="White"
+                                                                   Margin="0 0 0 1" />
+                                                    </Border>
+
+                                                    <StackPanel Grid.Column="1">
+
+                                                        <TextBlock Text="{Binding CallerDetails}"
+                                                                   TextTrimming="CharacterEllipsis"
+                                                                   VerticalAlignment="Center" />
+                                                        <TextBlock FontSize="9"
+                                                                   TextTrimming="CharacterEllipsis"
+                                                                   Foreground="{StaticResource AccentColor.Primary}">
+                            <Run>Emergency Call</Run>
+                            <Run> ● </Run>
+                            <Run>Call Category #11</Run>
+                                                        </TextBlock>
+                                                    </StackPanel>
+                                                </Grid>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+
+                                    <DataGridTextColumn Header="Location Information"
+                                                        IsReadOnly="True"
+                                                        Width="*"
+                                                        Binding="{Binding PlaceOfIncident}" />
+
+                                    <DataGridTextColumn Header="Summary"
+                                                        Binding="{Binding Title}"
+                                                        IsReadOnly="True"
+                                                        Width="*">
+                                        <DataGridTextColumn.ElementStyle>
+                                            <Style TargetType="{x:Type TextBlock}"
+                                                   BasedOn="{StaticResource {x:Type TextBlock}}">
+                                                <Setter Property="TextTrimming"
+                                                        Value="CharacterEllipsis" />
+                                            </Style>
+                                        </DataGridTextColumn.ElementStyle>
+                                    </DataGridTextColumn>
+
+                                    <DataGridTemplateColumn Header="Forwarded To"
+                                                            IsReadOnly="True"
+                                                            Width="*">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="auto" />
+                                                        <ColumnDefinition />
+                                                    </Grid.ColumnDefinitions>
+                                                    <Border Width="25"
+                                                            Height="25"
+                                                            CornerRadius="50"
+                                                            Margin="0 0 10 0">
+                                                        <Border.Background>
+                                                            <ImageBrush ImageSource="/Images/clipart3022007.png" />
+                                                        </Border.Background>
+                                                    </Border>
+
+                                                    <TextBlock Grid.Column="1"
+                                                               Text="{Binding EndorseTo}"
+                                                               TextTrimming="CharacterEllipsis"
+                                                               VerticalAlignment="Center" />
+                                                </Grid>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+
+                                    <DataGridTemplateColumn Header=""
+                                                            IsReadOnly="True"
+                                                            Width="auto">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <StackPanel Orientation="Horizontal"
+                                                            HorizontalAlignment="Center">
+                                                    <StackPanel.Resources>
+                                                        <Style TargetType="Image">
+                                                            <Setter Property="Width"
+                                                                    Value="15" />
+                                                        </Style>
+                                                    </StackPanel.Resources>
+
+                                                    <Button Style="{StaticResource gridEditButton}"
+                                                            Margin="5 0 0 0">
+                                                        <Image Source="/Images/GridButtons/edit_property_20px.png" />
+                                                        <!--<Icon:PackIconMaterial Kind="PencilOutline"
+                                               Style="{StaticResource gridButtonIcon}" />-->
+                                                    </Button>
+                                                    <Button Margin="5 0 0 0"
+                                                            Style="{StaticResource gridRemoveButton}">
+                                                        <Image Source="/Images/GridButtons/minus_20px.png" />
+                                                        <!--<Icon:PackIconMaterial Kind="DeleteOutline"
+                                               Style="{StaticResource gridButtonIcon}" />-->
+                                                    </Button>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </Grid>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type tabs:AgencyTab}">
+                        <DataGrid x:Name="membersDataGrid"
+                                  Grid.Row="3"
+                                  Margin="0"
+                                  ItemsSource="{Binding Items}"
+                                  RowStyle="{DynamicResource DataGridRowStyle1}"
+                                  ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}"
+                                  CellStyle="{DynamicResource DataGridCellStyle1}"
+                                  Style="{DynamicResource DataGridStyle1}">
+
+                            <DataGrid.Columns>
+                                <DataGridCheckBoxColumn CanUserResize="False"
+                                                        Width="auto"
+                                                        Binding="{Binding IsChecked,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                        ElementStyle="{StaticResource CheckBoxStyle1}">
+                                    <DataGridCheckBoxColumn.HeaderTemplate>
+                                        <DataTemplate>
+                                            <CheckBox IsChecked="{Binding Path=DataContext.AllItemsAreChecked, Mode=TwoWay, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}, Mode=FindAncestor}}"
+                                                      VerticalContentAlignment="Center"
+                                                      Style="{StaticResource CheckBoxStyle1}">
+                                                <TextBlock Foreground="Gray">
+                                                    <Run Text="{Binding Path=DataContext.ItemsSelected, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}, Mode=FindAncestor}}" />
+                                                    <Run Text="I" />
+                                                    <Run Text="{Binding Path=DataContext.TotalItems, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}, Mode=FindAncestor}}" />
+                                                </TextBlock>
+                                            </CheckBox>
+                                        </DataTemplate>
+                                    </DataGridCheckBoxColumn.HeaderTemplate>
+
+                                </DataGridCheckBoxColumn>
+
+                                <DataGridTemplateColumn Header="Name"
+                                                        IsReadOnly="True"
+                                                        Width="*">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="auto" />
+                                                    <ColumnDefinition />
+                                                </Grid.ColumnDefinitions>
+                                                <Border Width="25"
+                                                        Height="25"
+                                                        CornerRadius="50"
+                                                        Margin="0 0 10 0">
+                                                    <Border.Background>
+                                                        <ImageBrush ImageSource="/Images/clipart3022007.png" />
+                                                    </Border.Background>
+                                                </Border>
+
+                                                <TextBlock Grid.Column="1"
+                                                           Text="{Binding Name}"
+                                                           TextTrimming="CharacterEllipsis"
+                                                           VerticalAlignment="Center" />
+                                            </Grid>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+
+                                <DataGridTextColumn Header="Contact Details"
+                                                    IsReadOnly="True"
+                                                    Width="*"
+                                                    Binding="{Binding  ContactDetails}" />
+
+                                <DataGridTextColumn Header="Address"
+                                                    IsReadOnly="True"
+                                                    Width="*"
+                                                    Binding="{Binding  Address}" />
+
+                                <DataGridTemplateColumn Header=""
+                                                        IsReadOnly="True"
+                                                        Width="auto">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal"
+                                                        HorizontalAlignment="Center">
+                                                <StackPanel.Resources>
+                                                    <Style TargetType="Image">
+                                                        <Setter Property="Width"
+                                                                Value="15" />
+                                                    </Style>
+                                                </StackPanel.Resources>
+
+                                                <Button Style="{StaticResource gridEditButton}"
+                                                        Margin="5 0 0 0">
+                                                    <Image Source="/Images/GridButtons/edit_property_20px.png" />
+
+                                                </Button>
+                                                <Button Margin="5 0 0 0"
+                                                        Style="{StaticResource gridRemoveButton}">
+                                                    <Image Source="/Images/GridButtons/minus_20px.png" />
+                                                </Button>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+
+                    </DataTemplate>
+                </Grid.Resources>
+
+                <StackPanel Orientation="Horizontal"
+                            Margin="0,15">
+                    <StackPanel.Resources>
+                        <ResourceDictionary Source="/Views/ResourceDictionaries/HorizontalRadioButtonStyle.xaml" />
+                    </StackPanel.Resources>
+
+                    <RadioButton IsChecked="True"
+                                 Command="{Binding SwitchToCallsCommand}">Calls</RadioButton>
+                    <RadioButton Command="{Binding SwitchToAgenciesCommand}">Agencies</RadioButton>
+                </StackPanel>
+
+                <ContentControl Grid.Row="1"
+                                Content="{Binding CurrentTab}" />
+
             </Grid>
-
-            <DataGrid x:Name="membersDataGrid"
-                      Grid.Row="3"
-                      Margin="0"
-                      ItemsSource="{Binding Records}"
-                      RowStyle="{DynamicResource DataGridRowStyle1}"
-                      ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}"
-                      CellStyle="{DynamicResource DataGridCellStyle1}"
-                      Style="{DynamicResource DataGridStyle1}">
-
-                <DataGrid.Columns>
-                    <DataGridCheckBoxColumn CanUserResize="False"
-                                            Width="auto"
-                                            Binding="{Binding IsChecked,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                            ElementStyle="{StaticResource CheckBoxStyle1}">
-                        <DataGridCheckBoxColumn.HeaderTemplate>
-                            <DataTemplate>
-                                <CheckBox IsChecked="{Binding Path=DataContext.AllItemsAreChecked, Mode=TwoWay, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}, Mode=FindAncestor}}"
-                                          VerticalContentAlignment="Center"
-                                          Style="{StaticResource CheckBoxStyle1}">
-                                    <TextBlock Foreground="Gray">
-                                        <Run Text="{Binding Path=DataContext.ItemsSelected, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}, Mode=FindAncestor}}" />
-                                        <Run Text="I" />
-                                        <Run Text="{Binding Path=DataContext.TotalItems, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}, Mode=FindAncestor}}" />
-                                    </TextBlock>
-                                </CheckBox>
-                            </DataTemplate>
-                        </DataGridCheckBoxColumn.HeaderTemplate>
-
-                    </DataGridCheckBoxColumn>
-
-                    <DataGridTemplateColumn Header="Priority Level"
-                                            IsReadOnly="True"
-                                            Width="auto">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-
-                                <Image Width="20"
-                                       Margin="0"
-                                       HorizontalAlignment="Left"
-                                       Source="/Images/Signals/signal_50px.png" />
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-
-                    <DataGridTemplateColumn Header="Call Details"
-                                            IsReadOnly="True"
-                                            Width="*">
-
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="auto" />
-                                        <ColumnDefinition />
-                                    </Grid.ColumnDefinitions>
-                                    <Border Width="25"
-                                            Height="25"
-                                            CornerRadius="50"
-                                            Margin="0 0 10 0"
-                                            Background="red">
-                                        <TextBlock Text="JD"
-                                                   FontWeight="Bold"
-                                                   VerticalAlignment="Center"
-                                                   HorizontalAlignment="Center"
-                                                   Foreground="White"
-                                                   Margin="0 0 0 1" />
-                                    </Border>
-
-                                    <StackPanel Grid.Column="1">
-
-                                        <TextBlock Text="{Binding CallerDetails}"
-                                                   TextTrimming="CharacterEllipsis"
-                                                   VerticalAlignment="Center" />
-                                        <TextBlock FontSize="9"
-                                                   TextTrimming="CharacterEllipsis"
-                                                   Foreground="{StaticResource AccentColor.Primary}">
-                                            <Run>Emergency Call</Run>
-                                            <Run> ● </Run>
-                                            <Run>Call Category #11</Run>
-                                        </TextBlock>
-                                    </StackPanel>
-                                </Grid>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-
-                    <DataGridTextColumn Header="Location Information"
-                                        IsReadOnly="True"
-                                        Width="*"
-                                        Binding="{Binding PlaceOfIncident}" />
-
-                    <DataGridTextColumn Header="Summary"
-                                        Binding="{Binding Title}"
-                                        IsReadOnly="True"
-                                        Width="*">
-                        <DataGridTextColumn.ElementStyle>
-                            <Style TargetType="{x:Type TextBlock}"
-                                   BasedOn="{StaticResource {x:Type TextBlock}}">
-                                <Setter Property="TextTrimming"
-                                        Value="CharacterEllipsis" />
-                            </Style>
-                        </DataGridTextColumn.ElementStyle>
-                    </DataGridTextColumn>
-
-                    <DataGridTemplateColumn Header="Forwarded To"
-                                            IsReadOnly="True"
-                                            Width="*">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="auto" />
-                                        <ColumnDefinition />
-                                    </Grid.ColumnDefinitions>
-                                    <Border Width="25"
-                                            Height="25"
-                                            CornerRadius="50"
-                                            Margin="0 0 10 0">
-                                        <Border.Background>
-                                            <ImageBrush ImageSource="/Images/clipart3022007.png" />
-                                        </Border.Background>
-                                    </Border>
-
-                                    <TextBlock Grid.Column="1"
-                                               Text="{Binding EndorseTo}"
-                                               TextTrimming="CharacterEllipsis"
-                                               VerticalAlignment="Center" />
-                                </Grid>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-
-                    <DataGridTemplateColumn Header=""
-                                            IsReadOnly="True"
-                                            Width="auto">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal"
-                                            HorizontalAlignment="Center">
-                                    <StackPanel.Resources>
-                                        <Style TargetType="Image">
-                                            <Setter Property="Width"
-                                                    Value="15" />
-                                        </Style>
-                                    </StackPanel.Resources>
-
-                                    <Button Style="{StaticResource gridEditButton}"
-                                            Margin="5 0 0 0">
-                                        <Image Source="/Images/GridButtons/edit_property_20px.png" />
-                                        <!--<Icon:PackIconMaterial Kind="PencilOutline"
-                                                               Style="{StaticResource gridButtonIcon}" />-->
-                                    </Button>
-                                    <Button Margin="5 0 0 0"
-                                            Style="{StaticResource gridRemoveButton}">
-                                        <Image Source="/Images/GridButtons/minus_20px.png" />
-                                        <!--<Icon:PackIconMaterial Kind="DeleteOutline"
-                                                               Style="{StaticResource gridButtonIcon}" />-->
-                                    </Button>
-                                </StackPanel>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                </DataGrid.Columns>
-            </DataGrid>
 
         </Grid>
     </Grid>

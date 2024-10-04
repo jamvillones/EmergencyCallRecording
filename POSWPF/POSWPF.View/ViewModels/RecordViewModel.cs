@@ -27,7 +27,27 @@ namespace ECR.View.ViewModels {
         bool _isChecked = false;
 
         partial void OnIsCheckedChanged(bool value) {
-            //Debug.WriteLine("check");
+            OnSelectionChanged?.Invoke(this, value);
+        }
+
+        public event EventHandler<bool>? OnSelectionChanged;
+
+    }
+
+    public sealed partial class AgencyViewModel : ObservableObject {
+
+        [ObservableProperty]
+        string name = "";
+        [ObservableProperty]
+        string contactDetails = "";
+
+        [ObservableProperty]
+        string address = "";
+
+        [ObservableProperty]
+        bool _isChecked = false;
+
+        partial void OnIsCheckedChanged(bool value) {
             OnSelectionChanged?.Invoke(this, value);
         }
 
