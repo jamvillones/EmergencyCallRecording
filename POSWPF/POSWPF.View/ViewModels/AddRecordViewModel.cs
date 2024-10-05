@@ -114,7 +114,7 @@ namespace ECR.WPF.ViewModels {
         [ObservableProperty]
         [NotifyDataErrorInfo]
         [Required(ErrorMessage = REQUIRED_FIELD_STRING)]
-        private string? _details;
+        private string _details = null!;
 
         public ObservableCollection<AudioViewModel> Audios { get; private set; } = [];
         protected IDBContextFactory DbFactory { get; init; }

@@ -3,7 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:local="clr-namespace:ECR.WPF.Views.UserControls"
              xmlns:placeHolder="clr-namespace:PlaceholderTextBox;assembly=PlaceholderTextBox"
              mc:Ignorable="d"
              d:DesignHeight="685"
@@ -30,7 +29,7 @@
 
         <Grid Margin="40"
               MaxWidth="560"
-              MaxHeight="605">
+              MaxHeight="560">
             <Border Background="#EFF2F7"
                     BorderThickness="0.5"
                     BorderBrush="Black"
@@ -55,31 +54,59 @@
                 <StackPanel Grid.Row="1"
                             Margin="0,15">
                     <TextBlock>Logo</TextBlock>
-                    <Border Width="200"
-                            Height="200"
-                            BorderThickness="3"
-                            BorderBrush="{StaticResource AccentColor.Primary}"
-                            CornerRadius="100"
-                            VerticalAlignment="Center"
-                            HorizontalAlignment="Center">
-                        <!--<Border.Background>
-                            <ImageBrush ImageSource="{Binding Logo, Mode=OneWay}" />
-                        </Border.Background>-->
 
-                    </Border>
                     <StackPanel Orientation="Horizontal"
-                                HorizontalAlignment="Center"
-                                Margin="0 5 0 0">
-                        <Button Margin="0 0 10 0">Pick Logo</Button>
-                        <Button Margin="0 0 0 0">RemoveLogo</Button>
+                                HorizontalAlignment="Left">
+
+                        <Border Width="150"
+                                Height="150"
+                                BorderThickness="10"
+                                BorderBrush="White"
+                                CornerRadius="150"
+                                VerticalAlignment="Center"
+                                Margin="0 0 10 0"
+                                HorizontalAlignment="Left">
+                            <Border.Style>
+                                <Style TargetType="Border">
+                                    <Setter Property="Background">
+                                        <Setter.Value>
+                                            <ImageBrush ImageSource="{Binding Logo}" />
+                                        </Setter.Value>
+                                    </Setter>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Logo}"
+                                                     Value="{x:Null}">
+                                            <Setter Property="Background">
+                                                <Setter.Value>
+                                                    <ImageBrush Stretch="None"
+                                                                ImageSource="/Images/image_50px.png" />
+                                                </Setter.Value>
+                                            </Setter>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+
+                        </Border>
+                        <StackPanel VerticalAlignment="Center">
+                            <Button Margin="0 0 0 10"
+                                    Command="{Binding PickImageCommand}">Pick Logo</Button>
+                            <Button Margin="0 0 0 0">Remove Logo</Button>
+                        </StackPanel>
                     </StackPanel>
-                    
+                    <TextBlock VerticalAlignment="Center"
+                               Margin="20 0 0 10"
+                               Foreground="{StaticResource AccentColor.Primary}">* Choose the logo that will be asssociated with the agency *</TextBlock>
+
                     <TextBlock>Name:</TextBlock>
-                    <placeHolder:PlaceholderTextbox Margin="{StaticResource Vertical.Spacing}" />
+                    <placeHolder:PlaceholderTextbox Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                    Margin="{StaticResource Vertical.Spacing}" />
                     <TextBlock>Contact Details:</TextBlock>
-                    <placeHolder:PlaceholderTextbox Margin="{StaticResource Vertical.Spacing}" />
+                    <placeHolder:PlaceholderTextbox Text="{Binding ContactDetails, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                    Margin="{StaticResource Vertical.Spacing}" />
                     <TextBlock>Address:</TextBlock>
-                    <placeHolder:PlaceholderTextbox Margin="{StaticResource Vertical.Spacing}" />
+                    <placeHolder:PlaceholderTextbox Text="{Binding Address, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                    Margin="{StaticResource Vertical.Spacing}" />
 
                 </StackPanel>
 

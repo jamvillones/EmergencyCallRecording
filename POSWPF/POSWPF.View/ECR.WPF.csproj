@@ -27,6 +27,7 @@
     <None Remove="Images\GridButtons\minus_20px.png" />
     <None Remove="Images\GridButtons\Play Button Circled_50px.png" />
     <None Remove="Images\Ibajaylogo.png" />
+    <None Remove="Images\image_50px.png" />
     <None Remove="Images\Lock_20px.png" />
     <None Remove="Images\MDRRMO logo.png" />
     <None Remove="Images\menu_20px.png" />
@@ -56,6 +57,7 @@
   <ItemGroup>
     <Resource Include="Images\close_window_50px.png" />
     <Resource Include="Images\delete_receipt_50px.png" />
+    <Resource Include="Images\image_50px.png" />
     <Resource Include="Images\save_close_50px.png" />
   </ItemGroup>
 

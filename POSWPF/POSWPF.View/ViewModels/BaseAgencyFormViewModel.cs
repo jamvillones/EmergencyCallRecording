@@ -8,6 +8,8 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace ECR.WPF.ViewModels {
     public abstract partial class BaseAgencyFormViewModel : ObservableValidator, ICloseableObject {
@@ -32,7 +34,7 @@ namespace ECR.WPF.ViewModels {
 
 
         [ObservableProperty]
-        private byte[] logo = [];
+        private ImageSource? logo = null;
 
         protected void InvokeSaveEvent(object p) {
             OnSaveSuccessful?.Invoke(this, p);
@@ -48,6 +50,23 @@ namespace ECR.WPF.ViewModels {
         [RelayCommand]
         void Reset() {
 
+        }
+
+        [RelayCommand]
+        void PickImage() {
+            Microsoft.Win32.OpenFileDialog dlg = new() {
+                Filter = "Image Files | *.jpg;*.jpeg;*.png;"
+            };
+
+            bool? result = dlg.ShowDialog();
+
+            // Get the selected file name and display in a TextBox 
+            if (result == true) {
+                // Open document 
+                string filename = dlg.FileName;
+                //extension = Path.GetExtension(dlg.FileName);
+                Logo = new BitmapImage(new Uri(filename));
+            }
         }
     }
 
