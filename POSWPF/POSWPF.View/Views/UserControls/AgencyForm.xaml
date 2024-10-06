@@ -70,7 +70,7 @@
                                 <Style TargetType="Border">
                                     <Setter Property="Background">
                                         <Setter.Value>
-                                            <ImageBrush ImageSource="{Binding Logo}" />
+                                            <ImageBrush Stretch="UniformToFill" ImageSource="{Binding Logo}" />
                                         </Setter.Value>
                                     </Setter>
                                     <Style.Triggers>
