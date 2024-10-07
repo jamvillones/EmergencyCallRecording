@@ -172,8 +172,14 @@
               Visibility="{Binding AudiosIsEmpty, Converter={StaticResource BoolToVisibilityConverter}}"
               VerticalAlignment="Center"
               HorizontalAlignment="Center">
-            <TextBlock>No Audio Selected</TextBlock>
+            <StackPanel>
+                <Image Width="100"
+                       Height="100"
+                       Source="/Images/no_phones_100px.png" />
+                <TextBlock FontWeight="Bold"
+                           Foreground="#7D7D7D">No Audio Selected</TextBlock>
 
+            </StackPanel>
         </Grid>
     </Grid>
 </UserControl>

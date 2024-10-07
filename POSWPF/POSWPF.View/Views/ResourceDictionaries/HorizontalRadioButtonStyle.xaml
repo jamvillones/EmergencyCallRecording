@@ -6,7 +6,7 @@
         <Setter Property="HorizontalContentAlignment"
                 Value="Center" />
         <Setter Property="Padding"
-                Value="15,10" />
+                Value="15" />
         <Setter Property="Width"
                 Value="140" />
         <Setter Property="Cursor"
@@ -24,7 +24,8 @@
                                               Margin="{TemplateBinding Padding}" />
                             <Border x:Name="checkIndicator"
                                     VerticalAlignment="Bottom"
-                                    Height="4"
+                                    Height="5"
+                                    CornerRadius="2.5 2.5 0 0 "
                                     Visibility="Hidden"
                                     Background="{StaticResource AccentColor.Primary}" />
                         </Grid>
