@@ -35,10 +35,10 @@ namespace ECR.WPF.ViewModels {
         private string name = null!;
 
         [ObservableProperty]
-        private string contactDetails = null!;
+        private string? contactDetails = null;
 
         [ObservableProperty]
-        private string address = null!;
+        private string? address = null;
 
 
         [ObservableProperty]
@@ -92,6 +92,20 @@ namespace ECR.WPF.ViewModels {
     public partial class AddAgencyFormViewModel : BaseAgencyFormViewModel {
         public AddAgencyFormViewModel(IDBContextFactory contextFactory) : base(contextFactory) {
         }
+
+        private Agency agency = null!;
+
+        public Agency Agency {
+            get { return agency; }
+            set {
+                agency = value;
+                Name = agency.Name;
+                ContactDetails = agency.ContactInfo;
+                Address = agency.Address;
+                Logo = agency.Logo?.ToImageSource();
+            }
+        }
+
 
         protected override async Task SaveAgency() {
             ValidateAllProperties();
