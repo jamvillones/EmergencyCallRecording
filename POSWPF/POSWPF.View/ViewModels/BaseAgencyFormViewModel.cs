@@ -106,7 +106,6 @@ namespace ECR.WPF.ViewModels {
             }
         }
 
-
         protected override async Task SaveAgency() {
             ValidateAllProperties();
             if (HasErrors) {
