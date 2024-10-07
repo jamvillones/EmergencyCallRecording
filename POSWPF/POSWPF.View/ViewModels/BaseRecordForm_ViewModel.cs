@@ -18,6 +18,12 @@ namespace ECR.WPF.ViewModels {
 
         protected BaseRecordForm_ViewModel(IDBContextFactory dbFactory) {
             DbFactory = dbFactory;
+            Audios.CollectionChanged += Audios_CollectionChanged;
+        }
+
+        private void Audios_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e) {
+            OnPropertyChanged(nameof(AudiosIsEmpty));
+            OnPropertyChanged(nameof(AudiosNotEmpty));
         }
 
         public event EventHandler? OnClose;
@@ -117,6 +123,8 @@ namespace ECR.WPF.ViewModels {
         private string _details = null!;
 
         public ObservableCollection<AudioViewModel> Audios { get; private set; } = [];
+        public bool AudiosIsEmpty => Audios.Count == 0;
+        public bool AudiosNotEmpty => Audios.Count > 0;
         protected IDBContextFactory DbFactory { get; init; }
     }
     public partial class AddRecordForm_ViewModel : BaseRecordForm_ViewModel {

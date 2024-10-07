@@ -70,7 +70,8 @@
                                 <Style TargetType="Border">
                                     <Setter Property="Background">
                                         <Setter.Value>
-                                            <ImageBrush Stretch="UniformToFill" ImageSource="{Binding Logo}" />
+                                            <ImageBrush Stretch="UniformToFill"
+                                                        ImageSource="{Binding Logo}" />
                                         </Setter.Value>
                                     </Setter>
                                     <Style.Triggers>
@@ -91,7 +92,8 @@
                         <StackPanel VerticalAlignment="Center">
                             <Button Margin="0 0 0 10"
                                     Command="{Binding PickImageCommand}">Pick Logo</Button>
-                            <Button Margin="0 0 0 0">Remove Logo</Button>
+                            <Button Command="{Binding RemoveLogoCommand}"
+                                    Margin="0 0 0 0">Remove Logo</Button>
                         </StackPanel>
                     </StackPanel>
                     <TextBlock VerticalAlignment="Center"

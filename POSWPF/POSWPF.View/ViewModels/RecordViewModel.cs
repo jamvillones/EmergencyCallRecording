@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
 
 namespace ECR.View.ViewModels {
     public sealed partial class RecordViewModel : ObservableObject {
@@ -38,14 +39,18 @@ namespace ECR.View.ViewModels {
 
         [ObservableProperty]
         string name = "";
-        [ObservableProperty]
-        string contactDetails = "";
 
         [ObservableProperty]
-        string address = "";
+        string? contactDetails = "";
+
+        [ObservableProperty]
+        string? address = "";
 
         [ObservableProperty]
         bool _isChecked = false;
+
+        [ObservableProperty]
+        ImageSource? logo = null;
 
         partial void OnIsCheckedChanged(bool value) {
             OnSelectionChanged?.Invoke(this, value);

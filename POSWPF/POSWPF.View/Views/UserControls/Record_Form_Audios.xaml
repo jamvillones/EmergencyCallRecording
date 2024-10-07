@@ -26,11 +26,10 @@
 
             </ResourceDictionary>
         </Grid.Resources>
-        <Rectangle VerticalAlignment="Top"
-                   Height="1"
-                   Fill="Gray" />
+
         <StackPanel Orientation="Horizontal"
                     Margin="0 10 0 0"
+                    HorizontalAlignment="Right"
                     Grid.Row="0">
 
             <Button Grid.Column="2"
@@ -83,14 +82,28 @@
         </StackPanel>
 
         <DataGrid ItemsSource="{Binding Audios}"
-                  BorderThickness="0 0 0 1"
+                  BorderThickness="0"
                   BorderBrush="Gray"
                   Grid.Row="2"
                   Margin="0 10 0 0"
-                  Style="{StaticResource DataGridStyle1}"
                   RowStyle="{StaticResource DataGridRowStyle1}"
                   CellStyle="{StaticResource DataGridCellStyle1}"
                   ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle1}">
+
+            <DataGrid.Style>
+                <Style TargetType="DataGrid"
+                       BasedOn="{StaticResource DataGridStyle1}">
+                    <Setter Property="Visibility"
+                            Value="Visible" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Audios.Count}"
+                                     Value="0">
+                            <Setter Property="Visibility"
+                                    Value="Hidden" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </DataGrid.Style>
             <DataGrid.Columns>
                 <!--<DataGridTextColumn Header="#"
                                     Width="auto"
@@ -154,5 +167,13 @@
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
+
+        <Grid Grid.Row="2"
+              Visibility="{Binding AudiosIsEmpty, Converter={StaticResource BoolToVisibilityConverter}}"
+              VerticalAlignment="Center"
+              HorizontalAlignment="Center">
+            <TextBlock>No Audio Selected</TextBlock>
+
+        </Grid>
     </Grid>
 </UserControl>

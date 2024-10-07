@@ -5,12 +5,11 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:ECR.View.Views.UserControls"
              xmlns:ph="clr-namespace:PlaceholderTextBox;assembly=PlaceholderTextBox"
-             xmlns:vm="clr-namespace:ECR.View.ViewModels"
+             xmlns:vm="clr-namespace:ECR.WPF.ViewModels"
              xmlns:converter="clr-namespace:ECR.WPF.Utilities.Converters"
              xmlns:uc="clr-namespace:ECR.WPF.Views.UserControls"
              mc:Ignorable="d"
              FocusManager.FocusedElement="{Binding ElementName=firstControl}"
-             d:DataContext="{d:DesignInstance Type=vm:AddRecordForm_ViewModel, IsDesignTimeCreatable=True}"
              d:DesignHeight="1061.5"
              d:DesignWidth="1080">
     <UserControl.Resources>
@@ -59,8 +58,13 @@
                            FontSize="16"
                            FontWeight="Bold">ADD NEW RECORD</TextBlock>
 
+                <Rectangle Grid.Row="1"
+                           VerticalAlignment="Bottom"
+                           Height="1"
+                           Fill="Black" />
+
                 <StackPanel Grid.Row="1"
-                            Margin="0,10"
+                            Margin="0 0 0 0"
                             Orientation="Horizontal">
                     <StackPanel.Resources>
                         <ResourceDictionary Source="/Views/ResourceDictionaries/HorizontalRadioButtonStyle.xaml" />

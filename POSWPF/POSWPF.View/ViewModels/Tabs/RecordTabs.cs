@@ -2,7 +2,9 @@
 using CommunityToolkit.Mvvm.Input;
 using ECR.Domain.Data;
 using ECR.Domain.Models;
+using ECR.WPF.Utilities;
 using ECR.WPF.ViewModels;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.ObjectModel;
 
 namespace ECR.View.ViewModels.Tabs {
@@ -14,7 +16,7 @@ namespace ECR.View.ViewModels.Tabs {
         }
 
         readonly CallsTab callsTab = new();
-        readonly AgencyTab agencyTab = new();
+        readonly AgencyTab agencyTab = new(new DbContextFactory());
 
         [ObservableProperty]
         IRegistrationOpener currentTab = null!;
@@ -111,15 +113,26 @@ namespace ECR.View.ViewModels.Tabs {
     }
 
     sealed partial class AgencyTab : ObservableObject, IRegistrationOpener {
-        public AgencyTab() {
-            for (int i = 0; i < 10; i++) {
-                AddNewItem(new AgencyViewModel() { Name = "BFP Kalibo", ContactDetails = "267 9098", Address = "Poblacion, Kalibo, Aklan" });
+        private readonly IDBContextFactory contextFactory;
+
+        public AgencyTab(IDBContextFactory contextFactory) {
+            this.contextFactory = contextFactory;
+            _ = LoadDataAsync();
+        }
+
+        async Task LoadDataAsync() {
+            using (var context = contextFactory.CreateDbContext()) {
+                var agencies = await context.Agency.ToListAsync();
+
+                foreach (var a in agencies)
+                    AddNewItem(new AgencyViewModel() { Name = a.Name, Address = a.Address, ContactDetails = a.ContactInfo, Logo = a.Logo?.ToImageSource() });
             }
         }
 
         void AddNewItem(AgencyViewModel item) {
             Items.Add(item);
             item.OnSelectionChanged += Item_OnSelectionChanged; ;
+            OnPropertyChanged(nameof(TotalItems));
         }
 
         private void Item_OnSelectionChanged(object? sender, bool e) {
@@ -130,19 +143,22 @@ namespace ECR.View.ViewModels.Tabs {
         public ObservableCollection<AgencyViewModel> Items { get; } = [];
 
         public ICloseableObject GetRegistrationForm() {
-            var newRecordForm = new AddAgencyFormViewModel();
+            var newRecordForm = new AddAgencyFormViewModel(new DbContextFactory());
             newRecordForm.OnSaveSuccessful += NewRecordForm_OnSaveSuccessful;
             return newRecordForm;
         }
 
         private void NewRecordForm_OnSaveSuccessful(object? sender, object e) {
+            var agency = (Agency)e;
+
+            AddNewItem(new AgencyViewModel() { Name = agency.Name, Address = agency.Address, ContactDetails = agency.ContactInfo, Logo = agency.Logo?.ToImageSource() });
         }
 
         public int TotalItems => Items.Count;
         public int ItemsSelected => Items.Where(x => x.IsChecked).Count();
 
         public bool AllItemsAreChecked {
-            get => Items.All(x => x.IsChecked);
+            get => Items.Count == 0 ? false : Items.All(x => x.IsChecked);
             set {
                 foreach (var item in Items) item.IsChecked = value;
                 OnPropertyChanged();

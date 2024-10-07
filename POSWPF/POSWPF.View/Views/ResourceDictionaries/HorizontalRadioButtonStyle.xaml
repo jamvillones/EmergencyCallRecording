@@ -2,7 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Style TargetType="RadioButton">
         <Setter Property="Margin"
-                Value="0 0 10 0" />
+                Value="0 0 0 0" />
         <Setter Property="HorizontalContentAlignment"
                 Value="Center" />
         <Setter Property="Padding"
@@ -12,7 +12,7 @@
         <Setter Property="Cursor"
                 Value="Hand" />
         <Setter Property="Background"
-                Value="White" />
+                Value="Transparent" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="RadioButton">
@@ -24,7 +24,7 @@
                                               Margin="{TemplateBinding Padding}" />
                             <Border x:Name="checkIndicator"
                                     VerticalAlignment="Bottom"
-                                    Height="2"
+                                    Height="4"
                                     Visibility="Hidden"
                                     Background="{StaticResource AccentColor.Primary}" />
                         </Grid>

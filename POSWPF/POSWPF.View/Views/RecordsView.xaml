@@ -8,6 +8,7 @@
              xmlns:vm="clr-namespace:ECR.WPF.ViewModels"
              xmlns:placeholder="clr-namespace:PlaceholderTextBox;assembly=PlaceholderTextBox"
              xmlns:uc="clr-namespace:ECR.WPF.Views.UserControls"
+             xmlns:converter="clr-namespace:ECR.WPF.Utilities.Converters"
              xmlns:popup="clr-namespace:ECR.View.Views.Popups"
              mc:Ignorable="d"
              Background="White"
@@ -21,6 +22,8 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Views/ResourceDictionaries/DataGridResource.xaml" />
             </ResourceDictionary.MergedDictionaries>
+
+            <converter:GetFirstTwoInitialsFromNameConverter x:Key="GetFirstTwo" />
 
             <!--<Style TargetType="Button">
                 <Setter Property="Cursor"
@@ -643,33 +646,79 @@
 
                                 </DataGridCheckBoxColumn>
 
-                                <DataGridTemplateColumn Header="Name"
+                                <DataGridTemplateColumn Header=""
                                                         IsReadOnly="True"
-                                                        Width="*">
+                                                        Width="auto">
+
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
-                                            <Grid>
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="auto" />
-                                                    <ColumnDefinition />
-                                                </Grid.ColumnDefinitions>
-                                                <Border Width="25"
-                                                        Height="25"
-                                                        CornerRadius="50"
-                                                        Margin="0 0 10 0">
-                                                    <Border.Background>
-                                                        <ImageBrush ImageSource="/Images/clipart3022007.png" />
-                                                    </Border.Background>
-                                                </Border>
 
-                                                <TextBlock Grid.Column="1"
-                                                           Text="{Binding Name}"
-                                                           TextTrimming="CharacterEllipsis"
-                                                           VerticalAlignment="Center" />
-                                            </Grid>
+                                            <Border Width="30"
+                                                    Height="30"
+                                                    CornerRadius="15"
+                                                    Margin="0 0 10 0">
+                                                <Border.Style>
+                                                    <Style TargetType="Border">
+                                                        <Setter Property="Background">
+                                                            <Setter.Value>
+                                                                <!--<VisualBrush>
+                                                                    <VisualBrush.Visual>
+                                                                        <Border Width="30"
+                                                                                Height="30"
+                                                                                CornerRadius="15"
+                                                                                Background="Red">
+                                                                            <TextBlock FontWeight="Bold"
+                                                                                       Foreground="White"
+                                                                                       HorizontalAlignment="Center"
+                                                                                       VerticalAlignment="Center"
+                                                                                       Text="{Binding Name, Converter={StaticResource GetFirstTwo}}" />
+                                                                        </Border>
+                                                                    </VisualBrush.Visual>
+                                                                </VisualBrush>-->
+                                                                <ImageBrush ImageSource="{Binding Logo, Mode=OneWay}" />
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding Logo}"
+                                                                         Value="{x:Null}">
+                                                                <Setter Property="Background">
+                                                                    <Setter.Value>
+                                                                        <VisualBrush>
+                                                                            <VisualBrush.Visual>
+                                                                                <Border Width="30"
+                                                                                        Height="30"
+                                                                                        CornerRadius="15"
+                                                                                        Background="Red">
+                                                                                    <TextBlock FontWeight="Bold"
+                                                                                               Foreground="White"
+                                                                                               HorizontalAlignment="Center"
+                                                                                               VerticalAlignment="Center"
+                                                                                               Text="NA" />
+                                                                                    <!--<TextBlock FontWeight="Bold"
+                                                                                               Foreground="White"
+                                                                                               HorizontalAlignment="Center"
+                                                                                               VerticalAlignment="Center"
+                                                                                               Text="{Binding Name, Converter={StaticResource GetFirstTwo}}" />-->
+                                                                                </Border>
+                                                                            </VisualBrush.Visual>
+                                                                        </VisualBrush>
+                                                                    </Setter.Value>
+                                                                </Setter>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Border.Style>
+
+                                            </Border>
+
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
                                 </DataGridTemplateColumn>
+
+                                <DataGridTextColumn Header="Name"
+                                                    IsReadOnly="True"
+                                                    Width="*"
+                                                    Binding="{Binding Name}" />
 
                                 <DataGridTextColumn Header="Contact Details"
                                                     IsReadOnly="True"
@@ -714,8 +763,12 @@
                     </DataTemplate>
                 </Grid.Resources>
 
+                <Rectangle VerticalAlignment="Bottom"
+                           Height="0.5"
+                           Fill="Black" />
+
                 <StackPanel Orientation="Horizontal"
-                            Margin="0,15">
+                            Margin="0 15 0 0 ">
                     <StackPanel.Resources>
                         <ResourceDictionary Source="/Views/ResourceDictionaries/HorizontalRadioButtonStyle.xaml" />
                     </StackPanel.Resources>
