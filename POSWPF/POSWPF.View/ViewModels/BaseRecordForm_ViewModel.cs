@@ -54,7 +54,8 @@ namespace ECR.WPF.ViewModels {
         [RelayCommand]
         void AddAudioFile() {
             Microsoft.Win32.OpenFileDialog dlg = new() {
-                Filter = "Audio Files | *.mp3;*.ogg;*.wav;"
+                Filter = "Audio Files | *.mp3;*.ogg;*.wav;",
+                Multiselect = true
             };
 
             // Display OpenFileDialog by calling ShowDialog method 
@@ -63,18 +64,20 @@ namespace ECR.WPF.ViewModels {
             // Get the selected file name and display in a TextBox 
             if (result == true) {
 
-                if (Audios.Any(a => a.FilePath == dlg.FileName)) {
-                    MessageBox.Show("File Already on the list", "", MessageBoxButton.OK, MessageBoxImage.Stop);
-                    return;
-                }
-                var newAudioVm = new AudioViewModel() {
-                    Name = dlg.SafeFileName,
-                    DateTimeRecorded = File.GetCreationTime(dlg.FileName),
-                    Duration = Sound.SoundInfo.GetSoundLength(dlg.FileName),
-                    FilePath = dlg.FileName
-                };
+                foreach (var path in dlg.FileNames) {
 
-                Audios.Add(newAudioVm);
+                    if (Audios.Any(a => a.FilePath == path))
+                        continue;
+
+                    var newAudioVm = new AudioViewModel() {
+                        Name = Path.GetFileName(path),
+                        DateTimeRecorded = File.GetCreationTime(path),
+                        Duration = Sound.SoundInfo.GetSoundLength(path),
+                        FilePath = path
+                    };
+                    Audios.Add(newAudioVm);
+                }
+
             }
 
         }
@@ -127,10 +130,8 @@ namespace ECR.WPF.ViewModels {
         public bool AudiosNotEmpty => Audios.Count > 0;
         protected IDBContextFactory DbFactory { get; init; }
     }
-    public partial class AddRecordForm_ViewModel : BaseRecordForm_ViewModel {
-        public AddRecordForm_ViewModel(IDBContextFactory dbFactory) : base(dbFactory) {
-        }
 
+    public partial class Form_Add_Record_ViewModel(IDBContextFactory dbFactory) : BaseRecordForm_ViewModel(dbFactory) {
         public override async Task<bool> Save() {
             if (!await base.Save()) {
                 MessageBox.Show("Fill out necessary fields first!", "", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -155,10 +156,8 @@ namespace ECR.WPF.ViewModels {
             CallerName = CallAddresss = CallContactDetails = Severity = EndorseTo = Details = Title = CallType = string.Empty;
         }
     }
-    public partial class EditRecordForm_ViewModel : BaseRecordForm_ViewModel {
-        public EditRecordForm_ViewModel(IDBContextFactory dbFactory) : base(dbFactory) {
-        }
 
+    public partial class Form_Edit_Record_ViewModel(IDBContextFactory dbFactory) : BaseRecordForm_ViewModel(dbFactory) {
         protected override void Reset() {
         }
     }

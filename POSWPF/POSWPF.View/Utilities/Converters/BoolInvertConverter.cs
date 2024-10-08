@@ -1,6 +1,6 @@
 ﻿using System.Windows.Data;
 
-namespace ECR.View.Utilities.Converters {
+namespace ECR.WPF.Utilities.Converters {
 
 
     public class BoolInvertConverter : IValueConverter {

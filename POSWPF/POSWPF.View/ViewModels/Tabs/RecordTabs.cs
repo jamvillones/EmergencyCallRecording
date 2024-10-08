@@ -11,8 +11,15 @@ namespace ECR.View.ViewModels.Tabs {
 
     sealed partial class RecordTabs : ObservableObject {
         public RecordTabs() {
-
+            callsTab.OnEdit += OnEdit;
+            agencyTab.OnEdit += OnEdit;
             currentTab = callsTab;
+        }
+
+        private void OnEdit(object? sender, object e) {
+            var regForm = (ICloseableObject)e;
+            SubscribeToCloseEvent(regForm);
+            OpenedForm = regForm as ObservableObject;
         }
 
         readonly CallsTab callsTab = new();
@@ -30,6 +37,8 @@ namespace ECR.View.ViewModels.Tabs {
             SubscribeToCloseEvent(regForm);
             OpenedForm = regForm as ObservableObject;
         }
+
+
         void SubscribeToCloseEvent(ICloseableObject closeable) {
             closeable.OnClose += Closeable_OnClose;
         }
@@ -51,6 +60,8 @@ namespace ECR.View.ViewModels.Tabs {
     }
     interface IRegistrationOpener {
         ICloseableObject GetRegistrationForm();
+        ICloseableObject GetEditForm(int id);
+        event EventHandler<object> OnEdit;
     }
 
     sealed partial class CallsTab : ObservableObject, IRegistrationOpener {
@@ -61,6 +72,14 @@ namespace ECR.View.ViewModels.Tabs {
             OnPropertyChanged(nameof(TotalItems));
         }
         public ObservableCollection<RecordViewModel> Records { get; } = [];
+
+        public event EventHandler<object>? OnEdit;
+        [RelayCommand]
+        private void OpenEditForm(int id) {
+
+            var regForm = GetEditForm(id);
+            OnEdit?.Invoke(this, regForm);
+        }
 
         void AddNewItem(RecordViewModel record) {
             Records.Add(record);
@@ -84,7 +103,7 @@ namespace ECR.View.ViewModels.Tabs {
         }
 
         public ICloseableObject GetRegistrationForm() {
-            var newRecordForm = new AddRecordForm_ViewModel(new DbContextFactory());
+            var newRecordForm = new Form_Add_Record_ViewModel(new DbContextFactory());
             newRecordForm.OnSaveSuccessful += NewRecordForm_OnSaveSuccessful;
             return newRecordForm;
         }
@@ -97,6 +116,12 @@ namespace ECR.View.ViewModels.Tabs {
         private void NewRecordForm_OnSaveSuccessful(object? sender, object e) {
             RecordViewModel record = new RecordViewModel();
             AddNewItem(record);
+        }
+
+        public ICloseableObject GetEditForm(int id) {
+            var newRecordForm = new Form_Edit_Record_ViewModel(new DbContextFactory());
+            //newRecordForm.OnSaveSuccessful += NewRecordForm_OnSaveSuccessful;
+            return newRecordForm;
         }
 
         public int ItemsSelected => Records.Where(x => x.IsChecked).Count();
@@ -115,9 +140,19 @@ namespace ECR.View.ViewModels.Tabs {
     sealed partial class AgencyTab : ObservableObject, IRegistrationOpener {
         private readonly IDBContextFactory contextFactory;
 
+        public event EventHandler<object>? OnEdit;
+
         public AgencyTab(IDBContextFactory contextFactory) {
             this.contextFactory = contextFactory;
             _ = LoadDataAsync();
+        }
+
+        [RelayCommand]
+        private void OpenEditForm(int id) {
+
+            var regForm = GetEditForm(id);
+            OnEdit?.Invoke(this, regForm);
+
         }
 
         async Task LoadDataAsync() {
@@ -125,7 +160,7 @@ namespace ECR.View.ViewModels.Tabs {
                 var agencies = await context.Agency.ToListAsync();
 
                 foreach (var a in agencies)
-                    AddNewItem(new AgencyViewModel() { Name = a.Name, Address = a.Address, ContactDetails = a.ContactInfo, Logo = a.Logo?.ToImageSource() });
+                    AddNewItem(new AgencyViewModel() { Id = a.Id, Name = a.Name, Address = a.Address, ContactDetails = a.ContactInfo, Logo = a.Logo?.ToImageSource() });
             }
         }
 
@@ -143,7 +178,7 @@ namespace ECR.View.ViewModels.Tabs {
         public ObservableCollection<AgencyViewModel> Items { get; } = [];
 
         public ICloseableObject GetRegistrationForm() {
-            var newRecordForm = new AddAgencyFormViewModel(new DbContextFactory());
+            var newRecordForm = new Form_Add_Agency_ViewModel(new DbContextFactory());
             newRecordForm.OnSaveSuccessful += NewRecordForm_OnSaveSuccessful;
             return newRecordForm;
         }
@@ -151,7 +186,16 @@ namespace ECR.View.ViewModels.Tabs {
         private void NewRecordForm_OnSaveSuccessful(object? sender, object e) {
             var agency = (Agency)e;
 
-            AddNewItem(new AgencyViewModel() { Name = agency.Name, Address = agency.Address, ContactDetails = agency.ContactInfo, Logo = agency.Logo?.ToImageSource() });
+            AddNewItem(new AgencyViewModel() { Id = agency.Id, Name = agency.Name, Address = agency.Address, ContactDetails = agency.ContactInfo, Logo = agency.Logo?.ToImageSource() });
+        }
+
+        public ICloseableObject GetEditForm(int id) {
+            using var context = contextFactory.CreateDbContext();
+            var agency = context.Agency.FirstOrDefault(a => a.Id == id);
+            var newRecordForm = new Form_Edit_Agency_ViewModel(new DbContextFactory()) { AgencyToEdit = agency! };
+
+            //newRecordForm.OnSaveSuccessful += NewRecordForm_OnSaveSuccessful;
+            return newRecordForm;
         }
 
         public int TotalItems => Items.Count;

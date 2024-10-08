@@ -9,7 +9,6 @@
              xmlns:converter="clr-namespace:ECR.WPF.Utilities.Converters"
              xmlns:uc="clr-namespace:ECR.WPF.Views.UserControls"
              mc:Ignorable="d"
-             FocusManager.FocusedElement="{Binding ElementName=firstControl}"
              d:DesignHeight="1061.5"
              d:DesignWidth="1080">
     <UserControl.Resources>

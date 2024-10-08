@@ -140,21 +140,7 @@
         <ContentControl Content="{Binding OpenedForm}"
                         IsTabStop="False"
                         Panel.ZIndex="10"
-                        Validation.ErrorTemplate="{x:Null}">
-            <ContentControl.Resources>
-                <DataTemplate DataType="{x:Type vm:AddRecordForm_ViewModel }">
-                    <uc:RecordsForm />
-                </DataTemplate>
-
-                <DataTemplate DataType="{x:Type vm:EditRecordForm_ViewModel}">
-                    <uc:RecordsForm />
-                </DataTemplate>
-
-                <DataTemplate DataType="{x:Type vm:AddAgencyFormViewModel}">
-                    <uc:AgencyForm />
-                </DataTemplate>
-            </ContentControl.Resources>
-        </ContentControl>
+                        Validation.ErrorTemplate="{x:Null}" />
 
         <Grid x:Name="mainContent"
               Grid.Row="1"
@@ -167,22 +153,19 @@
             </Grid.RowDefinitions>
 
             <TextBlock Foreground="#247FFF"
+                       Margin="0 0 0 10"
                        FontWeight="Bold">Records</TextBlock>
-            
+
             <Grid Grid.Row="1"
-                  Margin="0,10">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition />
-                    <ColumnDefinition Width="10" />
-                    <ColumnDefinition Width="auto" />
-                </Grid.ColumnDefinitions>
+                  Margin="0 0 0 10">              
 
                 <Grid Height="40">
                     <Border Background="#E0EAFA"
                             BorderThickness="0"
                             CornerRadius="4"
-                            Width="420"
-                            HorizontalAlignment="Right"
+                            Width="580"
+                            HorizontalAlignment="Left"
+                            Margin="0"
                             BorderBrush="{StaticResource AccentColor.Primary}">
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -217,37 +200,8 @@
                         </Grid>
                     </Border>
                 </Grid>
-
-                <Button Command="{Binding OpenRegistrationFormCommand}"
-                        Foreground="White"
-                        Background="{StaticResource AccentColor.Primary}"
-                        BorderThickness="0"
-                        HorizontalAlignment="Right"
-                        Padding="10,0,15,0"
-                        Width="150"
-                        HorizontalContentAlignment="Stretch"
-                        Grid.Column="2">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="auto" />
-                            <ColumnDefinition Width="10" />
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
-                        <Image Width="15"
-                               Height="15"
-                               Source="/Images/Add Male User Group_30px.png" />
-
-                        <TextBlock Grid.Column="2"
-                                   FontSize="10"
-                                   VerticalAlignment="Center"
-                                   HorizontalAlignment="Center"
-                                   FontWeight="Bold">
-                            Create New
-                        </TextBlock>
-                    </Grid>
-                </Button>
             </Grid>
-            
+
             <Grid Grid.Row="3">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto" />
@@ -557,59 +511,16 @@
                                             <Border Width="30"
                                                     Height="30"
                                                     CornerRadius="15"
-                                                    Margin="0 0 10 0">
-                                                <Border.Style>
-                                                    <Style TargetType="Border">
-                                                        <Setter Property="Background">
-                                                            <Setter.Value>
-                                                                <!--<VisualBrush>
-                                                                    <VisualBrush.Visual>
-                                                                        <Border Width="30"
-                                                                                Height="30"
-                                                                                CornerRadius="15"
-                                                                                Background="Red">
-                                                                            <TextBlock FontWeight="Bold"
-                                                                                       Foreground="White"
-                                                                                       HorizontalAlignment="Center"
-                                                                                       VerticalAlignment="Center"
-                                                                                       Text="{Binding Name, Converter={StaticResource GetFirstTwo}}" />
-                                                                        </Border>
-                                                                    </VisualBrush.Visual>
-                                                                </VisualBrush>-->
-                                                                <ImageBrush ImageSource="{Binding Logo, Mode=OneWay}" />
-                                                            </Setter.Value>
-                                                        </Setter>
-                                                        <Style.Triggers>
-                                                            <DataTrigger Binding="{Binding Logo}"
-                                                                         Value="{x:Null}">
-                                                                <Setter Property="Background">
-                                                                    <Setter.Value>
-                                                                        <VisualBrush>
-                                                                            <VisualBrush.Visual>
-                                                                                <Border Width="30"
-                                                                                        Height="30"
-                                                                                        CornerRadius="15"
-                                                                                        Background="{StaticResource AccentColor.Primary}">
-                                                                                    <TextBlock FontWeight="Bold"
-                                                                                               Foreground="White"
-                                                                                               HorizontalAlignment="Center"
-                                                                                               VerticalAlignment="Center"
-                                                                                               Text="NA" />
-                                                                                    <!--<TextBlock FontWeight="Bold"
-                                                                                               Foreground="White"
-                                                                                               HorizontalAlignment="Center"
-                                                                                               VerticalAlignment="Center"
-                                                                                               Text="{Binding Name, Converter={StaticResource GetFirstTwo}}" />-->
-                                                                                </Border>
-                                                                            </VisualBrush.Visual>
-                                                                        </VisualBrush>
-                                                                    </Setter.Value>
-                                                                </Setter>
-                                                            </DataTrigger>
-                                                        </Style.Triggers>
-                                                    </Style>
-                                                </Border.Style>
-
+                                                    Background="{Binding Logo, Converter={StaticResource ImageToBackgroundConverter}}">
+                                                <Border Background="Red"
+                                                        CornerRadius="15"
+                                                        Visibility="{Binding Logo, Converter={StaticResource NullToVisibilityConverter}}">
+                                                    <TextBlock HorizontalAlignment="Center"
+                                                               VerticalAlignment="Center"
+                                                               FontWeight="Bold"
+                                                               Foreground="White"
+                                                               Text="{Binding Name, Mode=OneWay, Converter={StaticResource GetFirstTwoLetterConverter}}" />
+                                                </Border>
                                             </Border>
 
                                         </DataTemplate>
@@ -624,12 +535,12 @@
                                 <DataGridTextColumn Header="Contact Details"
                                                     IsReadOnly="True"
                                                     Width="*"
-                                                    Binding="{Binding  ContactDetails}" />
+                                                    Binding="{Binding  ContactDetails, TargetNullValue=--}" />
 
                                 <DataGridTextColumn Header="Address"
                                                     IsReadOnly="True"
                                                     Width="*"
-                                                    Binding="{Binding  Address}" />
+                                                    Binding="{Binding  Address, TargetNullValue=--}" />
 
                                 <DataGridTemplateColumn Header=""
                                                         IsReadOnly="True"
@@ -637,7 +548,8 @@
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
                                             <StackPanel Orientation="Horizontal"
-                                                        HorizontalAlignment="Center">
+                                                        HorizontalAlignment="Center"
+                                                        Width="auto">
                                                 <StackPanel.Resources>
                                                     <Style TargetType="Image">
                                                         <Setter Property="Width"
@@ -646,7 +558,10 @@
                                                 </StackPanel.Resources>
 
                                                 <Button Style="{StaticResource gridEditButton}"
-                                                        Margin="5 0 0 0">
+                                                        Margin="5 0 0 0"
+                                                        Command="{Binding Path=DataContext.OpenEditFormCommand, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}, Mode=FindAncestor}}"
+                                                        CommandParameter="{Binding Id}">
+
                                                     <Image Source="/Images/GridButtons/edit_property_20px.png" />
 
                                                 </Button>
@@ -677,6 +592,34 @@
                                  Command="{Binding SwitchToCallsCommand}">Calls</RadioButton>
                     <RadioButton Command="{Binding SwitchToAgenciesCommand}">Agencies</RadioButton>
                 </StackPanel>
+                <Button Command="{Binding OpenRegistrationFormCommand}"
+                        Foreground="White"
+                        Background="{StaticResource AccentColor.Primary}"
+                        BorderThickness="0"
+                        HorizontalAlignment="Right"
+                        Padding="10,0,15,0"
+                        Width="150"
+                        HorizontalContentAlignment="Stretch"
+                        Grid.Column="2">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto" />
+                            <ColumnDefinition Width="10" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Image Width="15"
+                               Height="15"
+                               Source="/Images/Add Male User Group_30px.png" />
+
+                        <TextBlock Grid.Column="2"
+                                   FontSize="10"
+                                   VerticalAlignment="Center"
+                                   HorizontalAlignment="Center"
+                                   FontWeight="Bold">
+                            Create New
+                        </TextBlock>
+                    </Grid>
+                </Button>
 
                 <ContentControl Grid.Row="1"
                                 Content="{Binding CurrentTab}" />

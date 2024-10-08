@@ -6,6 +6,8 @@
              xmlns:local="clr-namespace:ECR.WPF.Views.UserControls"
              xmlns:ph="clr-namespace:PlaceholderTextBox;assembly=PlaceholderTextBox"
              mc:Ignorable="d"
+             KeyboardNavigation.ControlTabNavigation="Cycle"
+             KeyboardNavigation.TabNavigation="Cycle"
              d:DesignHeight="450"
              d:DesignWidth="800">
     <UserControl.Resources>
@@ -31,7 +33,8 @@
 
             <TextBlock>Caller Information:</TextBlock>
 
-            <StackPanel Margin="{StaticResource Vertical.Spacing}">
+            <StackPanel Margin="{StaticResource Vertical.Spacing}"
+                        FocusManager.FocusedElement="{Binding ElementName=firstControl}">
                 <ph:PlaceholderTextbox x:Name="firstControl"
                                        Text="{Binding CallerName, Mode=TwoWay, NotifyOnValidationError=True, UpdateSourceTrigger=PropertyChanged}"
                                        PlaceholderText="Name..."></ph:PlaceholderTextbox>

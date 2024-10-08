@@ -36,6 +36,7 @@ namespace ECR.View.ViewModels {
     }
 
     public sealed partial class AgencyViewModel : ObservableObject {
+        public int Id { get; set; } = -1;
 
         [ObservableProperty]
         string name = "";

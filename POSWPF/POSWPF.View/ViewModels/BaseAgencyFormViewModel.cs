@@ -4,6 +4,7 @@ using ECR.Domain.Data;
 using ECR.Domain.Models;
 using ECR.View.ViewModels;
 using ECR.WPF.Utilities;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -40,9 +41,11 @@ namespace ECR.WPF.ViewModels {
         [ObservableProperty]
         private string? address = null;
 
-
         [ObservableProperty]
+        [NotifyCanExecuteChangedFor(nameof(RemoveLogoCommand))]
         private ImageSource? logo = null;
+
+        bool HasLogo => Logo is not null;
 
         protected IDBContextFactory contextFactory { get; init; }
 
@@ -57,16 +60,28 @@ namespace ECR.WPF.ViewModels {
             await SaveAgency();
         }
 
-        [RelayCommand]
+        [RelayCommand(CanExecute = nameof(HasLogo))]
         void RemoveLogo() {
-            Logo = null;
+            if (Logo is not null &&
+                MessageBox.Show("Are you sure you want to remove logo", "", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                Logo = null;
         }
 
-        protected abstract Task SaveAgency();
+        /// <summary>
+        /// the actual implementation of save
+        /// </summary>
+        /// <returns></returns>
+        protected virtual async Task SaveAgency() {
+            await Task.CompletedTask;
+            Close();
+        }
+        protected virtual bool ResetAgency() {
+            return MessageBox.Show("Are you sure you want to reset changes?", "", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes;
+        }
 
         [RelayCommand]
         void Reset() {
-
+            ResetAgency();
         }
 
         //public event EventHandler<object>? OnSaveSuccessful;
@@ -89,55 +104,97 @@ namespace ECR.WPF.ViewModels {
         }
     }
 
-    public partial class AddAgencyFormViewModel : BaseAgencyFormViewModel {
-        public AddAgencyFormViewModel(IDBContextFactory contextFactory) : base(contextFactory) {
-        }
+    public partial class Form_Add_Agency_ViewModel(IDBContextFactory contextFactory) : BaseAgencyFormViewModel(contextFactory) {
+        protected override bool ResetAgency() {
+            if (base.ResetAgency()) {
 
-        private Agency agency = null!;
-
-        public Agency Agency {
-            get { return agency; }
-            set {
-                agency = value;
-                Name = agency.Name;
-                ContactDetails = agency.ContactInfo;
-                Address = agency.Address;
-                Logo = agency.Logo?.ToImageSource();
+                Name = ContactDetails = Address = string.Empty;
+                Logo = null;
+                return true;
             }
+
+            return false;
         }
 
         protected override async Task SaveAgency() {
             ValidateAllProperties();
+
             if (HasErrors) {
-                MessageBox.Show("Fill out required fields to continue", "", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("Fill out required fields first!", "", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
             using (var context = contextFactory.CreateDbContext()) {
 
                 var agency = new Agency() {
-                    Name = Name,
-                    ContactInfo = ContactDetails,
-                    Address = Address,
+                    Name = Name.TrimmedAndNullWhenEmpty()!,
+                    ContactInfo = ContactDetails.TrimmedAndNullWhenEmpty(),
+                    Address = Address.TrimmedAndNullWhenEmpty(),
                     Logo = Logo.ToByteArray()
                 };
 
                 var result = context.Agency.Add(agency);
-
                 await context.SaveChangesAsync();
 
                 InvokeSaveEvent(result.Entity);
             }
 
-            Close();
+            await base.SaveAgency();
         }
     }
-    public partial class EditAgencyFormViewModel : BaseAgencyFormViewModel {
-        public EditAgencyFormViewModel(IDBContextFactory contextFactory) : base(contextFactory) {
+    public partial class Form_Edit_Agency_ViewModel(IDBContextFactory contextFactory) : BaseAgencyFormViewModel(contextFactory) {
+        private Agency agency = null!;
+
+        public Agency AgencyToEdit {
+            get { return agency; }
+            set {
+                agency = value;
+                Name = agency.Name;
+                ContactDetails = agency.ContactInfo.TrimmedAndNullWhenEmpty();
+                Address = agency.Address.TrimmedAndNullWhenEmpty();
+                Logo = agency.Logo?.ToImageSource();
+            }
+        }
+
+        protected override bool ResetAgency() {
+            if (base.ResetAgency()) {
+                Name = agency.Name;
+                ContactDetails = agency.ContactInfo;
+                Address = agency.Address;
+                Logo = agency.Logo.ToImageSource();
+                return true;
+            }
+            return false;
         }
 
         protected override async Task SaveAgency() {
+            ValidateAllProperties();
 
+            if (HasErrors) {
+                MessageBox.Show("Fill out required fields first!", "", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            try {
+                using var context = contextFactory.CreateDbContext();
+                var agencyToEdit = await context.Agency.FirstOrDefaultAsync(a => a.Id == agency.Id);
+
+                if (agencyToEdit is null) return;
+
+                agencyToEdit.Name = Name.TrimmedAndNullWhenEmpty()!;
+                agencyToEdit.ContactInfo = ContactDetails.TrimmedAndNullWhenEmpty();
+                agencyToEdit.Address = Address.TrimmedAndNullWhenEmpty();
+                agencyToEdit.Logo = Logo.ToByteArray();
+
+                await context.SaveChangesAsync();
+
+            }
+            catch (Exception ex) {
+                MessageBox.Show(ex.Message, string.Empty, MessageBoxButton.OK, MessageBoxImage.Error);
+
+            }
+
+            await base.SaveAgency();
         }
     }
 }

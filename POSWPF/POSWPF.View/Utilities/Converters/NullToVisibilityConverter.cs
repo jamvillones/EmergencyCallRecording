@@ -4,24 +4,16 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Data;
 
 namespace ECR.WPF.Utilities.Converters {
-    class GetFirstTwoInitialsFromNameConverter : IValueConverter {
+    internal class NullToVisibilityConverter : IValueConverter {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
-            if (value is string name) {
-                var spliced = name.Split(' ', StringSplitOptions.RemoveEmptyEntries).Skip(0).Take(2);
-
-                var result = "";
-
-                foreach (var s in spliced) {
-                    result += s[0];
-                }
-
-                return result.ToUpper();
-            }
-
-            throw new NotImplementedException();
+            return value is null ?
+                Visibility.Visible
+                :
+                Visibility.Collapsed;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) {
