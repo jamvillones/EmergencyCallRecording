@@ -65,12 +65,12 @@ namespace ECR.View.ViewModels.Tabs {
     }
 
     sealed partial class CallsTab : ObservableObject, IRegistrationOpener {
-        public CallsTab() {
-            for (int i = 0; i < 10; i++)
-                AddNewItem(new RecordViewModel());
+        //public CallsTab() {
+        //    for (int i = 0; i < 10; i++)
+        //        AddNewItem(new RecordViewModel());
 
-            OnPropertyChanged(nameof(TotalItems));
-        }
+        //    OnPropertyChanged(nameof(TotalItems));
+        //}
         public ObservableCollection<RecordViewModel> Records { get; } = [];
 
         public event EventHandler<object>? OnEdit;
@@ -127,7 +127,8 @@ namespace ECR.View.ViewModels.Tabs {
         public int ItemsSelected => Records.Where(x => x.IsChecked).Count();
 
         public bool AllItemsAreChecked {
-            get => Records.All(x => x.IsChecked);
+            get => Records.Any() && Records.All(x => x.IsChecked);
+
             set {
                 foreach (var item in Records) item.IsChecked = value;
                 OnPropertyChanged();
@@ -157,11 +158,15 @@ namespace ECR.View.ViewModels.Tabs {
 
         async Task LoadDataAsync() {
             using (var context = contextFactory.CreateDbContext()) {
-                var agencies = await context.Agency.ToListAsync();
+                var agencies = await context.Agencies.ToListAsync();
 
                 foreach (var a in agencies)
-                    AddNewItem(new AgencyViewModel() { Id = a.Id, Name = a.Name, Address = a.Address, ContactDetails = a.ContactInfo, Logo = a.Logo?.ToImageSource() });
+                    AddNewItem(CreateAgencyViewModel(a));
             }
+        }
+
+        private AgencyViewModel CreateAgencyViewModel(Agency agency) {
+            return new AgencyViewModel() { Id = agency.Id, Name = agency.Name, Address = agency.Address, Logo = agency.Logo?.ToImageSource() };
         }
 
         void AddNewItem(AgencyViewModel item) {
@@ -186,12 +191,12 @@ namespace ECR.View.ViewModels.Tabs {
         private void NewRecordForm_OnSaveSuccessful(object? sender, object e) {
             var agency = (Agency)e;
 
-            AddNewItem(new AgencyViewModel() { Id = agency.Id, Name = agency.Name, Address = agency.Address, ContactDetails = agency.ContactInfo, Logo = agency.Logo?.ToImageSource() });
+            AddNewItem(CreateAgencyViewModel(agency));
         }
 
         public ICloseableObject GetEditForm(int id) {
             using var context = contextFactory.CreateDbContext();
-            var agency = context.Agency.FirstOrDefault(a => a.Id == id);
+            var agency = context.Agencies.FirstOrDefault(a => a.Id == id);
             var newRecordForm = new Form_Edit_Agency_ViewModel(new DbContextFactory()) { AgencyToEdit = agency! };
 
             //newRecordForm.OnSaveSuccessful += NewRecordForm_OnSaveSuccessful;

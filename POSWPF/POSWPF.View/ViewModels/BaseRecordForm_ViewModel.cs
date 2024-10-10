@@ -141,7 +141,7 @@ namespace ECR.WPF.ViewModels {
             using var context = DbFactory.CreateDbContext();
 
             var record = new Record() {
-                Call = new Caller() { Name = CallerName, Address = CallAddresss, ContactDetails = CallContactDetails },
+                Call = new Caller() { Name = CallerName, Address = CallAddresss },
                 Audios = Audios.Select(a => new Audio() { FilePath = a.FilePath, Name = a.Name, DateRecorded = a.DateTimeRecorded }).ToList(),
                 Summary = Title,
                 Details = Details

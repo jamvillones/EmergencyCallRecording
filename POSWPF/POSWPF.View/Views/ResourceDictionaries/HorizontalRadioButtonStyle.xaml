@@ -5,10 +5,14 @@
                 Value="0 0 0 0" />
         <Setter Property="HorizontalContentAlignment"
                 Value="Center" />
+        <Setter Property="VerticalContentAlignment"
+                Value="Center" />
         <Setter Property="Padding"
-                Value="15" />
+                Value="15,0" />
         <Setter Property="Width"
                 Value="140" />
+        <Setter Property="Height"
+                Value="40" />
         <Setter Property="Cursor"
                 Value="Hand" />
         <Setter Property="Background"
@@ -20,9 +24,24 @@
                             CornerRadius="4"
                             Background="{TemplateBinding Background}">
                         <Grid>
-                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                              Margin="{TemplateBinding Padding}" />
+                            <Grid HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                  Margin="{TemplateBinding Padding}">
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto" />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock x:Name="arrow"
+                                           Visibility="Hidden"
+                                           Margin="0 0 10 0"
+                                           VerticalAlignment="Center">●</TextBlock>
+                                <ContentPresenter Grid.Column="1"
+                                                  VerticalAlignment="Center" />
+                            </Grid>
+
                             <Border x:Name="checkIndicator"
+                                    Grid.ColumnSpan="2"
                                     VerticalAlignment="Bottom"
                                     Height="5"
                                     CornerRadius="2.5 2.5 0 0 "
@@ -35,6 +54,9 @@
                                  Value="True">
                             <Setter Property="Visibility"
                                     TargetName="checkIndicator"
+                                    Value="Visible" />
+                            <Setter Property="Visibility"
+                                    TargetName="arrow"
                                     Value="Visible" />
                             <Setter Property="Foreground"
                                     Value="{StaticResource AccentColor.Primary}" />

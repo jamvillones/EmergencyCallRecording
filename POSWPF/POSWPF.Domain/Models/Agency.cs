@@ -14,7 +14,7 @@ namespace ECR.Domain.Models {
         /// </summary>
         public byte[]? Logo { get; set; } = [];
         public string Name { get; set; } = null!;
-        public string? ContactInfo { get; set; } = string.Empty;
+        public List<ContactDetail> ContactDetails { get; set; } = new();
         public string? Address { get; set; } = string.Empty;
     }
 }

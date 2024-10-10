@@ -8,6 +8,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ECR.WPF.ViewModels;
+using ECR.Domain.Data;
 
 namespace ECR.View.Utilities {
     static class ServicesConfigurationManager {
@@ -15,6 +17,8 @@ namespace ECR.View.Utilities {
         public static void ConfigureServices(HostBuilderContext context, IServiceCollection services) {
             services.AddSingleton<MainViewModel>();
             services.AddSingleton<IViewModelFactory, ViewModelFactory>();
+            services.AddTransient<IDBContextFactory, DbContextFactory>();
+            services.AddSingleton<ModalContentManager>();
             services.AddSingleton<RecordsStore>();
 
             services.AddTransient<RecordTabs>();

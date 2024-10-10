@@ -80,10 +80,6 @@
                             <Run FontWeight="Regular">]</Run>
                         </TextBlock>
                     </RadioButton>
-                    <!--<RadioButton>Lorem</RadioButton>
-                    <RadioButton>Ipsum</RadioButton>
-                    <RadioButton>Dolor</RadioButton>
-                    <RadioButton>Amet</RadioButton>-->
                 </StackPanel>
 
                 <uc:Record_Form_Details Grid.Row="2"
@@ -166,22 +162,6 @@
                         </Grid>
                     </Button>
                 </Grid>
-
-                <!--<Button x:Name="closeButton"
-                        HorizontalAlignment="Right"
-                        Background="Transparent"
-                        FontSize="36"
-                        Foreground="Maroon"
-                        Height="30"
-                        Width="30"
-                        Padding="0"
-                        Margin="0"
-                        Command="{Binding CloseCommand}">
-                    -->
-                <!--✖-->
-                <!--
-
-                </Button>-->
 
             </Grid>
 

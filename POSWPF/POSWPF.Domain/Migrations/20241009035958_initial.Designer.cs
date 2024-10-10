@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ECR.Domain.Migrations
 {
     [DbContext(typeof(MDRContext))]
-    [Migration("20241007012929_initial")]
+    [Migration("20241009035958_initial")]
     partial class initial
     {
         /// <inheritdoc />
@@ -34,9 +34,6 @@ namespace ECR.Domain.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Address")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ContactInfo")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<byte[]>("Logo")
@@ -91,7 +88,8 @@ namespace ECR.Domain.Migrations
                     b.Property<string>("Address")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ContactDetails")
+                    b.Property<string>("ContactDetail")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
@@ -101,6 +99,32 @@ namespace ECR.Domain.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Caller");
+                });
+
+            modelBuilder.Entity("ECR.Domain.Models.ContactDetail", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("AgencyId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Value")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AgencyId");
+
+                    b.ToTable("ContactDetail");
                 });
 
             modelBuilder.Entity("ECR.Domain.Models.Login", b =>
@@ -149,7 +173,6 @@ namespace ECR.Domain.Migrations
 
                     b.Property<string>("Details")
                         .IsRequired()
-                        .HasMaxLength(2147483647)
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("IncidentLocation")
@@ -179,6 +202,13 @@ namespace ECR.Domain.Migrations
                     b.HasOne("ECR.Domain.Models.Record", null)
                         .WithMany("Audios")
                         .HasForeignKey("RecordId");
+                });
+
+            modelBuilder.Entity("ECR.Domain.Models.ContactDetail", b =>
+                {
+                    b.HasOne("ECR.Domain.Models.Agency", null)
+                        .WithMany("ContactDetails")
+                        .HasForeignKey("AgencyId");
                 });
 
             modelBuilder.Entity("ECR.Domain.Models.Login", b =>
@@ -225,6 +255,11 @@ namespace ECR.Domain.Migrations
                     b.Navigation("Agency");
 
                     b.Navigation("Call");
+                });
+
+            modelBuilder.Entity("ECR.Domain.Models.Agency", b =>
+                {
+                    b.Navigation("ContactDetails");
                 });
 
             modelBuilder.Entity("ECR.Domain.Models.Record", b =>

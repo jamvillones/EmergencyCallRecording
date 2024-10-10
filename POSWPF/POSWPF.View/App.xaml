@@ -32,7 +32,7 @@
             <SolidColorBrush x:Key="Button.Disabled.Border"
                              Color="#FFADB2B5" />
             <SolidColorBrush x:Key="Button.Disabled.Foreground"
-                             Color="Black" />
+                             Color="White" />
             <Style x:Key="FocusVisual">
                 <Setter Property="Control.Template">
                     <Setter.Value>

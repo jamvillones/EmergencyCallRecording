@@ -19,7 +19,6 @@ namespace ECR.Domain.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Logo = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ContactInfo = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -34,7 +33,7 @@ namespace ECR.Domain.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ContactDetails = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ContactDetail = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -62,6 +61,26 @@ namespace ECR.Domain.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ContactDetail",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Type = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Value = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    AgencyId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ContactDetail", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ContactDetail_Agency_AgencyId",
+                        column: x => x.AgencyId,
+                        principalTable: "Agency",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Record",
                 columns: table => new
                 {
@@ -69,7 +88,7 @@ namespace ECR.Domain.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Summary = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CallType = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Details = table.Column<string>(type: "nvarchar(max)", maxLength: 2147483647, nullable: false),
+                    Details = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PriorityLevel = table.Column<int>(type: "int", nullable: false),
                     CallId = table.Column<int>(type: "int", nullable: false),
                     AgencyId = table.Column<int>(type: "int", nullable: true),
@@ -119,6 +138,11 @@ namespace ECR.Domain.Migrations
                 column: "RecordId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ContactDetail_AgencyId",
+                table: "ContactDetail",
+                column: "AgencyId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Record_AgencyId",
                 table: "Record",
                 column: "AgencyId");
@@ -134,6 +158,9 @@ namespace ECR.Domain.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Audio");
+
+            migrationBuilder.DropTable(
+                name: "ContactDetail");
 
             migrationBuilder.DropTable(
                 name: "Login");

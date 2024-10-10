@@ -25,21 +25,6 @@
 
             <converter:GetFirstTwoInitialsFromNameConverter x:Key="GetFirstTwo" />
 
-            <!--<Style TargetType="Button">
-                <Setter Property="Cursor"
-                        Value="Hand" />
-                <Setter Property="Padding"
-                        Value="5" />
-                <Setter Property="VerticalContentAlignment"
-                        Value="Center" />
-                <Setter Property="Foreground"
-                        Value="#247FFF" />
-                <Setter Property="BorderThickness"
-                        Value="0" />
-                <Setter Property="Background"
-                        Value="{StaticResource Button.Static.Background}" />
-            </Style>-->
-
             <SolidColorBrush x:Key="Button.MouseOver.Background"
                              Color="#FFBEE6FD" />
             <SolidColorBrush x:Key="Button.MouseOver.Border"
@@ -56,7 +41,6 @@
                              Color="#FF838383" />
             <ControlTemplate x:Key="ArrowToggleButtonTemplate"
                              TargetType="{x:Type ToggleButton}">
-
                 <Border x:Name="border"
                         Background="{TemplateBinding Background}"
                         BorderBrush="{TemplateBinding BorderBrush}"
@@ -136,9 +120,9 @@
     </UserControl.Resources>
 
     <Grid>
-
         <ContentControl Content="{Binding OpenedForm}"
                         IsTabStop="False"
+                        Focusable="False"
                         Panel.ZIndex="10"
                         Validation.ErrorTemplate="{x:Null}" />
 
@@ -153,12 +137,11 @@
             </Grid.RowDefinitions>
 
             <TextBlock Foreground="#247FFF"
-                       Margin="0 0 0 10"
                        FontWeight="Bold">Records</TextBlock>
 
+            <!--Search-->
             <Grid Grid.Row="1"
-                  Margin="0 0 0 10">              
-
+                  Margin="0 10">
                 <Grid Height="40">
                     <Border Background="#E0EAFA"
                             BorderThickness="0"
@@ -180,7 +163,7 @@
                                                             PlaceholderText="search records..."
                                                             Padding="10,8"
                                                             Margin="0"
-                                                            CornerRadius="5"
+                                                            CornerRadius="9"
                                                             FontSize="12"
                                                             VerticalAlignment="Center"
                                                             VerticalContentAlignment="Center" />
@@ -193,6 +176,7 @@
                                     Margin="2"
                                     Template="{StaticResource Template.Round.Button}"
                                     BorderThickness="0"
+                                    Height="35"
                                     Width="35">
                                 <Image Width="18"
                                        Source="/Images/find_user_male_25px.png" />
@@ -202,22 +186,75 @@
                 </Grid>
             </Grid>
 
-            <Grid Grid.Row="3">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="auto" />
-                    <RowDefinition />
-                </Grid.RowDefinitions>
+            <!--Navigation-->
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="10" />
+                    <ColumnDefinition Width="auto" />
+                </Grid.ColumnDefinitions>
 
-                <Grid.Resources>
+                <Border BorderBrush="{StaticResource AccentColor.Primary}"
+                        BorderThickness="0 0 0 0.5"
+                        SnapsToDevicePixels="True">
+
+                    <StackPanel Orientation="Horizontal">
+                        <StackPanel.Resources>
+                            <ResourceDictionary Source="/Views/ResourceDictionaries/HorizontalRadioButtonStyle.xaml" />
+                        </StackPanel.Resources>
+
+                        <RadioButton IsChecked="True"
+                                     Command="{Binding SwitchToCallsCommand}">Calls</RadioButton>
+                        <RadioButton Command="{Binding SwitchToAgenciesCommand}">Agencies</RadioButton>
+                    </StackPanel>
+                </Border>
+
+                <Button Command="{Binding OpenRegistrationFormCommand}"
+                        Foreground="White"
+                        Background="{StaticResource AccentColor.Primary}"
+                        BorderThickness="0"
+                        HorizontalAlignment="Right"
+                        Padding="10,0"
+                        Width="150"
+                        HorizontalContentAlignment="Stretch"
+                        Grid.Column="2">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto" />
+                            <ColumnDefinition Width="10" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Image Width="15"
+                               Height="15"
+                               Source="/Images/Add Male User Group_30px.png" />
+
+                        <TextBlock Grid.Column="2"
+                                   FontSize="10"
+                                   VerticalAlignment="Center"
+                                   HorizontalAlignment="Center"
+                                   FontWeight="Bold">
+            Create New
+                        </TextBlock>
+                    </Grid>
+                </Button>
+            </Grid>
+
+            <!--Content-->
+            <ContentControl Grid.Row="3"
+                            Margin="0 20 0 0"
+                            Content="{Binding CurrentTab}">
+                <ContentControl.Resources>
+                    
                     <DataTemplate DataType="{x:Type tabs:CallsTab}">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="auto" />
                                 <RowDefinition />
                             </Grid.RowDefinitions>
+                            
                             <StackPanel Orientation="Horizontal"
                                         VerticalAlignment="Center"
-                                        Margin="-2,5"
+                                        Margin="-2,0"
                                         Height="auto">
                                 <StackPanel.Resources>
                                     <Style TargetType="Button">
@@ -259,9 +296,9 @@
                                 </Button>
 
                                 <!--<TextBlock FontSize="10"
-                                           Margin="10,0"
-                                           Foreground="gray"
-                                           VerticalAlignment="Center">1 I 100</TextBlock>-->
+                             Margin="10,0"
+                             Foreground="gray"
+                             VerticalAlignment="Center">1 I 100</TextBlock>-->
 
                                 <Button ToolTip="Next Page">
                                     <Image Source="/Images/NavButtons/forward_30px.png" />
@@ -324,9 +361,9 @@
                                                           VerticalContentAlignment="Center"
                                                           Style="{StaticResource CheckBoxStyle1}">
                                                     <TextBlock Foreground="Gray">
-                                                        <Run Text="{Binding Path=DataContext.ItemsSelected, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}, Mode=FindAncestor}}" />
-                                                        <Run Text="I" />
-                                                        <Run Text="{Binding Path=DataContext.TotalItems, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}, Mode=FindAncestor}}" />
+                                          <Run Text="{Binding Path=DataContext.ItemsSelected, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}, Mode=FindAncestor}}" />
+                                          <Run Text="I" />
+                                          <Run Text="{Binding Path=DataContext.TotalItems, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}, Mode=FindAncestor}}" />
                                                     </TextBlock>
                                                 </CheckBox>
                                             </DataTemplate>
@@ -380,9 +417,9 @@
                                                         <TextBlock FontSize="9"
                                                                    TextTrimming="CharacterEllipsis"
                                                                    Foreground="{StaticResource AccentColor.Primary}">
-                            <Run>Emergency Call</Run>
-                            <Run> ● </Run>
-                            <Run>Call Category #11</Run>
+              <Run>Emergency Call</Run>
+              <Run> ● </Run>
+              <Run>Call Category #11</Run>
                                                         </TextBlock>
                                                     </StackPanel>
                                                 </Grid>
@@ -453,14 +490,12 @@
                                                     <Button Style="{StaticResource gridEditButton}"
                                                             Margin="5 0 0 0">
                                                         <Image Source="/Images/GridButtons/edit_property_20px.png" />
-                                                        <!--<Icon:PackIconMaterial Kind="PencilOutline"
-                                               Style="{StaticResource gridButtonIcon}" />-->
+                                                        
                                                     </Button>
                                                     <Button Margin="5 0 0 0"
                                                             Style="{StaticResource gridRemoveButton}">
                                                         <Image Source="/Images/GridButtons/minus_20px.png" />
-                                                        <!--<Icon:PackIconMaterial Kind="DeleteOutline"
-                                               Style="{StaticResource gridButtonIcon}" />-->
+                                                       
                                                     </Button>
                                                 </StackPanel>
                                             </DataTemplate>
@@ -470,6 +505,7 @@
                             </DataGrid>
                         </Grid>
                     </DataTemplate>
+
                     <DataTemplate DataType="{x:Type tabs:AgencyTab}">
                         <DataGrid x:Name="membersDataGrid"
                                   Grid.Row="3"
@@ -481,6 +517,7 @@
                                   Style="{DynamicResource DataGridStyle1}">
 
                             <DataGrid.Columns>
+                                <!--Checkboxes-->
                                 <DataGridCheckBoxColumn CanUserResize="False"
                                                         Width="auto"
                                                         Binding="{Binding IsChecked,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
@@ -491,9 +528,9 @@
                                                       VerticalContentAlignment="Center"
                                                       Style="{StaticResource CheckBoxStyle1}">
                                                 <TextBlock Foreground="Gray">
-                                                    <Run Text="{Binding Path=DataContext.ItemsSelected, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}, Mode=FindAncestor}}" />
-                                                    <Run Text="I" />
-                                                    <Run Text="{Binding Path=DataContext.TotalItems, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}, Mode=FindAncestor}}" />
+                                      <Run Text="{Binding Path=DataContext.ItemsSelected, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}, Mode=FindAncestor}}" />
+                                      <Run Text="I" />
+                                      <Run Text="{Binding Path=DataContext.TotalItems, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}, Mode=FindAncestor}}" />
                                                 </TextBlock>
                                             </CheckBox>
                                         </DataTemplate>
@@ -501,8 +538,10 @@
 
                                 </DataGridCheckBoxColumn>
 
+                                <!--Image-->
                                 <DataGridTemplateColumn Header=""
                                                         IsReadOnly="True"
+                                                        CanUserResize="False"
                                                         Width="auto">
 
                                     <DataGridTemplateColumn.CellTemplate>
@@ -511,8 +550,10 @@
                                             <Border Width="30"
                                                     Height="30"
                                                     CornerRadius="15"
+                                                    BorderThickness="1"
+                                                    BorderBrush="Black"
                                                     Background="{Binding Logo, Converter={StaticResource ImageToBackgroundConverter}}">
-                                                <Border Background="Red"
+                                                <Border Background="{StaticResource AccentColor.Primary}"
                                                         CornerRadius="15"
                                                         Visibility="{Binding Logo, Converter={StaticResource NullToVisibilityConverter}}">
                                                     <TextBlock HorizontalAlignment="Center"
@@ -527,21 +568,30 @@
                                     </DataGridTemplateColumn.CellTemplate>
                                 </DataGridTemplateColumn>
 
+                                <!--Name-->
                                 <DataGridTextColumn Header="Name"
                                                     IsReadOnly="True"
                                                     Width="*"
                                                     Binding="{Binding Name}" />
 
-                                <DataGridTextColumn Header="Contact Details"
-                                                    IsReadOnly="True"
-                                                    Width="*"
-                                                    Binding="{Binding  ContactDetails, TargetNullValue=--}" />
+                                <!--Contact Details-->
+                                <DataGridTemplateColumn Header="Contact Details"
+                                                        Width="*"
+                                                        CanUserResize="True">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
 
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+
+                                <!--Address-->
                                 <DataGridTextColumn Header="Address"
                                                     IsReadOnly="True"
                                                     Width="*"
                                                     Binding="{Binding  Address, TargetNullValue=--}" />
 
+                                <!--Buttons-->
                                 <DataGridTemplateColumn Header=""
                                                         IsReadOnly="True"
                                                         Width="auto">
@@ -577,54 +627,9 @@
                         </DataGrid>
 
                     </DataTemplate>
-                </Grid.Resources>
-
-                <Rectangle VerticalAlignment="Bottom"
-                           Height="0.5"
-                           Fill="Black" />
-
-                <StackPanel Orientation="Horizontal">
-                    <StackPanel.Resources>
-                        <ResourceDictionary Source="/Views/ResourceDictionaries/HorizontalRadioButtonStyle.xaml" />
-                    </StackPanel.Resources>
-
-                    <RadioButton IsChecked="True"
-                                 Command="{Binding SwitchToCallsCommand}">Calls</RadioButton>
-                    <RadioButton Command="{Binding SwitchToAgenciesCommand}">Agencies</RadioButton>
-                </StackPanel>
-                <Button Command="{Binding OpenRegistrationFormCommand}"
-                        Foreground="White"
-                        Background="{StaticResource AccentColor.Primary}"
-                        BorderThickness="0"
-                        HorizontalAlignment="Right"
-                        Padding="10,0,15,0"
-                        Width="150"
-                        HorizontalContentAlignment="Stretch"
-                        Grid.Column="2">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="auto" />
-                            <ColumnDefinition Width="10" />
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
-                        <Image Width="15"
-                               Height="15"
-                               Source="/Images/Add Male User Group_30px.png" />
-
-                        <TextBlock Grid.Column="2"
-                                   FontSize="10"
-                                   VerticalAlignment="Center"
-                                   HorizontalAlignment="Center"
-                                   FontWeight="Bold">
-                            Create New
-                        </TextBlock>
-                    </Grid>
-                </Button>
-
-                <ContentControl Grid.Row="1"
-                                Content="{Binding CurrentTab}" />
-
-            </Grid>
+                    
+                </ContentControl.Resources>
+            </ContentControl>
 
         </Grid>
     </Grid>

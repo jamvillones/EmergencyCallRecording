@@ -20,9 +20,13 @@
     <None Remove="Images\clipart3022007.png" />
     <None Remove="Images\closed_eye_20px.png" />
     <None Remove="Images\close_window_50px.png" />
+    <None Remove="Images\ContactTypes\Email_20px.png" />
+    <None Remove="Images\ContactTypes\phone_20px.png" />
+    <None Remove="Images\ContactTypes\Rotary Dial Telephone_20px.png" />
     <None Remove="Images\delete_receipt_50px.png" />
     <None Remove="Images\Eye_20px.png" />
     <None Remove="Images\find_user_male_25px.png" />
+    <None Remove="Images\GridButtons\copy_20px.png" />
     <None Remove="Images\GridButtons\edit_property_20px.png" />
     <None Remove="Images\GridButtons\minus_20px.png" />
     <None Remove="Images\GridButtons\Play Button Circled_50px.png" />
@@ -57,7 +61,11 @@
 
   <ItemGroup>
     <Resource Include="Images\close_window_50px.png" />
+    <Resource Include="Images\ContactTypes\Email_20px.png" />
+    <Resource Include="Images\ContactTypes\phone_20px.png" />
+    <Resource Include="Images\ContactTypes\Rotary Dial Telephone_20px.png" />
     <Resource Include="Images\delete_receipt_50px.png" />
+    <Resource Include="Images\GridButtons\copy_20px.png" />
     <Resource Include="Images\image_50px.png" />
     <Resource Include="Images\no_phones_100px.png" />
     <Resource Include="Images\save_close_50px.png" />

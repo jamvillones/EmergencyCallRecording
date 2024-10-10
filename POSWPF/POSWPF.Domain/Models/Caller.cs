@@ -10,7 +10,7 @@ namespace ECR.Domain.Models {
     public sealed class Caller {
         public int Id { get; set; }
         public string Name { get; set; } = null!;
-        public string? ContactDetails { get; set; }
+        public string ContactDetail { get; set; } = null!;
         public string? Address { get; set; } = null;
     }
 }

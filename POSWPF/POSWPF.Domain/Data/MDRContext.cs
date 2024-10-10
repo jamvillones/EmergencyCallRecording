@@ -13,7 +13,8 @@ public partial class MDRContext : DbContext {
 
     public virtual DbSet<Caller> Callers { get; set; }
     public virtual DbSet<Record> Records { get; set; }
-    public virtual DbSet<Agency> Agency { get; set; }
+    public virtual DbSet<Agency> Agencies { get; set; }
+    public virtual DbSet<ContactDetail> ContactDetails { get; set; }
     public virtual DbSet<Login> Logins { get; set; }
     public virtual DbSet<Audio> Audios { get; set; }
 
@@ -21,8 +22,6 @@ public partial class MDRContext : DbContext {
 
         modelBuilder.Entity<Login>()
             .OwnsOne(l => l.Name);
-
-        modelBuilder.Entity<Record>().Property(l => l.Details).HasMaxLength(int.MaxValue);
 
         OnModelCreatingPartial(modelBuilder);
     }

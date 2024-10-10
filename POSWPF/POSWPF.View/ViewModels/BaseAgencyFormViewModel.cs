@@ -7,6 +7,7 @@ using ECR.WPF.Utilities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using System.Drawing;
@@ -18,10 +19,27 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 namespace ECR.WPF.ViewModels {
+    public enum ContactType { Mobile, Telephone, Email }
+    public partial class ContactViewModel : ObservableObject {
+        public int Id { get; set; } = -1;
+
+        [ObservableProperty]
+        ContactType contactType = ContactType.Mobile;
+
+        [ObservableProperty]
+        string value = "";
+
+        [RelayCommand]
+        void CopyToClipboard() {
+            Clipboard.SetText(Value.Replace(" ","").Trim());
+            MessageBox.Show("Copied to clipboard.", "", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+    }
     public abstract partial class BaseAgencyFormViewModel : ObservableValidator, ICloseableObject {
         protected BaseAgencyFormViewModel(IDBContextFactory contextFactory) {
             this.contextFactory = contextFactory;
         }
+
         public event EventHandler? OnClose;
 
         const string REQUIRED_FIELD_STRING = "*Requred";
@@ -29,6 +47,38 @@ namespace ECR.WPF.ViewModels {
         public void Close() {
             this.OnClose?.Invoke(this, EventArgs.Empty);
         }
+
+        public ObservableCollection<ContactViewModel> Contacts { get; set; } = [];
+
+        public ContactType[] ContactTypeChoices { get; } = [ContactType.Mobile, ContactType.Telephone, ContactType.Email];
+
+        bool CanAddContact => !string.IsNullOrWhiteSpace(ContactValue);
+
+        [RelayCommand(CanExecute = nameof(CanAddContact))]
+        void AddContact() {
+
+            var contact = new ContactViewModel() {
+                ContactType = ContactType,
+                Value = ContactValue.TrimmedAndNullWhenEmpty()!
+            };
+
+            Contacts.Add(contact);
+
+            ContactValue = string.Empty;
+        }
+
+        [RelayCommand]
+        void RemoveContact(ContactViewModel contact) {
+            if (MessageBox.Show("Are you sure you want to remove this contact information?", string.Empty, MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                Contacts.Remove(contact);
+        }
+
+        [ObservableProperty]
+        [NotifyCanExecuteChangedFor(nameof(AddContactCommand))]
+        string contactValue = string.Empty;
+
+        [ObservableProperty]
+        ContactType contactType = ContactType.Mobile;
 
         [ObservableProperty]
         [NotifyDataErrorInfo]
@@ -128,12 +178,12 @@ namespace ECR.WPF.ViewModels {
 
                 var agency = new Agency() {
                     Name = Name.TrimmedAndNullWhenEmpty()!,
-                    ContactInfo = ContactDetails.TrimmedAndNullWhenEmpty(),
+                    //ContactInfo = ContactDetails.TrimmedAndNullWhenEmpty(),
                     Address = Address.TrimmedAndNullWhenEmpty(),
                     Logo = Logo.ToByteArray()
                 };
 
-                var result = context.Agency.Add(agency);
+                var result = context.Agencies.Add(agency);
                 await context.SaveChangesAsync();
 
                 InvokeSaveEvent(result.Entity);
@@ -150,7 +200,7 @@ namespace ECR.WPF.ViewModels {
             set {
                 agency = value;
                 Name = agency.Name;
-                ContactDetails = agency.ContactInfo.TrimmedAndNullWhenEmpty();
+                //ContactDetails = agency.ContactInfo.TrimmedAndNullWhenEmpty();
                 Address = agency.Address.TrimmedAndNullWhenEmpty();
                 Logo = agency.Logo?.ToImageSource();
             }
@@ -159,7 +209,7 @@ namespace ECR.WPF.ViewModels {
         protected override bool ResetAgency() {
             if (base.ResetAgency()) {
                 Name = agency.Name;
-                ContactDetails = agency.ContactInfo;
+                //ContactDetails = agency.ContactInfo;
                 Address = agency.Address;
                 Logo = agency.Logo.ToImageSource();
                 return true;
@@ -177,12 +227,12 @@ namespace ECR.WPF.ViewModels {
 
             try {
                 using var context = contextFactory.CreateDbContext();
-                var agencyToEdit = await context.Agency.FirstOrDefaultAsync(a => a.Id == agency.Id);
+                var agencyToEdit = await context.Agencies.FirstOrDefaultAsync(a => a.Id == agency.Id);
 
                 if (agencyToEdit is null) return;
 
                 agencyToEdit.Name = Name.TrimmedAndNullWhenEmpty()!;
-                agencyToEdit.ContactInfo = ContactDetails.TrimmedAndNullWhenEmpty();
+                //agencyToEdit.ContactInfo = ContactDetails.TrimmedAndNullWhenEmpty();
                 agencyToEdit.Address = Address.TrimmedAndNullWhenEmpty();
                 agencyToEdit.Logo = Logo.ToByteArray();
 
