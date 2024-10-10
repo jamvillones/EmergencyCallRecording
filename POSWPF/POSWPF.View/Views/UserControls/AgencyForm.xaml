@@ -31,7 +31,7 @@
     </UserControl.Resources>
     <Grid Background="#cfffffff">
 
-        <Grid Margin="40"
+        <Grid Margin="40 0 40 40"
               MaxWidth="560">
             <Border Background="#EFF2F7"
                     BorderThickness="0.5"
@@ -164,9 +164,16 @@
                     <placeHolder:PlaceholderTextbox Grid.Column="1"
                                                     PlaceholderText="Value..."
                                                     Margin="0 0 10 0"
-                                                    Text="{Binding ContactValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                                    Text="{Binding ContactValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                        <TextBox.InputBindings>
+                            <KeyBinding Command="{Binding AddContactCommand}"
+                                        Key="Return" />
+                        </TextBox.InputBindings>
+                    </placeHolder:PlaceholderTextbox>
 
                     <Button Grid.Column="2"
+                            IsTabStop="False"
+                            Focusable="False"
                             Command="{Binding AddContactCommand}"
                             Margin="0">Add Contact</Button>
 
@@ -192,6 +199,7 @@
                                         <Image Width="15"
                                                Height="15"
                                                Margin="0 0 0 0"
+                                               ToolTip="{Binding ContactType, Mode=OneTime}"
                                                Source="{Binding ContactType, Converter={StaticResource ContactToImage}}" />
 
                                     </DataTemplate>
