@@ -8,14 +8,16 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace ECR.WPF.Utilities.Converters {
     internal class ImageSourceToBackground : IValueConverter {
         public object? Convert(object value, Type targetType, object parameter, CultureInfo culture) {
+            if (value is null)
+                return new ImageBrush(new BitmapImage(new Uri("pack://application:,,,/Images/image_50px.png"))) { Stretch = Stretch.None };
 
-            if (value is ImageSource image) {
+            if (value is ImageSource image)
                 return new ImageBrush(image) { Stretch = Stretch.UniformToFill };
-            }
 
             return default(ImageBrush);
         }

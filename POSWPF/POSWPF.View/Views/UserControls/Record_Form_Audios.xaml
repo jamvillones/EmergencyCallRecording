@@ -10,7 +10,7 @@
              d:DesignHeight="450"
              d:DesignWidth="800">
 
-    <Grid Margin="0 10">
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
@@ -29,7 +29,7 @@
         </Grid.Resources>
 
         <StackPanel Orientation="Horizontal"
-                    Margin="0 10 0 0"
+                    Margin="0"
                     HorizontalAlignment="Right"
                     Grid.Row="0">
 
@@ -87,24 +87,10 @@
                   BorderBrush="Gray"
                   Grid.Row="2"
                   Margin="0 10 0 0"
+                  Style="{StaticResource DataGridStyle1}"
                   RowStyle="{StaticResource DataGridRowStyle1}"
                   CellStyle="{StaticResource DataGridCellStyle1}"
                   ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle1}">
-
-            <DataGrid.Style>
-                <Style TargetType="DataGrid"
-                       BasedOn="{StaticResource DataGridStyle1}">
-                    <Setter Property="Visibility"
-                            Value="Visible" />
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding Audios.Count}"
-                                     Value="0">
-                            <Setter Property="Visibility"
-                                    Value="Hidden" />
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </DataGrid.Style>
             <DataGrid.Columns>
                 <!--<DataGridTextColumn Header="#"
                                     Width="auto"
@@ -153,14 +139,10 @@
                                 <Button Style="{StaticResource gridEditButton}"
                                         Command="{Binding PlayAudioCommand}">
                                     <Image Source="/Images/GridButtons/Play Button Circled_50px.png" />
-                                    <!--<Icon:PackIconMaterial Kind="PencilOutline"
-                            Style="{StaticResource gridButtonIcon}" />-->
                                 </Button>
                                 <Button Margin="5 0 0 0"
                                         Style="{StaticResource gridRemoveButton}">
                                     <Image Source="/Images/GridButtons/minus_20px.png" />
-                                    <!--<Icon:PackIconMaterial Kind="DeleteOutline"
-                            Style="{StaticResource gridButtonIcon}" />-->
                                 </Button>
                             </StackPanel>
                         </DataTemplate>
@@ -169,7 +151,7 @@
             </DataGrid.Columns>
         </DataGrid>
 
-        <Grid Grid.Row="2"
+        <!--<Grid Grid.Row="2"
               Visibility="{Binding AudiosIsEmpty, Converter={StaticResource BoolToVisibilityConverter}}"
               VerticalAlignment="Center"
               HorizontalAlignment="Center">
@@ -181,6 +163,6 @@
                            Foreground="#7D7D7D">No Audio Selected</TextBlock>
 
             </StackPanel>
-        </Grid>
+        </Grid>-->
     </Grid>
 </UserControl>

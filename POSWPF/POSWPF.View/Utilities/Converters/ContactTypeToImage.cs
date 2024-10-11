@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows.Media;
+using ECR.Domain.Models;
 using System.Windows.Media.Imaging;
 
 namespace ECR.WPF.Utilities.Converters {
@@ -26,6 +27,10 @@ namespace ECR.WPF.Utilities.Converters {
                     case ContactType.Email:
                         image = new BitmapImage(new Uri("pack://application:,,,/Images/ContactTypes/Email_20px.png"));
                         break;
+                    case ContactType.Messenger:
+                        image = new BitmapImage(new Uri("pack://application:,,,/Images/ContactTypes/Facebook Messenger_20px.png"));
+                        break;
+
                     default:
                         break;
                 }

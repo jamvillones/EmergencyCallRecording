@@ -196,7 +196,7 @@ namespace ECR.View.ViewModels.Tabs {
 
         public ICloseableObject GetEditForm(int id) {
             using var context = contextFactory.CreateDbContext();
-            var agency = context.Agencies.FirstOrDefault(a => a.Id == id);
+            var agency = context.Agencies.Include(a => a.ContactDetails).FirstOrDefault(a => a.Id == id);
             var newRecordForm = new Form_Edit_Agency_ViewModel(new DbContextFactory()) { AgencyToEdit = agency! };
 
             //newRecordForm.OnSaveSuccessful += NewRecordForm_OnSaveSuccessful;

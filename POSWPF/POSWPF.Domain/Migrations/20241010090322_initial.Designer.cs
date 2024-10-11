@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ECR.Domain.Migrations
 {
     [DbContext(typeof(MDRContext))]
-    [Migration("20241009035958_initial")]
+    [Migration("20241010090322_initial")]
     partial class initial
     {
         /// <inheritdoc />
@@ -112,9 +112,8 @@ namespace ECR.Domain.Migrations
                     b.Property<int?>("AgencyId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Type")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
 
                     b.Property<string>("Value")
                         .IsRequired()

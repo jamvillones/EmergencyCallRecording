@@ -2,26 +2,18 @@
 using CommunityToolkit.Mvvm.Input;
 using ECR.Domain.Data;
 using ECR.Domain.Models;
-using ECR.View.ViewModels;
 using ECR.WPF.Utilities;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
-using System.Diagnostics;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 namespace ECR.WPF.ViewModels {
-    public enum ContactType { Mobile, Telephone, Email }
     public partial class ContactViewModel : ObservableObject {
         public int Id { get; set; } = -1;
+        public bool IsNew => Id == -1;
 
         [ObservableProperty]
         ContactType contactType = ContactType.Mobile;
@@ -31,7 +23,7 @@ namespace ECR.WPF.ViewModels {
 
         [RelayCommand]
         void CopyToClipboard() {
-            Clipboard.SetText(Value.Replace(" ","").Trim());
+            Clipboard.SetText(Value.Replace(" ", "").Trim());
             MessageBox.Show("Copied to clipboard.", "", MessageBoxButton.OK, MessageBoxImage.Information);
         }
     }
@@ -50,7 +42,7 @@ namespace ECR.WPF.ViewModels {
 
         public ObservableCollection<ContactViewModel> Contacts { get; set; } = [];
 
-        public ContactType[] ContactTypeChoices { get; } = [ContactType.Mobile, ContactType.Telephone, ContactType.Email];
+        public ContactType[] ContactTypeChoices { get; } = [ContactType.Mobile, ContactType.Telephone, ContactType.Email, ContactType.Messenger];
 
         bool CanAddContact => !string.IsNullOrWhiteSpace(ContactValue);
 
@@ -178,9 +170,9 @@ namespace ECR.WPF.ViewModels {
 
                 var agency = new Agency() {
                     Name = Name.TrimmedAndNullWhenEmpty()!,
-                    //ContactInfo = ContactDetails.TrimmedAndNullWhenEmpty(),
                     Address = Address.TrimmedAndNullWhenEmpty(),
-                    Logo = Logo.ToByteArray()
+                    Logo = Logo.ToByteArray(),
+                    ContactDetails = Contacts.Select(c => new ContactDetail() { Type = c.ContactType, Value = c.Value }).ToList()
                 };
 
                 var result = context.Agencies.Add(agency);
@@ -200,9 +192,11 @@ namespace ECR.WPF.ViewModels {
             set {
                 agency = value;
                 Name = agency.Name;
-                //ContactDetails = agency.ContactInfo.TrimmedAndNullWhenEmpty();
                 Address = agency.Address.TrimmedAndNullWhenEmpty();
                 Logo = agency.Logo?.ToImageSource();
+
+                foreach (var c in agency.ContactDetails.Select(c => new ContactViewModel() { Id = c.Id, ContactType = c.Type, Value = c.Value }).ToList())
+                    Contacts.Add(c);
             }
         }
 
