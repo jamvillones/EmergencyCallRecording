@@ -234,7 +234,20 @@
                               ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}"
                               CellStyle="{DynamicResource DataGridCellStyle1}"
                               Style="{DynamicResource DataGridStyle1}">
+
                         <DataGrid.Columns>
+                            <DataGridTemplateColumn Header="Is Default"
+                                                    Width="auto"
+                                                    IsReadOnly="True"
+                                                    HeaderStyle="{StaticResource DataGridColumnHeader.IndividualCell.Style}">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <RadioButton Style="{StaticResource RadioButton.Check.Style}"
+                                                     GroupName="isdefaultcheck" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+
+                            </DataGridTemplateColumn>
                             <DataGridTemplateColumn Header="Contact Information"
                                                     SortMemberPath="Value"
                                                     Width="*"
@@ -268,8 +281,9 @@
                                                      BorderThickness="0"
                                                      Grid.Column="1"
                                                      Margin="5 0 0 0"
+                                                     VerticalAlignment="Center"
                                                      Background="Transparent"
-                                                     Padding="5" />
+                                                     Padding="0" />
                                         </Grid>
 
                                     </DataTemplate>
