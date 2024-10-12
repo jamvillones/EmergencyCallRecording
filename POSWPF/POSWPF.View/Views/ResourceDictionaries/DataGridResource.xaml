@@ -223,12 +223,12 @@
                     <Border x:Name="DGR_Border"
                             Padding="0"
                             IsHitTestVisible="True"
-                            CornerRadius="5"
+                            CornerRadius="2"
                             Background="{TemplateBinding Background}"
                             BorderThickness="1"
                             BorderBrush="Transparent"
                             SnapsToDevicePixels="True">
-                        <SelectiveScrollingGrid>
+                        <SelectiveScrollingGrid HorizontalAlignment="Stretch">
                             <SelectiveScrollingGrid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="*" />
@@ -290,6 +290,8 @@
         </Style.Triggers>
     </Style>
 
+    <Thickness x:Key="Cell.Padding">5</Thickness>
+
     <Style x:Key="DataGridCellStyle1"
            TargetType="{x:Type DataGridCell}">
         <Setter Property="Background"
@@ -299,7 +301,7 @@
         <Setter Property="FocusVisualStyle"
                 Value="{x:Null}" />
         <Setter Property="Padding"
-                Value="5" />
+                Value="{StaticResource Cell.Padding}" />
         <Setter Property="FontWeight"
                 Value="Regular" />
         <Setter Property="FontSize"
@@ -320,8 +322,6 @@
 
     <Style x:Key="ColumnHeaderGripperStyle"
            TargetType="{x:Type Thumb}">
-        <Setter Property="Width"
-                Value="2" />
         <Setter Property="Background"
                 Value="Transparent" />
         <Setter Property="Cursor"
@@ -348,13 +348,18 @@
                 Value="Transparent" />
         <Setter Property="Foreground"
                 Value="#69717D" />
+        <!--<Setter Property="Margin"
+                Value="2 0" />-->
         <Setter Property="Padding"
-                Value="5" />
+                Value="{StaticResource Cell.Padding}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type DataGridColumnHeader}">
                     <Grid>
-                        <Border Background="{TemplateBinding Background}"
+
+                        <Border x:Name="culomnCellBorder"
+                                Grid.Column="1"
+                                Background="{TemplateBinding Background}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 Padding="{TemplateBinding Padding}">
@@ -363,13 +368,98 @@
                                               SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                               VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
                         </Border>
-                        <Thumb x:Name="PART_LeftHeaderGripper"
-                               HorizontalAlignment="Left"
-                               Style="{StaticResource ColumnHeaderGripperStyle}" />
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="DataGridColumnHeader.IndividualCell.Style"
+           TargetType="{x:Type DataGridColumnHeader}">
+        <Setter Property="VerticalContentAlignment"
+                Value="Center" />
+        <Setter Property="BorderBrush"
+                Value="{StaticResource AccentColor.Primary}" />
+        <Setter Property="BorderThickness"
+                Value="1" />
+        <Setter Property="Background"
+                Value="#E0EAFA" />
+        <Setter Property="Foreground"
+                Value="Black" />
+        <!--<Setter Property="Margin"
+             Value="2 0" />-->
+        <Setter Property="Padding"
+                Value="{StaticResource Cell.Padding}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type DataGridColumnHeader}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="3" />
+                        </Grid.ColumnDefinitions>
+
+                        <Border x:Name="culomnCellBorder"
+                                Grid.Column="0"
+                                CornerRadius="2"
+                                Background="{TemplateBinding Background}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              RecognizesAccessKey="True"
+                                              Margin="5 0 0 0"
+                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                        </Border>
+
                         <Thumb x:Name="PART_RightHeaderGripper"
-                               HorizontalAlignment="Right"
+                               Grid.Column="1"
                                Style="{StaticResource ColumnHeaderGripperStyle}" />
                     </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="DataGridColumnHeader.IndividualCell.Last.Style"
+           TargetType="{x:Type DataGridColumnHeader}">
+        <Setter Property="VerticalContentAlignment"
+                Value="Center" />
+        <Setter Property="BorderBrush"
+                Value="{StaticResource AccentColor.Primary}" />
+        <Setter Property="BorderThickness"
+                Value="1" />
+        <Setter Property="Background"
+                Value="#E0EAFA" />
+        <Setter Property="Foreground"
+                Value="Black" />
+        <Setter Property="Padding"
+                Value="10 5" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type DataGridColumnHeader}">
+                    <Grid>
+
+                        <Border x:Name="culomnCellBorder"
+                                Grid.Column="0"
+                                CornerRadius="2"
+                                Background="{TemplateBinding Background}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              RecognizesAccessKey="True"
+                                              Margin="5 0 0 0"
+                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                        </Border>
+                        <Thumb x:Name="PART_RightHeaderGripper"
+                               Grid.Column="1"
+                               Width="3"
+                               Style="{StaticResource ColumnHeaderGripperStyle}" />
+                    </Grid>
+
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -499,9 +589,9 @@
 
                                 <Image x:Name="optionMark"
                                        Opacity="0"
-                                       Width="25"
+                                       Width="20"
+                                       Height="20"
                                        Margin="-4"
-                                       Height="25"
                                        Source="/Images/Check Mark_50px.png" />
                                 <Rectangle x:Name="indeterminateMark"
                                            Fill="{StaticResource OptionMark.Static.Glyph}"

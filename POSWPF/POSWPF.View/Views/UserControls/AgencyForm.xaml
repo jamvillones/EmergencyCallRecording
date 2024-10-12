@@ -230,19 +230,25 @@
                               Grid.ColumnSpan="3"
                               BorderThickness="0 0 0 1"
                               SnapsToDevicePixels="True"
-                              BorderBrush="{StaticResource AccentColor.Primary}"
                               RowStyle="{DynamicResource DataGridRowStyle1}"
                               ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}"
                               CellStyle="{DynamicResource DataGridCellStyle1}"
                               Style="{DynamicResource DataGridStyle1}">
                         <DataGrid.Columns>
-                            <DataGridTemplateColumn Header="Type"
-                                                    Width="auto"
-                                                    IsReadOnly="True"
-                                                    CanUserResize="False">
+                            <DataGridTemplateColumn Header="Contact Information"
+                                                    SortMemberPath="Value"
+                                                    Width="*"
+                                                    HeaderStyle="{StaticResource DataGridColumnHeader.IndividualCell.Style}">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <Grid>
+                                        <Grid HorizontalAlignment="Left"
+                                              VerticalAlignment="Center"
+                                              Width="AUTO"
+                                              Height="AUTO">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="auto" />
+                                                <ColumnDefinition />
+                                            </Grid.ColumnDefinitions>
                                             <Image Width="15"
                                                    Height="15"
                                                    Margin="5"
@@ -257,24 +263,29 @@
                                                    ToolTip="Contact is not yet saved in the records"
                                                    Visibility="{Binding IsNew, Converter={StaticResource BoolToVisibilityConverter}}"
                                                    Source="/Images/Add_20px.png" />
+
+                                            <TextBox Text="{Binding Value}"
+                                                     BorderThickness="0"
+                                                     Grid.Column="1"
+                                                     Margin="5 0 0 0"
+                                                     Background="Transparent"
+                                                     Padding="5" />
                                         </Grid>
 
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
-                            <DataGridTextColumn Header="Value"
-                                                Width="*"
-                                                Binding="{Binding Value}" />
-                            <DataGridTemplateColumn Header=""
+
+                            <DataGridTemplateColumn Header="Actions"
+                                                    MinWidth="79"
+                                                    HeaderStyle="{StaticResource DataGridColumnHeader.IndividualCell.Last.Style}"
                                                     Width="auto"
-                                                    MaxWidth="73"
-                                                    MinWidth="73"
                                                     CanUserResize="False">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                         <StackPanel Orientation="Horizontal"
                                                     Width="auto"
-                                                    HorizontalAlignment="Center">
+                                                    HorizontalAlignment="Right">
                                             <StackPanel.Resources>
                                                 <Style TargetType="Image">
                                                     <Setter Property="Width"
