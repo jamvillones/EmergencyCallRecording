@@ -278,7 +278,7 @@
                                                    Visibility="{Binding IsNew, Converter={StaticResource BoolToVisibilityConverter}}"
                                                    Source="/Images/Add_20px.png" />
 
-                                            <TextBox Text="{Binding Value}"
+                                            <TextBox Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                      BorderThickness="0"
                                                      Grid.Column="1"
                                                      Margin="5 0 0 0"
