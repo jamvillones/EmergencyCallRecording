@@ -47,15 +47,14 @@ namespace ECR.WPF.ViewModels {
 
         public ContactType[] ContactTypeChoices { get; } = [ContactType.Mobile, ContactType.Telephone, ContactType.Email, ContactType.Messenger];
 
-        bool CanAddContact => !string.IsNullOrWhiteSpace(ContactValue);
+        bool CanAddContact => !string.IsNullOrWhiteSpace(ContactValue) && Contacts.Count < 10;
 
         [RelayCommand(CanExecute = nameof(CanAddContact))]
         void AddContact() {
 
             var contact = new ContactViewModel() {
                 ContactType = ContactType,
-                Value = ContactValue.TrimmedAndNullWhenEmpty()!,
-                IsDefault = !Contacts.Any()
+                Value = ContactValue.TrimmedAndNullWhenEmpty()!
             };
 
             Contacts.Add(contact);
