@@ -309,7 +309,7 @@
                             <TextBlock Grid.Column="2"> Records</TextBlock>
                         </Grid>
                     </RadioButton>
-                    <RadioButton>
+                    <!--<RadioButton>
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="auto" />
@@ -332,7 +332,7 @@
                                    Source="/Images/SideButtons/location_50px.png" />
                             <TextBlock Grid.Column="2">Locations</TextBlock>
                         </Grid>
-                    </RadioButton>
+                    </RadioButton>-->
                     <RadioButton>
                         <Grid>
                             <Grid.ColumnDefinitions>
