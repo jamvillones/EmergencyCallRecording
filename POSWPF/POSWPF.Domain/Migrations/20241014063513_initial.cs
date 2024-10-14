@@ -27,21 +27,6 @@ namespace ECR.Domain.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Caller",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ContactDetail = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Address = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Caller", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Login",
                 columns: table => new
                 {
@@ -66,9 +51,10 @@ namespace ECR.Domain.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    IsDefault = table.Column<bool>(type: "bit", nullable: false),
                     Type = table.Column<int>(type: "int", nullable: false),
                     Value = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    AgencyId = table.Column<int>(type: "int", nullable: true)
+                    AgencyId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -77,7 +63,8 @@ namespace ECR.Domain.Migrations
                         name: "FK_ContactDetail_Agency_AgencyId",
                         column: x => x.AgencyId,
                         principalTable: "Agency",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -90,10 +77,9 @@ namespace ECR.Domain.Migrations
                     CallType = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Details = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PriorityLevel = table.Column<int>(type: "int", nullable: false),
-                    CallId = table.Column<int>(type: "int", nullable: false),
-                    AgencyId = table.Column<int>(type: "int", nullable: true),
                     IncidentLocation = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Landmark = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Landmark = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AgencyId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -103,12 +89,6 @@ namespace ECR.Domain.Migrations
                         column: x => x.AgencyId,
                         principalTable: "Agency",
                         principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Record_Caller_CallId",
-                        column: x => x.CallId,
-                        principalTable: "Caller",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -132,6 +112,26 @@ namespace ECR.Domain.Migrations
                         principalColumn: "Id");
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Callers",
+                columns: table => new
+                {
+                    RecordId = table.Column<int>(type: "int", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ContactDetail = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Address = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Callers", x => x.RecordId);
+                    table.ForeignKey(
+                        name: "FK_Callers_Record_RecordId",
+                        column: x => x.RecordId,
+                        principalTable: "Record",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Audio_RecordId",
                 table: "Audio",
@@ -146,11 +146,6 @@ namespace ECR.Domain.Migrations
                 name: "IX_Record_AgencyId",
                 table: "Record",
                 column: "AgencyId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Record_CallId",
-                table: "Record",
-                column: "CallId");
         }
 
         /// <inheritdoc />
@@ -158,6 +153,9 @@ namespace ECR.Domain.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Audio");
+
+            migrationBuilder.DropTable(
+                name: "Callers");
 
             migrationBuilder.DropTable(
                 name: "ContactDetail");
@@ -170,9 +168,6 @@ namespace ECR.Domain.Migrations
 
             migrationBuilder.DropTable(
                 name: "Agency");
-
-            migrationBuilder.DropTable(
-                name: "Caller");
         }
     }
 }

@@ -19,10 +19,6 @@ namespace ECR.Domain.Models {
         public int PriorityLevel { get; set; } = 0;
         public Caller Call { get; set; } = null!;
         /// <summary>
-        /// to transfer to
-        /// </summary>
-        public Agency? Agency { get; set; }
-        /// <summary>
         /// place where the incident took place
         /// </summary>
         public string IncidentLocation { get; set; } = null!;
@@ -30,6 +26,10 @@ namespace ECR.Domain.Models {
         /// the distinguishing landmark for operations
         /// </summary>
         public string? Landmark { get; set; } = null;
+        /// <summary>
+        /// to transfer to
+        /// </summary>
+        public Agency? Agency { get; set; }
 
         public List<Audio> Audios { get; set; } = new();
     }

@@ -74,30 +74,6 @@ namespace ECR.Domain.Migrations
                     b.ToTable("Audio");
                 });
 
-            modelBuilder.Entity("ECR.Domain.Models.Caller", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Address")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ContactDetail")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Caller");
-                });
-
             modelBuilder.Entity("ECR.Domain.Models.ContactDetail", b =>
                 {
                     b.Property<int>("Id")
@@ -106,7 +82,7 @@ namespace ECR.Domain.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("AgencyId")
+                    b.Property<int>("AgencyId")
                         .HasColumnType("int");
 
                     b.Property<bool>("IsDefault")
@@ -164,9 +140,6 @@ namespace ECR.Domain.Migrations
                     b.Property<int?>("AgencyId")
                         .HasColumnType("int");
 
-                    b.Property<int>("CallId")
-                        .HasColumnType("int");
-
                     b.Property<string>("CallType")
                         .HasColumnType("nvarchar(max)");
 
@@ -191,8 +164,6 @@ namespace ECR.Domain.Migrations
 
                     b.HasIndex("AgencyId");
 
-                    b.HasIndex("CallId");
-
                     b.ToTable("Record");
                 });
 
@@ -205,9 +176,13 @@ namespace ECR.Domain.Migrations
 
             modelBuilder.Entity("ECR.Domain.Models.ContactDetail", b =>
                 {
-                    b.HasOne("ECR.Domain.Models.Agency", null)
+                    b.HasOne("ECR.Domain.Models.Agency", "Agency")
                         .WithMany("ContactDetails")
-                        .HasForeignKey("AgencyId");
+                        .HasForeignKey("AgencyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Agency");
                 });
 
             modelBuilder.Entity("ECR.Domain.Models.Login", b =>
@@ -242,23 +217,44 @@ namespace ECR.Domain.Migrations
             modelBuilder.Entity("ECR.Domain.Models.Record", b =>
                 {
                     b.HasOne("ECR.Domain.Models.Agency", "Agency")
-                        .WithMany()
+                        .WithMany("Records")
                         .HasForeignKey("AgencyId");
 
-                    b.HasOne("ECR.Domain.Models.Caller", "Call")
-                        .WithMany()
-                        .HasForeignKey("CallId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.OwnsOne("ECR.Domain.Models.Caller", "Call", b1 =>
+                        {
+                            b1.Property<int>("RecordId")
+                                .HasColumnType("int");
+
+                            b1.Property<string>("Address")
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<string>("ContactDetail")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<string>("Name")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.HasKey("RecordId");
+
+                            b1.ToTable("Callers");
+
+                            b1.WithOwner()
+                                .HasForeignKey("RecordId");
+                        });
 
                     b.Navigation("Agency");
 
-                    b.Navigation("Call");
+                    b.Navigation("Call")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("ECR.Domain.Models.Agency", b =>
                 {
                     b.Navigation("ContactDetails");
+
+                    b.Navigation("Records");
                 });
 
             modelBuilder.Entity("ECR.Domain.Models.Record", b =>
