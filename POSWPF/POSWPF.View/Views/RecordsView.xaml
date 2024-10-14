@@ -468,7 +468,8 @@
 
                             <DataGrid.Columns>
                                 <!--Checkboxes-->
-                                <DataGridCheckBoxColumn HeaderStyle="{StaticResource DataGridColumnHeader.IndividualCell.Style}"
+                                <DataGridCheckBoxColumn Width="auto"
+                                                        HeaderStyle="{StaticResource DataGridColumnHeader.IndividualCell.Style}"
                                                         Binding="{Binding IsChecked,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                         ElementStyle="{StaticResource CheckBoxStyle1}">
                                     <DataGridCheckBoxColumn.HeaderTemplate>
@@ -530,50 +531,41 @@
                                     </DataGridTemplateColumn.CellTemplate>
                                 </DataGridTemplateColumn>
 
-                                <!--Name-->
-                                <!--<DataGridTextColumn Header="Name"
-                                                    IsReadOnly="True"
-                                                    Width="*"
-                                                    Binding="{Binding Name}" />-->
-
-                                <!--Contact Details-->
-                                <!--<DataGridTemplateColumn Header="Contact Details"
-                                                        HeaderStyle="{StaticResource DataGridColumnHeader.IndividualCell.Style}">
+                                <DataGridTemplateColumn Header="Default Contact Information"
+                                                        HeaderStyle="{StaticResource DataGridColumnHeader.IndividualCell.Style}"
+                                                        SortMemberPath="Value"
+                                                        Width="*"
+                                                        IsReadOnly="True">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
-                                            <Grid>
-                                                <ToggleButton x:Name="toggle"
-                                                              Template="{StaticResource ArrowToggleButtonTemplate}"
-                                                              Background="Transparent"
-                                                              BorderThickness="0"
-                                                              HorizontalContentAlignment="Stretch"
-                                                              IsEnabled="{Binding ElementName=popup, Path=IsOpen, Converter={StaticResource BoolInvertConverter}}">3 contacts available</ToggleButton>
-                                                <Popup AllowsTransparency="True"
-                                                       VerticalOffset="4"
-                                                       x:Name="popup"
-                                                       StaysOpen="False"
-                                                       IsOpen="{Binding ElementName=toggle, Path=IsChecked}"
-                                                       PlacementTarget="{Binding ElementName=toggle}"
-                                                       Placement="Bottom">
+                                            <DataTemplate.Resources>
+                                                <converter:ContactTypeToImage x:Key="ContactToImage" />
+                                            </DataTemplate.Resources>
+                                            <Grid HorizontalAlignment="Left"
+                                                  VerticalAlignment="Center"
+                                                  Width="AUTO"
+                                                  Height="AUTO">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="auto" />
+                                                    <ColumnDefinition />
+                                                </Grid.ColumnDefinitions>
+                                                <Image Width="15"
+                                                       Height="15"
+                                                       Margin="5"
+                                                       ToolTip="{Binding DefaultContactDetail.Type, Mode=OneTime}"
+                                                       Source="{Binding DefaultContactDetail.Type, Converter={StaticResource ContactToImage}}" />
 
-                                                    <Border Width="250"
-                                                            Height="350"
-                                                            CornerRadius="4"
-                                                            Background="#E0EAFA"
-                                                            BorderBrush="Black"
-                                                            BorderThickness="1"
-                                                            SnapsToDevicePixels="True" />
-                                                </Popup>
+                                                <TextBox Text="{Binding DefaultContactDetail.Value,Mode=OneWay}"
+                                                         BorderThickness="0"
+                                                         Grid.Column="1"
+                                                         Margin="5 0 0 0"
+                                                         VerticalAlignment="Center"
+                                                         Background="Transparent"
+                                                         Padding="0" />
                                             </Grid>
 
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
-                                </DataGridTemplateColumn>-->
-
-                                <DataGridTemplateColumn Header="Default Contact Information"
-                                                        HeaderStyle="{StaticResource DataGridColumnHeader.IndividualCell.Style}"
-                                                    Width="*"
-                                                    IsReadOnly="True"                                                    >
 
                                 </DataGridTemplateColumn>
 

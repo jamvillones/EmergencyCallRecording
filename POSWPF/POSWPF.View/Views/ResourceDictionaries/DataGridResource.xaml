@@ -368,6 +368,16 @@
                                               SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                               VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
                         </Border>
+
+                        <!--<Thumb x:Name="PART_LeftHeaderGripper"
+                               Width="3"
+                               HorizontalAlignment="Left"
+                               Style="{StaticResource ColumnHeaderGripperStyle}" />
+
+                        <Thumb x:Name="PART_RightHeaderGripper"
+                               Width="3"
+                               HorizontalAlignment="Right"
+                               Style="{StaticResource ColumnHeaderGripperStyle}" />-->
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>

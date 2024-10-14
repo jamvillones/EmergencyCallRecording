@@ -152,13 +152,27 @@ namespace ECR.View.ViewModels.Tabs {
         private void OpenEditForm(int id) {
 
             var regForm = GetEditForm(id);
+            if (regForm is Form_Edit_Agency_ViewModel form) {
+                form.OnSaveSuccessful += Form_OnSaveSuccessful;
+            }
             OnEdit?.Invoke(this, regForm);
 
+        }
+        /// <summary>
+        /// handling successful edit of agency
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Form_OnSaveSuccessful(object? sender, object e) {
+            if (e is Agency a) {
+                var toUpdate = Items.FirstOrDefault(i => i.Id == a.Id)!;
+                toUpdate.SetAgency(a);
+            }
         }
 
         async Task LoadDataAsync() {
             using (var context = contextFactory.CreateDbContext()) {
-                var agencies = await context.Agencies.ToListAsync();
+                var agencies = await context.Agencies.Include(a => a.ContactDetails).ToListAsync();
 
                 foreach (var a in agencies)
                     AddNewItem(CreateAgencyViewModel(a));
@@ -166,7 +180,10 @@ namespace ECR.View.ViewModels.Tabs {
         }
 
         private AgencyViewModel CreateAgencyViewModel(Agency agency) {
-            return new AgencyViewModel() { Id = agency.Id, Name = agency.Name, Address = agency.Address, Logo = agency.Logo?.ToImageSource() };
+            var vm = new AgencyViewModel();
+            vm.SetAgency(agency);
+            return vm;
+            //return new AgencyViewModel() { Id = agency.Id, Name = agency.Name, Address = agency.Address, Logo = agency.Logo?.ToImageSource() };
         }
 
         void AddNewItem(AgencyViewModel item) {

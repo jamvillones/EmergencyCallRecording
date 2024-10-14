@@ -243,7 +243,8 @@
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                         <RadioButton Style="{StaticResource RadioButton.Check.Style}"
-                                                     GroupName="isdefaultcheck" />
+                                                     GroupName="isdefaultcheck"
+                                                     IsChecked="{Binding IsDefault, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
 

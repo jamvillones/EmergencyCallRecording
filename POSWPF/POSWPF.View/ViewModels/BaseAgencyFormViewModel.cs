@@ -16,6 +16,9 @@ namespace ECR.WPF.ViewModels {
         public bool IsNew => Id == -1;
 
         [ObservableProperty]
+        bool isDefault = false;
+
+        [ObservableProperty]
         ContactType contactType = ContactType.Mobile;
 
         [ObservableProperty]
@@ -51,7 +54,8 @@ namespace ECR.WPF.ViewModels {
 
             var contact = new ContactViewModel() {
                 ContactType = ContactType,
-                Value = ContactValue.TrimmedAndNullWhenEmpty()!
+                Value = ContactValue.TrimmedAndNullWhenEmpty()!,
+                IsDefault = !Contacts.Any()
             };
 
             Contacts.Add(contact);
@@ -61,8 +65,19 @@ namespace ECR.WPF.ViewModels {
 
         [RelayCommand]
         void RemoveContact(ContactViewModel contact) {
-            if (MessageBox.Show("Are you sure you want to remove this contact information?", string.Empty, MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            if (MessageBox.Show("Are you sure you want to remove this contact information?", string.Empty, MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes) {
+
                 Contacts.Remove(contact);
+
+                if (contact.IsDefault) {
+
+                    var newDefaultContact = Contacts.FirstOrDefault();
+
+                    if (newDefaultContact is not null)
+                        newDefaultContact.IsDefault = true;
+
+                }
+            }
         }
 
         [ObservableProperty]
@@ -172,7 +187,13 @@ namespace ECR.WPF.ViewModels {
                     Name = Name.TrimmedAndNullWhenEmpty()!,
                     Address = Address.TrimmedAndNullWhenEmpty(),
                     Logo = Logo.ToByteArray(),
-                    ContactDetails = Contacts.Select(c => new ContactDetail() { Type = c.ContactType, Value = c.Value }).ToList()
+                    ContactDetails = Contacts.Select(c =>
+                    new ContactDetail() {
+                        Type = c.ContactType,
+                        Value = c.Value,
+                        IsDefault = c.IsDefault
+                    })
+                    .ToList()
                 };
 
                 var result = context.Agencies.Add(agency);
@@ -195,7 +216,7 @@ namespace ECR.WPF.ViewModels {
                 Address = agency.Address.TrimmedAndNullWhenEmpty();
                 Logo = agency.Logo?.ToImageSource();
 
-                foreach (var c in agency.ContactDetails.Select(c => new ContactViewModel() { Id = c.Id, ContactType = c.Type, Value = c.Value }).ToList())
+                foreach (var c in agency.ContactDetails.Select(c => new ContactViewModel() { Id = c.Id, ContactType = c.Type, Value = c.Value, IsDefault = c.IsDefault }).ToList())
                     Contacts.Add(c);
             }
         }
@@ -221,21 +242,41 @@ namespace ECR.WPF.ViewModels {
 
             try {
                 using var context = contextFactory.CreateDbContext();
-                var agencyToEdit = await context.Agencies.FirstOrDefaultAsync(a => a.Id == agency.Id);
+
+                var agencyToEdit = await context.Agencies
+                    .Include(a => a.ContactDetails)
+                    .FirstOrDefaultAsync(a => a.Id == agency.Id);
 
                 if (agencyToEdit is null) return;
 
                 agencyToEdit.Name = Name.TrimmedAndNullWhenEmpty()!;
-                //agencyToEdit.ContactInfo = ContactDetails.TrimmedAndNullWhenEmpty();
                 agencyToEdit.Address = Address.TrimmedAndNullWhenEmpty();
                 agencyToEdit.Logo = Logo.ToByteArray();
 
+                ///delete
+                foreach (var contact in agencyToEdit.ContactDetails.ToArray()) {
+                    if (!Contacts.Any(c => c.Id == contact.Id)) {
+                        agencyToEdit.ContactDetails.Remove(contact);
+                    }
+                }
+
+                foreach (var vm in Contacts) {
+                    if (vm.Id == -1)
+                        agencyToEdit.ContactDetails.Add(new ContactDetail() { Type = vm.ContactType, Value = vm.Value, IsDefault = vm.IsDefault });
+                    else {
+                        var edit = agencyToEdit.ContactDetails.FirstOrDefault(c => c.Id == vm.Id)!;
+                        edit.Value = vm.Value;
+                        edit.IsDefault = vm.IsDefault;
+                    }
+                }
+
                 await context.SaveChangesAsync();
+
+                InvokeSaveEvent(agencyToEdit);
 
             }
             catch (Exception ex) {
                 MessageBox.Show(ex.Message, string.Empty, MessageBoxButton.OK, MessageBoxImage.Error);
-
             }
 
             await base.SaveAgency();

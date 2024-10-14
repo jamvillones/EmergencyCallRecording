@@ -1,4 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using ECR.Domain.Models;
+using ECR.WPF.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -36,13 +38,21 @@ namespace ECR.View.ViewModels {
     }
 
     public sealed partial class AgencyViewModel : ObservableObject {
+        public void SetAgency(Agency agency) {
+            Id = agency.Id;
+            Name = agency.Name;
+            DefaultContactDetail = agency.ContactDetails.FirstOrDefault(x => x.IsDefault);
+            Address = agency.Address;
+            Logo = agency.Logo.ToImageSource();
+        }
+
         public int Id { get; set; } = -1;
 
         [ObservableProperty]
         string name = "";
 
         [ObservableProperty]
-        string? contactDetails = "";
+        ContactDetail? defaultContactDetail = null;
 
         [ObservableProperty]
         string? address = "";
