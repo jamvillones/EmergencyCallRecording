@@ -10,7 +10,8 @@ using System.Threading.Tasks;
 using System.Windows.Media;
 
 namespace ECR.View.ViewModels {
-    public sealed partial class RecordViewModel : ObservableObject {
+    public sealed partial class Record_Item_ViewModel : ObservableObject {
+       
 
         [ObservableProperty]
         string _callerDetails = "Juan Dela Cruz - 0999 999 9999";
@@ -37,7 +38,7 @@ namespace ECR.View.ViewModels {
 
     }
 
-    public sealed partial class AgencyViewModel : ObservableObject {
+    public sealed partial class Agency_Item_ViewModel : ObservableObject {
         public void SetAgency(Agency agency) {
             Id = agency.Id;
             Name = agency.Name;
