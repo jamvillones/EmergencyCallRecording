@@ -148,7 +148,7 @@
                         </StackPanel.Resources>
 
                         <RadioButton IsChecked="True"
-                                     Command="{Binding SwitchToCallsCommand}">Calls</RadioButton>
+                                     Command="{Binding SwitchToCallsCommand}">Reports</RadioButton>
                         <RadioButton Command="{Binding SwitchToAgenciesCommand}">Agencies</RadioButton>
                     </StackPanel>
                 </Border>
@@ -239,10 +239,12 @@
                                     <Image Source="/Images/NavButtons/back_30px.png" />
                                 </Button>
 
-                                --><!--<TextBlock FontSize="10"
+                                -->
+                            <!--<TextBlock FontSize="10"
                              Margin="10,0"
                              Foreground="gray"
-                             VerticalAlignment="Center">1 I 100</TextBlock>--><!--
+                             VerticalAlignment="Center">1 I 100</TextBlock>-->
+                            <!--
 
                                 <Button ToolTip="Next Page">
                                     <Image Source="/Images/NavButtons/forward_30px.png" />

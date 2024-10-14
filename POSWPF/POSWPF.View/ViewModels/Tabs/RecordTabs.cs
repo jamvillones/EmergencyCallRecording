@@ -71,7 +71,7 @@ namespace ECR.View.ViewModels.Tabs {
 
         //    OnPropertyChanged(nameof(TotalItems));
         //}
-        public ObservableCollection<RecordViewModel> Records { get; } = [];
+        public ObservableCollection<Record_Item_ViewModel> Records { get; } = [];
 
         public event EventHandler<object>? OnEdit;
         [RelayCommand]
@@ -81,7 +81,7 @@ namespace ECR.View.ViewModels.Tabs {
             OnEdit?.Invoke(this, regForm);
         }
 
-        void AddNewItem(RecordViewModel record) {
+        void AddNewItem(Record_Item_ViewModel record) {
             Records.Add(record);
             record.OnSelectionChanged += Record_OnSelectionChanged;
         }
@@ -114,7 +114,7 @@ namespace ECR.View.ViewModels.Tabs {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void NewRecordForm_OnSaveSuccessful(object? sender, object e) {
-            RecordViewModel record = new RecordViewModel();
+            Record_Item_ViewModel record = new Record_Item_ViewModel();
             AddNewItem(record);
         }
 
@@ -179,14 +179,14 @@ namespace ECR.View.ViewModels.Tabs {
             }
         }
 
-        private AgencyViewModel CreateAgencyViewModel(Agency agency) {
-            var vm = new AgencyViewModel();
+        private Agency_Item_ViewModel CreateAgencyViewModel(Agency agency) {
+            var vm = new Agency_Item_ViewModel();
             vm.SetAgency(agency);
             return vm;
             //return new AgencyViewModel() { Id = agency.Id, Name = agency.Name, Address = agency.Address, Logo = agency.Logo?.ToImageSource() };
         }
 
-        void AddNewItem(AgencyViewModel item) {
+        void AddNewItem(Agency_Item_ViewModel item) {
             Items.Add(item);
             item.OnSelectionChanged += Item_OnSelectionChanged; ;
             OnPropertyChanged(nameof(TotalItems));
@@ -197,7 +197,7 @@ namespace ECR.View.ViewModels.Tabs {
             OnPropertyChanged(nameof(ItemsSelected));
         }
 
-        public ObservableCollection<AgencyViewModel> Items { get; } = [];
+        public ObservableCollection<Agency_Item_ViewModel> Items { get; } = [];
 
         public ICloseableObject GetRegistrationForm() {
             var newRecordForm = new Form_Add_Agency_ViewModel(new DbContextFactory());
