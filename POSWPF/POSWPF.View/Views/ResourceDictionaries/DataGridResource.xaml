@@ -391,7 +391,7 @@
         <Setter Property="BorderBrush"
                 Value="{StaticResource AccentColor.Primary}" />
         <Setter Property="BorderThickness"
-                Value="0 0 0 1" />
+                Value="0" />
         <Setter Property="Background"
                 Value="#E0EAFA" />
         <Setter Property="Foreground"
@@ -411,7 +411,7 @@
 
                         <Border x:Name="culomnCellBorder"
                                 Grid.Column="0"
-                                CornerRadius="0"
+                                CornerRadius="2"
                                 Background="{TemplateBinding Background}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
@@ -439,7 +439,7 @@
         <Setter Property="BorderBrush"
                 Value="{StaticResource AccentColor.Primary}" />
         <Setter Property="BorderThickness"
-                Value="0 0 0 1" />
+                Value="0" />
         <Setter Property="Background"
                 Value="#E0EAFA" />
         <Setter Property="Foreground"
@@ -453,7 +453,7 @@
 
                         <Border x:Name="culomnCellBorder"
                                 Grid.Column="0"
-                                CornerRadius="0"
+                                CornerRadius="2"
                                 Background="{TemplateBinding Background}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
