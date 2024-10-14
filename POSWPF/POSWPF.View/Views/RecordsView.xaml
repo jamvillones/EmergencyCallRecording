@@ -196,7 +196,7 @@
                                 <RowDefinition />
                             </Grid.RowDefinitions>
 
-                            <StackPanel Orientation="Horizontal"
+                            <!--<StackPanel Orientation="Horizontal"
                                         VerticalAlignment="Center"
                                         Margin="-2,0"
                                         Height="auto">
@@ -239,10 +239,10 @@
                                     <Image Source="/Images/NavButtons/back_30px.png" />
                                 </Button>
 
-                                <!--<TextBlock FontSize="10"
+                                --><!--<TextBlock FontSize="10"
                              Margin="10,0"
                              Foreground="gray"
-                             VerticalAlignment="Center">1 I 100</TextBlock>-->
+                             VerticalAlignment="Center">1 I 100</TextBlock>--><!--
 
                                 <Button ToolTip="Next Page">
                                     <Image Source="/Images/NavButtons/forward_30px.png" />
@@ -283,7 +283,7 @@
                                          VerticalAlignment="Center"
                                          Width="auto"
                                          Padding="5,2">1000</TextBox>
-                            </StackPanel>
+                            </StackPanel>-->
 
                             <DataGrid x:Name="membersDataGrid"
                                       Grid.Row="1"
@@ -471,6 +471,7 @@
                                 <DataGridCheckBoxColumn Width="auto"
                                                         HeaderStyle="{StaticResource DataGridColumnHeader.IndividualCell.Style}"
                                                         Binding="{Binding IsChecked,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                        EditingElementStyle="{StaticResource CheckBoxStyle1}"
                                                         ElementStyle="{StaticResource CheckBoxStyle1}">
                                     <DataGridCheckBoxColumn.HeaderTemplate>
                                         <DataTemplate>
@@ -533,7 +534,7 @@
 
                                 <DataGridTemplateColumn Header="Default Contact Information"
                                                         HeaderStyle="{StaticResource DataGridColumnHeader.IndividualCell.Style}"
-                                                        SortMemberPath="Value"
+                                                        SortMemberPath="DefaultContactDetail.Value"
                                                         Width="*"
                                                         IsReadOnly="True">
                                     <DataGridTemplateColumn.CellTemplate>
@@ -555,13 +556,12 @@
                                                        ToolTip="{Binding DefaultContactDetail.Type, Mode=OneTime}"
                                                        Source="{Binding DefaultContactDetail.Type, Converter={StaticResource ContactToImage}}" />
 
-                                                <TextBox Text="{Binding DefaultContactDetail.Value,Mode=OneWay}"
-                                                         BorderThickness="0"
-                                                         Grid.Column="1"
-                                                         Margin="5 0 0 0"
-                                                         VerticalAlignment="Center"
-                                                         Background="Transparent"
-                                                         Padding="0" />
+                                                <TextBlock Text="{Binding DefaultContactDetail.Value,Mode=OneWay}"
+                                                           Grid.Column="1"
+                                                           Margin="0 0 0 0"
+                                                           VerticalAlignment="Center"
+                                                           Background="Transparent"
+                                                           Padding="0" />
                                             </Grid>
 
                                         </DataTemplate>
