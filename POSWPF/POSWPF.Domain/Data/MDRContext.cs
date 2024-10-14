@@ -23,7 +23,8 @@ public partial class MDRContext : DbContext {
         modelBuilder.Entity<Login>()
             .OwnsOne(l => l.Name);
 
-        modelBuilder.Entity<Record>().OwnsOne(r => r.Call);
+        modelBuilder.Entity<Record>()
+            .OwnsOne(r => r.Call);
 
         OnModelCreatingPartial(modelBuilder);
     }
