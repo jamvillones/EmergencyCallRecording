@@ -73,6 +73,7 @@
         <Grid x:Name="mainContent"
               Grid.Row="1"
               Margin="15,15,15,0">
+
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto" />
                 <RowDefinition Height="auto" />
@@ -177,7 +178,7 @@
                                    VerticalAlignment="Center"
                                    HorizontalAlignment="Center"
                                    FontWeight="Bold">
-            Create New
+                                Create New
                         </TextBlock>
                     </Grid>
                 </Button>
@@ -196,97 +197,6 @@
                                 <RowDefinition />
                             </Grid.RowDefinitions>
 
-                            <!--<StackPanel Orientation="Horizontal"
-                                        VerticalAlignment="Center"
-                                        Margin="-2,0"
-                                        Height="auto">
-                                <StackPanel.Resources>
-                                    <Style TargetType="Button">
-                                        <Setter Property="Background"
-                                                Value="#E0EAFA" />
-                                        <Setter Property="Cursor"
-                                                Value="Hand" />
-                                        <Setter Property="BorderThickness"
-                                                Value="0" />
-                                        <Setter Property="Template"
-                                                Value="{StaticResource Template.Round.Button}" />
-                                        <Setter Property="Margin"
-                                                Value="2,0" />
-                                        <Setter Property="Padding"
-                                                Value="5" />
-                                        <Setter Property="Width"
-                                                Value="25" />
-                                        <Setter Property="Height"
-                                                Value="25" />
-                                    </Style>
-                                    <Style TargetType="Rectangle">
-                                        <Setter Property="Fill"
-                                                Value="Gray" />
-                                        <Setter Property="Width"
-                                                Value="2" />
-                                        <Setter Property="Margin"
-                                                Value="2,6" />
-                                        <Setter Property="HorizontalAlignment"
-                                                Value="Center" />
-                                    </Style>
-
-                                </StackPanel.Resources>
-
-                                <Button ToolTip="First Page">
-                                    <Image Source="/Images/NavButtons/double_left_30px.png" />
-                                </Button>
-                                <Button ToolTip="Previous Page">
-                                    <Image Source="/Images/NavButtons/back_30px.png" />
-                                </Button>
-
-                                -->
-                            <!--<TextBlock FontSize="10"
-                             Margin="10,0"
-                             Foreground="gray"
-                             VerticalAlignment="Center">1 I 100</TextBlock>-->
-                            <!--
-
-                                <Button ToolTip="Next Page">
-                                    <Image Source="/Images/NavButtons/forward_30px.png" />
-                                </Button>
-                                <Button ToolTip="Last Page">
-                                    <Image Source="/Images/NavButtons/double_right_30px.png" />
-                                </Button>
-                                <Button ToolTip="Refresh Entries">
-                                    <Image Source="/Images/NavButtons/refresh_30px.png" />
-                                </Button>
-                            </StackPanel>
-                            <StackPanel Grid.Row="0"
-                                        Orientation="Horizontal"
-                                        VerticalAlignment="Bottom"
-                                        HorizontalAlignment="Right">
-                                <StackPanel.Resources>
-                                    <Style TargetType="TextBox">
-                                        <Setter Property="Background"
-                                                Value="Transparent" />
-                                        <Setter Property="BorderThickness"
-                                                Value="0" />
-                                        <Style.Triggers>
-                                            <Trigger Property="IsKeyboardFocused"
-                                                     Value="True">
-                                                <Setter Property="Background"
-                                                        Value="#E0EAFA" />
-                                                <Setter Property="BorderThickness"
-                                                        Value="1" />
-                                            </Trigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </StackPanel.Resources>
-                                <TextBlock VerticalAlignment="Center"
-                                           FontSize="9"
-                                           Margin="0,0,5,0">Page Size:</TextBlock>
-
-                                <TextBox ToolTip="Number of Entries To Display"
-                                         VerticalAlignment="Center"
-                                         Width="auto"
-                                         Padding="5,2">1000</TextBox>
-                            </StackPanel>-->
-
                             <DataGrid x:Name="membersDataGrid"
                                       Grid.Row="1"
                                       Margin="0"
@@ -297,18 +207,22 @@
                                       Style="{DynamicResource DataGridStyle1}">
 
                                 <DataGrid.Columns>
-                                    <DataGridCheckBoxColumn HeaderStyle="{StaticResource DataGridColumnHeader.IndividualCell.Style}"
+                                    <DataGridCheckBoxColumn Width="auto"
+                                                            MinWidth="80"
+                                                            HeaderStyle="{StaticResource DataGridColumnHeader.IndividualCell.Style}"
                                                             Binding="{Binding IsChecked,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                                            ElementStyle="{StaticResource CheckBoxStyle1}">
+                                                            ElementStyle="{StaticResource CheckBoxStyle1}"
+                                                            EditingElementStyle="{StaticResource CheckBoxStyle1}">
                                         <DataGridCheckBoxColumn.HeaderTemplate>
                                             <DataTemplate>
                                                 <CheckBox IsChecked="{Binding Path=DataContext.AllItemsAreChecked, Mode=TwoWay, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}, Mode=FindAncestor}}"
                                                           VerticalContentAlignment="Center"
+                                                          Margin="-5 0 0 0"
                                                           Style="{StaticResource CheckBoxStyle1}">
                                                     <TextBlock Foreground="Gray">
-                                          <Run Text="{Binding Path=DataContext.ItemsSelected, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}, Mode=FindAncestor}}" />
-                                          <Run Text="I" />
-                                          <Run Text="{Binding Path=DataContext.TotalItems, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}, Mode=FindAncestor}}" />
+                                                      <Run Text="{Binding Path=DataContext.ItemsSelected, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}, Mode=FindAncestor}}" />
+                                                      <Run Text="I" />
+                                                      <Run Text="{Binding Path=DataContext.TotalItems, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}, Mode=FindAncestor}}" />
                                                     </TextBlock>
                                                 </CheckBox>
                                             </DataTemplate>
@@ -316,21 +230,21 @@
 
                                     </DataGridCheckBoxColumn>
 
-                                    <DataGridTemplateColumn Header="Priority Level"
-                                                            IsReadOnly="True"
-                                                            HeaderStyle="{StaticResource DataGridColumnHeader.IndividualCell.Style}">
-                                        <DataGridTemplateColumn.CellTemplate>
-                                            <DataTemplate>
+                                    <DataGridTextColumn Header="Priority Level"
+                                                        MinWidth="80"
+                                                        Binding="{Binding Level, Mode=OneWay}"
+                                                        IsReadOnly="True"
+                                                        Width="auto"
+                                                        HeaderStyle="{StaticResource DataGridColumnHeader.IndividualCell.Style}" />
 
-                                                <Image Width="20"
-                                                       Margin="0"
-                                                       HorizontalAlignment="Left"
-                                                       Source="/Images/Signals/signal_50px.png" />
-                                            </DataTemplate>
-                                        </DataGridTemplateColumn.CellTemplate>
-                                    </DataGridTemplateColumn>
+                                    <DataGridTextColumn Header="Date/Time"
+                                                        Binding="{Binding DateTimeOfReport, Mode=OneWay, StringFormat={}{0:MMM d yyyy hh:mm:ss tt}}"
+                                                        Width="*"
+                                                        IsReadOnly="True"
+                                                        HeaderStyle="{StaticResource DataGridColumnHeader.IndividualCell.Style}" />
 
-                                    <DataGridTemplateColumn Header="Call Details"
+                                    <DataGridTemplateColumn Header="Caller Details"
+                                                            SortMemberPath="CallerDetails"
                                                             HeaderStyle="{StaticResource DataGridColumnHeader.IndividualCell.Style}"
                                                             IsReadOnly="True"
                                                             Width="*">
@@ -344,11 +258,14 @@
                                                     </Grid.ColumnDefinitions>
                                                     <Border Width="25"
                                                             Height="25"
+                                                            BorderThickness="2"
+                                                            BorderBrush="Orange"
                                                             CornerRadius="50"
                                                             Margin="0 0 10 0"
                                                             Background="red">
-                                                        <TextBlock Text="JD"
+                                                        <TextBlock Text="{Binding CallerDetails, Mode=OneWay, Converter={StaticResource GetFirstTwoLetterConverter}}"
                                                                    FontWeight="Bold"
+                                                                   FontSize="10"
                                                                    VerticalAlignment="Center"
                                                                    HorizontalAlignment="Center"
                                                                    Foreground="White"
@@ -356,16 +273,13 @@
                                                     </Border>
 
                                                     <StackPanel Grid.Column="1">
-
                                                         <TextBlock Text="{Binding CallerDetails}"
                                                                    TextTrimming="CharacterEllipsis"
                                                                    VerticalAlignment="Center" />
                                                         <TextBlock FontSize="9"
                                                                    TextTrimming="CharacterEllipsis"
                                                                    Foreground="{StaticResource AccentColor.Primary}">
-              <Run>Emergency Call</Run>
-              <Run> ● </Run>
-              <Run>Call Category #11</Run>
+                                                          <Run Text="{Binding CallType, Mode=OneWay}" />
                                                         </TextBlock>
                                                     </StackPanel>
                                                 </Grid>
@@ -373,15 +287,9 @@
                                         </DataGridTemplateColumn.CellTemplate>
                                     </DataGridTemplateColumn>
 
-                                    <DataGridTextColumn Header="Location Information"
-                                                        HeaderStyle="{StaticResource DataGridColumnHeader.IndividualCell.Style}"
-                                                        IsReadOnly="True"
-                                                        Width="*"
-                                                        Binding="{Binding PlaceOfIncident}" />
-
                                     <DataGridTextColumn Header="Summary"
                                                         HeaderStyle="{StaticResource DataGridColumnHeader.IndividualCell.Style}"
-                                                        Binding="{Binding Title}"
+                                                        Binding="{Binding Summary}"
                                                         IsReadOnly="True"
                                                         Width="*">
                                         <DataGridTextColumn.ElementStyle>
@@ -393,45 +301,64 @@
                                         </DataGridTextColumn.ElementStyle>
                                     </DataGridTextColumn>
 
-                                    <DataGridTemplateColumn Header="Forwarded To"
-                                                            HeaderStyle="{StaticResource DataGridColumnHeader.IndividualCell.Style}"
+                                    <DataGridTextColumn Header="Incident Location"
+                                                        HeaderStyle="{StaticResource DataGridColumnHeader.IndividualCell.Style}"
+                                                        IsReadOnly="True"
+                                                        Width="*"
+                                                        Binding="{Binding PlaceOfIncident}" />
+
+                                    <DataGridTemplateColumn Header="Endorse To"
                                                             IsReadOnly="True"
-                                                            Width="*">
+                                                            SortMemberPath="Agency.Name"
+                                                            HeaderStyle="{StaticResource DataGridColumnHeader.IndividualCell.Style}">
+
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
-                                                <Grid>
+                                                <Grid HorizontalAlignment="Stretch">
                                                     <Grid.ColumnDefinitions>
                                                         <ColumnDefinition Width="auto" />
                                                         <ColumnDefinition />
                                                     </Grid.ColumnDefinitions>
+
                                                     <Border Width="25"
                                                             Height="25"
-                                                            CornerRadius="50"
-                                                            Margin="0 0 10 0">
-                                                        <Border.Background>
-                                                            <ImageBrush ImageSource="/Images/clipart3022007.png" />
-                                                        </Border.Background>
+                                                            CornerRadius="15"
+                                                            BorderThickness="2"
+                                                            BorderBrush="White"
+                                                            Background="{Binding Agency.Logo, Converter={StaticResource ImageToBackgroundConverter}}">
+                                                        <Border Background="{StaticResource AccentColor.Primary}"
+                                                                CornerRadius="15"
+                                                                Margin="-1"
+                                                                Visibility="{Binding Agency.Logo, Converter={StaticResource NullToVisibilityConverter}}">
+                                                            <TextBlock HorizontalAlignment="Center"
+                                                                       VerticalAlignment="Center"
+                                                                       FontWeight="Bold"
+                                                                       Foreground="White"
+                                                                       Text="{Binding Agency.Name, Mode=OneWay, Converter={StaticResource GetFirstTwoLetterConverter}}" />
+                                                        </Border>
                                                     </Border>
 
-                                                    <TextBlock Grid.Column="1"
-                                                               Text="{Binding EndorseTo}"
+                                                    <TextBlock Margin="10 0 0 0"
+                                                               Grid.Column="1"
+                                                               VerticalAlignment="Center"
                                                                TextTrimming="CharacterEllipsis"
-                                                               VerticalAlignment="Center" />
+                                                               Text="{Binding Agency.Name, Mode=OneWay}" />
                                                 </Grid>
+
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>
                                     </DataGridTemplateColumn>
 
                                     <DataGridTemplateColumn Header="Actions"
                                                             HeaderStyle="{StaticResource DataGridColumnHeader.IndividualCell.Last.Style}"
-                                                            MinWidth="72"
-                                                            MaxWidth="72"
+                                                            MinWidth="80"
+                                                            MaxWidth="80"
                                                             IsReadOnly="True"
                                                             Width="auto">
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
                                                 <StackPanel Orientation="Horizontal"
-                                                            HorizontalAlignment="Center">
+                                                            HorizontalAlignment="Right">
                                                     <StackPanel.Resources>
                                                         <Style TargetType="Image">
                                                             <Setter Property="Width"
@@ -440,11 +367,14 @@
                                                     </StackPanel.Resources>
 
                                                     <Button Style="{StaticResource gridEditButton}"
-                                                            Margin="5 0 0 0">
+                                                            Command="{Binding DataContext.OpenEditFormCommand, RelativeSource={RelativeSource AncestorType=DataGrid, Mode=FindAncestor}}"
+                                                            CommandParameter="{Binding Id}">
                                                         <Image Source="/Images/GridButtons/edit_property_20px.png" />
 
                                                     </Button>
                                                     <Button Margin="5 0 0 0"
+                                                            Command="{Binding DataContext.RemoveItemCommand, RelativeSource={RelativeSource AncestorType=DataGrid, Mode=FindAncestor}}"
+                                                            CommandParameter="{Binding}"
                                                             Style="{StaticResource gridRemoveButton}">
                                                         <Image Source="/Images/GridButtons/minus_20px.png" />
 
@@ -453,6 +383,7 @@
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>
                                     </DataGridTemplateColumn>
+
                                 </DataGrid.Columns>
                             </DataGrid>
                         </Grid>
@@ -471,6 +402,7 @@
                             <DataGrid.Columns>
                                 <!--Checkboxes-->
                                 <DataGridCheckBoxColumn Width="auto"
+                                                        MinWidth="80"
                                                         HeaderStyle="{StaticResource DataGridColumnHeader.IndividualCell.Style}"
                                                         Binding="{Binding IsChecked,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                         EditingElementStyle="{StaticResource CheckBoxStyle1}"
@@ -527,6 +459,7 @@
                                                 <TextBlock Margin="10 0 0 0"
                                                            Grid.Column="1"
                                                            VerticalAlignment="Center"
+                                                           TextWrapping="Wrap"
                                                            Text="{Binding Name, Mode=OneWay}" />
                                             </Grid>
 
@@ -562,6 +495,7 @@
                                                            Grid.Column="1"
                                                            Margin="0 0 0 0"
                                                            VerticalAlignment="Center"
+                                                           TextWrapping="Wrap"
                                                            Background="Transparent"
                                                            Padding="0" />
                                             </Grid>
@@ -582,7 +516,7 @@
                                 <DataGridTemplateColumn Header="Actions"
                                                         HeaderStyle="{StaticResource DataGridColumnHeader.IndividualCell.Last.Style}"
                                                         IsReadOnly="True"
-                                                        MinWidth="79"
+                                                        MinWidth="80"
                                                         CanUserResize="False"
                                                         Width="auto">
                                     <DataGridTemplateColumn.CellTemplate>
@@ -606,6 +540,8 @@
 
                                                 </Button>
                                                 <Button Margin="5 0 0 0"
+                                                        Command="{Binding Path=DataContext.RemoveAgencyCommand, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}, Mode=FindAncestor}}"
+                                                        CommandParameter="{Binding}"
                                                         Style="{StaticResource gridRemoveButton}">
                                                     <Image Source="/Images/GridButtons/minus_20px.png" />
                                                 </Button>

@@ -1,6 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ECR.Domain.Models {
+    public enum PriorityLevel { One, Two, Three, Four, Five, Six }
+
     [Table(nameof(Record))]
     public sealed class Record {
         public int Id { get; set; }
@@ -16,7 +18,7 @@ namespace ECR.Domain.Models {
         /// <summary>
         /// levels from 1 - 3
         /// </summary>
-        public int PriorityLevel { get; set; } = 0;
+        public PriorityLevel PriorityLevel { get; set; } = PriorityLevel.One;
         public Caller Call { get; set; } = null!;
         /// <summary>
         /// place where the incident took place
@@ -25,13 +27,13 @@ namespace ECR.Domain.Models {
         /// <summary>
         /// the distinguishing landmark for operations
         /// </summary>
-        public string? Landmark { get; set; } = null;
+        public DateTime DateTimeOfReport { get; set; } = DateTime.Now;
         /// <summary>
         /// to transfer to
         /// </summary>
-        public Agency? Agency { get; set; }
+        public Agency? Agency { get; set; } = null;
 
-        public List<Audio> Audios { get; set; } = new();
+        public List<Audio> Audios { get; set; } = [];
     }
 
     [Table(nameof(Audio))]
@@ -40,5 +42,6 @@ namespace ECR.Domain.Models {
         public string Name { get; set; } = null!;
         public DateTime DateRecorded { get; set; }
         public string FilePath { get; set; } = string.Empty;
+        public Record Record { get; set; } = null!;
     }
 }

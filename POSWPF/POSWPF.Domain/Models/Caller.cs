@@ -10,5 +10,7 @@ namespace ECR.Domain.Models {
         public string Name { get; set; } = null!;
         public string ContactDetail { get; set; } = null!;
         public string? Address { get; set; } = null;
+        public override string ToString()
+            => Name + " ● " + ContactDetail + (string.IsNullOrWhiteSpace(Address) ? "" : " ● " + Address);
     }
 }

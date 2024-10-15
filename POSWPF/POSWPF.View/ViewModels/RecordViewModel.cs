@@ -1,28 +1,43 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using ECR.Domain.Models;
 using ECR.WPF.Utilities;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Media;
 
 namespace ECR.View.ViewModels {
     public sealed partial class Record_Item_ViewModel : ObservableObject {
-       
+        private Record record = null!;
+
+        public int Id => record.Id;
+
+        public Record Record {
+            get => record;
+
+            set {
+                record = value;
+                CallerDetails = record.Call?.ToString()!;
+                CallType = record.CallType!;
+                Summary = record.Summary!;
+                Agency = new Agency_Item_ViewModel() { Agency = record.Agency! };
+                Level = record.PriorityLevel;
+                PlaceOfIncident = record.IncidentLocation;
+                DateTimeOfReport = record.DateTimeOfReport;
+            }
+        }
 
         [ObservableProperty]
-        string _callerDetails = "Juan Dela Cruz - 0999 999 9999";
+        string _callerDetails = null!;
+
         [ObservableProperty]
-        string _title = "Lorem ipsum dolor sit amet";
+        string _callType = null!;
+
         [ObservableProperty]
-        string _level = "VI";
+        string _summary = null!;
+
         [ObservableProperty]
-        string _severity = "Catastrophic";
+        PriorityLevel _level = PriorityLevel.One;
+
         [ObservableProperty]
-        string _endorseTo = "BFP Kalibo Subfirestation";
+        Agency_Item_ViewModel _agency = null!;
 
         [ObservableProperty]
         string _placeOfIncident = "Poblacion, Kalibo, Aklan";
@@ -30,21 +45,30 @@ namespace ECR.View.ViewModels {
         [ObservableProperty]
         bool _isChecked = false;
 
+        [ObservableProperty]
+        DateTime _dateTimeOfReport;
+
         partial void OnIsCheckedChanged(bool value) {
             OnSelectionChanged?.Invoke(this, value);
         }
 
         public event EventHandler<bool>? OnSelectionChanged;
-
     }
 
     public sealed partial class Agency_Item_ViewModel : ObservableObject {
-        public void SetAgency(Agency agency) {
-            Id = agency.Id;
-            Name = agency.Name;
-            DefaultContactDetail = agency.ContactDetails.FirstOrDefault(x => x.IsDefault);
-            Address = agency.Address;
-            Logo = agency.Logo.ToImageSource();
+
+        private Agency _agency = null!;
+        public Agency Agency {
+            get => _agency;
+            set {
+                _agency = value;
+                Id = _agency.Id;
+                Name = _agency.Name;
+                DefaultContactDetail = _agency.ContactDetails.FirstOrDefault(x => x.IsDefault);
+                Address = _agency.Address;
+                Logo = _agency.Logo.ToImageSource();
+                DefaultContactDetail = _agency.DefaultContact;
+            }
         }
 
         public int Id { get; set; } = -1;

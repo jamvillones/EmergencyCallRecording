@@ -21,7 +21,7 @@ namespace ECR.WPF.Utilities.Converters {
                 return result.ToUpper();
             }
 
-            throw new NotImplementedException();
+            return Binding.DoNothing;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) {

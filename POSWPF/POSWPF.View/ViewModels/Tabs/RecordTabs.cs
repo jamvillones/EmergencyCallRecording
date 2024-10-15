@@ -2,10 +2,10 @@
 using CommunityToolkit.Mvvm.Input;
 using ECR.Domain.Data;
 using ECR.Domain.Models;
-using ECR.WPF.Utilities;
 using ECR.WPF.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.ObjectModel;
+using System.Windows;
 
 namespace ECR.View.ViewModels.Tabs {
 
@@ -22,7 +22,7 @@ namespace ECR.View.ViewModels.Tabs {
             OpenedForm = regForm as ObservableObject;
         }
 
-        readonly CallsTab callsTab = new();
+        readonly CallsTab callsTab = new(new DbContextFactory());
         readonly AgencyTab agencyTab = new(new DbContextFactory());
 
         [ObservableProperty]
@@ -30,6 +30,7 @@ namespace ECR.View.ViewModels.Tabs {
 
         [ObservableProperty]
         private ObservableObject? _openedForm = null;
+
 
         [RelayCommand]
         private void OpenRegistrationForm() {
@@ -55,8 +56,6 @@ namespace ECR.View.ViewModels.Tabs {
         void SwitchToAgencies() {
             CurrentTab = agencyTab;
         }
-
-
     }
     interface IRegistrationOpener {
         ICloseableObject GetRegistrationForm();
@@ -65,18 +64,37 @@ namespace ECR.View.ViewModels.Tabs {
     }
 
     sealed partial class CallsTab : ObservableObject, IRegistrationOpener {
-        //public CallsTab() {
-        //    for (int i = 0; i < 10; i++)
-        //        AddNewItem(new RecordViewModel());
 
-        //    OnPropertyChanged(nameof(TotalItems));
-        //}
+        public IDBContextFactory ContextFactory { get; }
+
+        public CallsTab(IDBContextFactory contextFactory) {
+            ContextFactory = contextFactory;
+
+            _ = InitializeData();
+        }
+
+        async Task InitializeData() {
+            try {
+                using var context = ContextFactory.CreateDbContext();
+                Records.Clear();
+
+                var records = await context.Records.AsNoTracking()
+                    .Include(r => r.Agency)
+                    .ToListAsync();
+
+                foreach (var rec in records)
+                    AddNewItem(new Record_Item_ViewModel() { Record = rec });
+
+            }
+            catch (Exception) { throw; }
+        }
+
         public ObservableCollection<Record_Item_ViewModel> Records { get; } = [];
 
         public event EventHandler<object>? OnEdit;
+
         [RelayCommand]
         private void OpenEditForm(int id) {
-
             var regForm = GetEditForm(id);
             OnEdit?.Invoke(this, regForm);
         }
@@ -85,6 +103,28 @@ namespace ECR.View.ViewModels.Tabs {
             Records.Add(record);
             record.OnSelectionChanged += Record_OnSelectionChanged;
         }
+
+        [RelayCommand]
+        async Task RemoveItem(Record_Item_ViewModel vm) {
+            if (MessageBox.Show("Are you sure you want to remove this record?", "", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.No) return;
+
+            try {
+                using var context = ContextFactory.CreateDbContext();
+
+                var toRemove = await context.Records.FirstOrDefaultAsync(r => r.Id == vm.Id);
+                if (toRemove is null)
+                    return;
+
+                context.Records.Remove(toRemove);
+                await context.SaveChangesAsync();
+
+                Records.Remove(vm);
+            }
+            catch (Exception ex) {
+                MessageBox.Show(ex.Message, "", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
         /// <summary>
         /// We have this method for unsubscribing 'onselectionchanged' event when record is removed
         /// </summary>
@@ -92,6 +132,7 @@ namespace ECR.View.ViewModels.Tabs {
             foreach (var item in Records) item.OnSelectionChanged -= Record_OnSelectionChanged;
             Records.Clear();
         }
+
         /// <summary>
         /// we inform the ui that the selection has changed, thus calculating if the the main checkbox should be checked or not based on condition
         /// </summary>
@@ -114,13 +155,19 @@ namespace ECR.View.ViewModels.Tabs {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void NewRecordForm_OnSaveSuccessful(object? sender, object e) {
-            Record_Item_ViewModel record = new Record_Item_ViewModel();
-            AddNewItem(record);
+            if (e is Record rec) {
+                Record_Item_ViewModel record = new() { Record = rec };
+                AddNewItem(record);
+            }
         }
 
         public ICloseableObject GetEditForm(int id) {
-            var newRecordForm = new Form_Edit_Record_ViewModel(new DbContextFactory());
-            //newRecordForm.OnSaveSuccessful += NewRecordForm_OnSaveSuccessful;
+            using var context = ContextFactory.CreateDbContext();
+            var recordToEdit = context.Records
+                .Include(r => r.Agency)
+                .Include(r => r.Audios)
+                .FirstOrDefault(x => x.Id == id);
+            var newRecordForm = new Form_Edit_Record_ViewModel(new DbContextFactory()) { Record = recordToEdit! };
             return newRecordForm;
         }
 
@@ -149,6 +196,26 @@ namespace ECR.View.ViewModels.Tabs {
         }
 
         [RelayCommand]
+        async Task RemoveAgency(Agency_Item_ViewModel vm) {
+
+            if (MessageBox.Show("Are you sure you want to remove this agency? This action cannot be undone.", "", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.No)
+                return;
+
+            try {
+                using (var context = contextFactory.CreateDbContext()) {
+                    var agency = await context.Agencies.FirstOrDefaultAsync(x => x.Id == vm.Id);
+                    context.Agencies.Remove(agency!);
+                    await context.SaveChangesAsync();
+                }
+
+                Items.Remove(vm);
+            }
+            catch (Exception ex) {
+                MessageBox.Show(ex.Message, "Delete failed", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        [RelayCommand]
         private void OpenEditForm(int id) {
 
             var regForm = GetEditForm(id);
@@ -166,7 +233,7 @@ namespace ECR.View.ViewModels.Tabs {
         private void Form_OnSaveSuccessful(object? sender, object e) {
             if (e is Agency a) {
                 var toUpdate = Items.FirstOrDefault(i => i.Id == a.Id)!;
-                toUpdate.SetAgency(a);
+                toUpdate.Agency = a;
             }
         }
 
@@ -180,10 +247,11 @@ namespace ECR.View.ViewModels.Tabs {
         }
 
         private Agency_Item_ViewModel CreateAgencyViewModel(Agency agency) {
-            var vm = new Agency_Item_ViewModel();
-            vm.SetAgency(agency);
+            var vm = new Agency_Item_ViewModel {
+                Agency = agency
+            };
+
             return vm;
-            //return new AgencyViewModel() { Id = agency.Id, Name = agency.Name, Address = agency.Address, Logo = agency.Logo?.ToImageSource() };
         }
 
         void AddNewItem(Agency_Item_ViewModel item) {

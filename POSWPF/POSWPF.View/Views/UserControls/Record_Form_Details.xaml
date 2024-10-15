@@ -3,13 +3,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:local="clr-namespace:ECR.WPF.Views.UserControls"
              xmlns:ph="clr-namespace:PlaceholderTextBox;assembly=PlaceholderTextBox"
+             xmlns:converter="clr-namespace:ECR.WPF.Utilities.Converters"
              mc:Ignorable="d"
              KeyboardNavigation.ControlTabNavigation="Cycle"
              KeyboardNavigation.TabNavigation="Cycle"
              d:DesignHeight="450"
-             d:DesignWidth="800">
+             d:DesignWidth="600">
     <UserControl.Resources>
         <Thickness x:Key="Vertical.Spacing">0,0,0,20</Thickness>
     </UserControl.Resources>
@@ -19,17 +19,6 @@
                   HorizontalScrollBarVisibility="Disabled">
 
         <StackPanel>
-            <StackPanel.Resources>
-                <!--<Style TargetType="TextBlock">
-                    <Setter Property="Margin"
-                            Value="5,0,5,5" />
-                    <Setter Property="FontSize"
-                            Value="11" />
-
-                    <Setter Property="Foreground"
-                            Value="{StaticResource AccentColor.Primary}" />
-                </Style>-->
-            </StackPanel.Resources>
 
             <TextBlock>Caller Information:</TextBlock>
 
@@ -46,6 +35,7 @@
             </StackPanel>
 
             <TextBlock>Call Type:</TextBlock>
+
             <ComboBox Margin="{StaticResource Vertical.Spacing}"
                       Text="{Binding CallType,UpdateSourceTrigger=PropertyChanged}"
                       Background="White"
@@ -58,14 +48,47 @@
             <TextBlock>Endorse To:</TextBlock>
 
             <ComboBox Margin="{StaticResource Vertical.Spacing}"
-                      Text="{Binding EndorseTo,UpdateSourceTrigger=PropertyChanged}"
-                      Background="White"
-                      IsEditable="True">
-                <ComboBoxItem>BFP Kalibo FireStation</ComboBoxItem>
-                <ComboBoxItem>BFP Kalibo FireStation I</ComboBoxItem>
-                <ComboBoxItem>BFP Kalibo FireStation II</ComboBoxItem>
-                <ComboBoxItem>BFP Kalibo FireStation III</ComboBoxItem>
-                <ComboBoxItem>BFP Kalibo FireStation IV</ComboBoxItem>
+                      ItemsSource="{Binding Agencies}"
+                      SelectedItem="{Binding SelectedAgency, Mode=TwoWay}"
+                      IsEditable="False"
+                      Background="White">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Center"
+                                    Orientation="Horizontal">
+
+                            <Border Width="20"
+                                    Height="20"
+                                    CornerRadius="15"
+                                    BorderThickness="2"
+                                    BorderBrush="White"
+                                    Margin="0"
+                                    Background="{Binding Logo, Converter={StaticResource ImageToBackgroundConverter}}">
+                                <Border Background="{StaticResource AccentColor.Primary}"
+                                        CornerRadius="10"
+                                        Margin="-1"
+                                        Visibility="{Binding Logo, Converter={StaticResource NullToVisibilityConverter}}">
+                                    <TextBlock HorizontalAlignment="Center"
+                                               VerticalAlignment="Center"
+                                               FontWeight="Bold"
+                                               Foreground="White"
+                                               Text="{Binding Name, Mode=OneWay, Converter={StaticResource GetFirstTwoLetterConverter}}" />
+                                </Border>
+                            </Border>
+
+                            <TextBlock Margin="10 0"
+                                       Grid.Column="1"
+                                       VerticalAlignment="Center">
+                                <Run Text="{Binding Name, Mode=OneWay}" />
+                                <Run Foreground="{StaticResource AccentColor.Primary}"> - </Run>
+                                <Run Text="{Binding DefaultContactDetail.Value, Mode=OneWay}" />
+                            </TextBlock>
+                        </StackPanel>
+
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+
             </ComboBox>
             <Grid Margin="{StaticResource Vertical.Spacing}">
                 <Grid.ColumnDefinitions>
@@ -79,11 +102,12 @@
                     <RowDefinition />
                 </Grid.RowDefinitions>
 
-                <TextBlock Grid.Column="0">Location:</TextBlock>
+                <TextBlock Grid.Column="0">Incident Location:</TextBlock>
                 <ph:PlaceholderTextbox Grid.Row="1"
                                        Grid.Column="0"
                                        Margin="0"
-                                       Text="{Binding Severity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                       Text="{Binding IncidentLocation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
                 <TextBlock Grid.Column="2">Priority Level:</TextBlock>
 
                 <Border Grid.Row="1"
@@ -106,20 +130,23 @@
                                         Value="Hand" />
                             </Style>
 
+                            <converter:EnumBooleanConverter x:Key="EnumToBool" />
+
                         </UniformGrid.Resources>
-                        <RadioButton IsChecked="True">I</RadioButton>
-                        <RadioButton>II</RadioButton>
-                        <RadioButton>III</RadioButton>
-                        <RadioButton>IV</RadioButton>
-                        <RadioButton>V</RadioButton>
-                        <RadioButton Margin="0">VI</RadioButton>
+                        <RadioButton IsChecked="{Binding Level, Converter={StaticResource EnumToBool}, ConverterParameter=One}">I</RadioButton>
+                        <RadioButton IsChecked="{Binding Level, Converter={StaticResource EnumToBool}, ConverterParameter=Two}">II</RadioButton>
+                        <RadioButton IsChecked="{Binding Level, Converter={StaticResource EnumToBool}, ConverterParameter=Three}">III</RadioButton>
+                        <RadioButton IsChecked="{Binding Level, Converter={StaticResource EnumToBool}, ConverterParameter=Four}">IV</RadioButton>
+                        <RadioButton IsChecked="{Binding Level, Converter={StaticResource EnumToBool}, ConverterParameter=Five}">V</RadioButton>
+                        <RadioButton IsChecked="{Binding Level, Converter={StaticResource EnumToBool}, ConverterParameter=Six}"
+                                     Margin="0">VI</RadioButton>
 
                     </UniformGrid>
                 </Border>
             </Grid>
 
             <TextBlock>Summary:</TextBlock>
-            <ph:PlaceholderTextbox Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}"
+            <ph:PlaceholderTextbox Text="{Binding Summary, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                    Margin="{StaticResource Vertical.Spacing}" />
 
             <TextBlock>Details of the Report:</TextBlock>
@@ -128,7 +155,7 @@
                                    MinHeight="250"
                                    Margin="0"
                                    BorderBrush="{StaticResource AccentColor.Primary}"
-                                   Text="{Binding Details,UpdateSourceTrigger=PropertyChanged}" />
+                                   Text="{Binding Details , Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
 
         </StackPanel>
     </ScrollViewer>

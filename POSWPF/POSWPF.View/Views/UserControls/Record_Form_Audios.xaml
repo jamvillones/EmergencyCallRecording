@@ -58,6 +58,7 @@
                 </Grid>
             </Button>
             <Button Grid.Column="2"
+                    Command="{Binding RemoveAllAudiosCommand}"
                     BorderThickness="0"
                     Background="Maroon"
                     Foreground="white"
@@ -141,6 +142,8 @@
                                     <Image Source="/Images/GridButtons/Play Button Circled_50px.png" />
                                 </Button>
                                 <Button Margin="5 0 0 0"
+                                        CommandParameter="{Binding}"
+                                        Command="{Binding DataContext.RemoveAudioCommand, RelativeSource={RelativeSource AncestorType=DataGrid, Mode=FindAncestor}}"
                                         Style="{StaticResource gridRemoveButton}">
                                     <Image Source="/Images/GridButtons/minus_20px.png" />
                                 </Button>

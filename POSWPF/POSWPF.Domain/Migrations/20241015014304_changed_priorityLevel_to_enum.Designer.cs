@@ -4,6 +4,7 @@ using ECR.Domain.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ECR.Domain.Migrations
 {
     [DbContext(typeof(MDRContext))]
-    partial class MDRContextModelSnapshot : ModelSnapshot
+    [Migration("20241015014304_changed_priorityLevel_to_enum")]
+    partial class changed_priorityLevel_to_enum
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -143,15 +146,15 @@ namespace ECR.Domain.Migrations
                     b.Property<string>("CallType")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("DateTimeOfReport")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("Details")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("IncidentLocation")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Landmark")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("PriorityLevel")
