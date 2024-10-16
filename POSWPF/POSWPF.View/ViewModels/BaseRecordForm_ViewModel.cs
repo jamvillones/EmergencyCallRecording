@@ -21,15 +21,13 @@ namespace ECR.WPF.ViewModels {
         protected BaseRecordForm_ViewModel(IDBContextFactory dbFactory) {
             DbFactory = dbFactory;
             Audios.CollectionChanged += Audios_CollectionChanged;
-
-            //_ = InitializeAgencyList();
         }
 
+        public abstract FormSaveType SaveType { get; }
         private void Audios_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e) {
             OnPropertyChanged(nameof(AudiosIsEmpty));
             OnPropertyChanged(nameof(AudiosNotEmpty));
 
-            //if (AudiosIsEmpty)
             RemoveAllAudiosCommand.NotifyCanExecuteChanged();
         }
 
@@ -176,6 +174,8 @@ namespace ECR.WPF.ViewModels {
             _ = InitializeAgencyList();
         }
 
+        public override FormSaveType SaveType => FormSaveType.Register;
+
         public override async Task<bool> Save() {
             if (!await base.Save()) {
                 MessageBox.Show("Fill out necessary fields first!", "", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -216,7 +216,15 @@ namespace ECR.WPF.ViewModels {
         protected override void Reset() {
             if (MessageBox.Show("Are you sure you want to reset?", "These changes cannot be made", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.No) return;
 
-            CallerName = CallAddresss = CallContactDetails = IncidentLocation = Summary = CallType = string.Empty;
+            CallerName =
+            CallAddresss =
+            CallContactDetails =
+            IncidentLocation =
+            Summary =
+            CallType =
+            Details = string.Empty;
+
+            Audios.Clear();
         }
     }
 
@@ -227,21 +235,31 @@ namespace ECR.WPF.ViewModels {
             get { return record; }
             set {
                 record = value;
-                CallerName = record.Call.Name;
-                CallContactDetails = record.Call.ContactDetail;
-                CallAddresss = record.Call.Address;
 
-                Level = record.PriorityLevel;
-                CallType = record.CallType;
-                IncidentLocation = record.IncidentLocation;
-                Summary = record.Summary;
-                Details = record.Details;
-
-                foreach (var audio in record.Audios)
-                    Audios.Add(new AudioViewModel() { Audio = audio });
+                SetDetails(record);
 
                 _ = InitializeAgencyList(record.Agency!);
             }
+        }
+
+        public override FormSaveType SaveType => FormSaveType.Edit;
+
+        void SetDetails(Record record) {
+            CallerName = record.Call.Name;
+            CallContactDetails = record.Call.ContactDetail;
+            CallAddresss = record.Call.Address;
+
+            Level = record.PriorityLevel;
+            CallType = record.CallType;
+            IncidentLocation = record.IncidentLocation;
+            Summary = record.Summary;
+            Details = record.Details;
+
+            if (Audios.Any())
+                Audios.Clear();
+
+            foreach (var audio in record.Audios)
+                Audios.Add(new AudioViewModel() { Audio = audio });
         }
 
         public override async Task<bool> Save() {
@@ -295,9 +313,9 @@ namespace ECR.WPF.ViewModels {
 
         }
 
-
-
         protected override void Reset() {
+            SetDetails(record);
+            SelectedAgency = Agencies.FirstOrDefault(a => a.Id == record.Agency!.Id)!;
         }
     }
 
@@ -334,7 +352,12 @@ namespace ECR.WPF.ViewModels {
 
         [RelayCommand]
         void PlayAudio() {
-            System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo() { FileName = FilePath, UseShellExecute = true });
+            try {
+                System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo() { FileName = FilePath, UseShellExecute = true });
+            }
+            catch {
+                MessageBox.Show("File not found.", "", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
     }

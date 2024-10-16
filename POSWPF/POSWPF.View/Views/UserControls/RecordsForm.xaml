@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:uc="clr-namespace:ECR.WPF.Views.UserControls"
+             xmlns:vm="clr-namespace:ECR.WPF.ViewModels"
              mc:Ignorable="d"
              d:DesignHeight="1061.5"
              d:DesignWidth="1080">
@@ -51,7 +52,21 @@
 
                 <TextBlock VerticalAlignment="Center"
                            FontSize="16"
-                           FontWeight="Bold">ADD NEW RECORD</TextBlock>
+                           FontWeight="Bold">
+                    <TextBlock.Style>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="Text"
+                                    Value="Add New Record" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding SaveType}"
+                                             Value="{x:Static vm:FormSaveType.Edit}">
+                                    <Setter Property="Text"
+                                            Value="Edit Record Details" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
 
                 <StackPanel Grid.Row="1"
                             Margin="0 0 0 0"
@@ -78,7 +93,7 @@
                            Height="1"
                            SnapsToDevicePixels="True"
                            Fill="{StaticResource AccentColor.Primary}" />
-                
+
                 <Grid Margin="0 10"
                       Grid.Row="2">
                     <uc:Record_Form_Details Visibility="{Binding ElementName=detailsRB, Path=IsChecked, Converter={StaticResource BoolToVisibilityConverter}}" />
@@ -137,7 +152,7 @@
                         </Button>
 
                     </StackPanel>
-                    <Button Background="IndianRed"
+                    <Button Background="Maroon"
                             Foreground="White"
                             Grid.Column="1"
                             Margin="0"

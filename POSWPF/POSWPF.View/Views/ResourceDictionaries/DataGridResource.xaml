@@ -223,7 +223,7 @@
                     <Border x:Name="DGR_Border"
                             Padding="0"
                             IsHitTestVisible="True"
-                            CornerRadius="2"
+                            CornerRadius="5"
                             Background="{TemplateBinding Background}"
                             BorderThickness="1"
                             BorderBrush="Transparent"
@@ -266,14 +266,14 @@
             <Trigger Property="IsMouseOver"
                      Value="True">
                 <Setter Property="Background"
-                        Value="#E0EAFA" />
+                        Value="LightGray" />
                 <!--<Setter Property="Foreground"
                         Value="#ffffff" />-->
             </Trigger>
             <Trigger Property="IsSelected"
                      Value="True">
                 <Setter Property="Background"
-                        Value="#9DC5FF" />
+                        Value="{StaticResource Datagrid.IsSelected.Background}" />
                 <!--<Setter Property="Foreground"
                         Value="#247FFF" />-->
             </Trigger>
@@ -285,7 +285,7 @@
                                Value="false" />
                 </MultiTrigger.Conditions>
                 <Setter Property="Background"
-                        Value="#EFF2F7" />
+                        Value="#D3D3D3" />
             </MultiTrigger>
         </Style.Triggers>
     </Style>
@@ -345,20 +345,20 @@
         <Setter Property="BorderThickness"
                 Value="0" />
         <Setter Property="Background"
-                Value="Transparent" />
+                Value="#333333" />
         <Setter Property="Foreground"
                 Value="#69717D" />
-        <!--<Setter Property="Margin"
-                Value="2 0" />-->
+        <Setter Property="Height"
+                Value="40" />
         <Setter Property="Padding"
                 Value="{StaticResource Cell.Padding}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type DataGridColumnHeader}">
                     <Grid>
-
                         <Border x:Name="culomnCellBorder"
                                 Grid.Column="1"
+                                CornerRadius="5"
                                 Background="{TemplateBinding Background}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
@@ -393,11 +393,9 @@
         <Setter Property="BorderThickness"
                 Value="0" />
         <Setter Property="Background"
-                Value="#E0EAFA" />
+                Value="Transparent" />
         <Setter Property="Foreground"
-                Value="Black" />
-        <!--<Setter Property="Margin"
-             Value="2 0" />-->
+                Value="White" />
         <Setter Property="Padding"
                 Value="{StaticResource Cell.Padding}" />
         <Setter Property="Template">
@@ -406,7 +404,7 @@
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition />
-                            <ColumnDefinition Width="4" />
+                            <ColumnDefinition Width="2" />
                         </Grid.ColumnDefinitions>
 
                         <Border x:Name="culomnCellBorder"
@@ -425,6 +423,9 @@
 
                         <Thumb x:Name="PART_RightHeaderGripper"
                                Grid.Column="1"
+                               Height="20"
+                               VerticalAlignment="Center"
+                               Background="Gray"
                                Style="{StaticResource ColumnHeaderGripperStyle}" />
                     </Grid>
                 </ControlTemplate>
@@ -441,9 +442,9 @@
         <Setter Property="BorderThickness"
                 Value="0" />
         <Setter Property="Background"
-                Value="#E0EAFA" />
+                Value="Transparent" />
         <Setter Property="Foreground"
-                Value="Black" />
+                Value="White" />
         <Setter Property="Padding"
                 Value="10 5" />
         <Setter Property="Template">
@@ -479,16 +480,10 @@
            TargetType="Button">
         <Setter Property="Cursor"
                 Value="Hand" />
-        <!--<Setter Property="Background"
-                Value="#512DA8" />
-        <Setter Property="BorderBrush"
-                Value="#4A148C" />-->
         <Setter Property="Background"
-                Value="#247FFF" />
+                Value="{StaticResource AccentColor.Secondary}" />
         <Setter Property="BorderThickness"
                 Value="0" />
-        <!--<Setter Property="Foreground"
-                Value="{StaticResource AccentColor.Primary}" />-->
         <Setter Property="FocusVisualStyle"
                 Value="{x:Null}" />
         <Setter Property="VerticalAlignment"
@@ -507,13 +502,6 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-        <!--<Style.Triggers>
-            <Trigger Property="IsMouseOver"
-                     Value="True">
-                <Setter Property="Background"
-                        Value="#E0EAFA" />
-            </Trigger>
-        </Style.Triggers>-->
     </Style>
 
     <Style x:Key="gridRemoveButton"
@@ -532,12 +520,12 @@
     </Style>
 
     <!--#region Check Box Style-->
-    <SolidColorBrush x:Key="OptionMark.Static.Background"
+    <SolidColorBrush x:Key="OptionMark.Static.Glyph"
+                     Color="#FF212121" />
+    <!--<SolidColorBrush x:Key="OptionMark.Static.Background"
                      Color="#FFFFFFFF" />
     <SolidColorBrush x:Key="OptionMark.Static.Border"
                      Color="#FF707070" />
-    <SolidColorBrush x:Key="OptionMark.Static.Glyph"
-                     Color="#FF212121" />
     <SolidColorBrush x:Key="OptionMark.MouseOver.Background"
                      Color="#FFF3F9FF" />
     <SolidColorBrush x:Key="OptionMark.MouseOver.Border"
@@ -555,7 +543,7 @@
     <SolidColorBrush x:Key="OptionMark.Disabled.Border"
                      Color="#FFBCBCBC" />
     <SolidColorBrush x:Key="OptionMark.Disabled.Glyph"
-                     Color="#FF707070" />
+                     Color="#FF707070" />-->
     <Style x:Key="CheckBoxStyle1"
            TargetType="{x:Type CheckBox}">
         <Setter Property="FocusVisualStyle"
@@ -563,11 +551,11 @@
         <Setter Property="Cursor"
                 Value="Hand" />
         <Setter Property="Background"
-                Value="{StaticResource OptionMark.Static.Background}" />
+                Value="White" />
         <Setter Property="BorderBrush"
-                Value="#DAE2EA" />
+                Value="{StaticResource Main.Foreground}" />
         <Setter Property="Foreground"
-                Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
+                Value="White" />
         <Setter Property="BorderThickness"
                 Value="2" />
         <Setter Property="Template">
@@ -601,7 +589,7 @@
                                        Opacity="0"
                                        Width="20"
                                        Height="20"
-                                       Margin="-4"
+                                       Margin="-3"
                                        Source="/Images/Check Mark_50px.png" />
                                 <Rectangle x:Name="indeterminateMark"
                                            Fill="{StaticResource OptionMark.Static.Glyph}"
@@ -628,54 +616,58 @@
                         </Trigger>
                         <Trigger Property="IsMouseOver"
                                  Value="true">
-                            <Setter Property="Background"
+                            <!--<Setter Property="Background"
                                     TargetName="checkBoxBorder"
-                                    Value="{StaticResource OptionMark.MouseOver.Background}" />
+                                    Value="{StaticResource OptionMark.MouseOver.Background}" />-->
                             <Setter Property="BorderBrush"
                                     TargetName="checkBoxBorder"
-                                    Value="#247FFF" />
+                                    Value="{StaticResource AccentColor.Primary}" />
                             <!--<Setter Property="Fill"
                                     TargetName="optionMark"
                                     Value="{StaticResource OptionMark.MouseOver.Glyph}" />-->
-                            <Setter Property="Fill"
+                            <!--<Setter Property="Fill"
                                     TargetName="indeterminateMark"
-                                    Value="{StaticResource OptionMark.MouseOver.Glyph}" />
+                                    Value="{StaticResource OptionMark.MouseOver.Glyph}" />-->
                         </Trigger>
                         <Trigger Property="IsEnabled"
                                  Value="false">
-                            <Setter Property="Background"
+                            <!--<Setter Property="Background"
                                     TargetName="checkBoxBorder"
                                     Value="{StaticResource OptionMark.Disabled.Background}" />
                             <Setter Property="BorderBrush"
                                     TargetName="checkBoxBorder"
                                     Value="{StaticResource OptionMark.Disabled.Border}" />
+                            -->
                             <!--<Setter Property="Fill"
                                     TargetName="optionMark"
                                     Value="{StaticResource OptionMark.Disabled.Glyph}" />-->
+                            <!--
                             <Setter Property="Fill"
                                     TargetName="indeterminateMark"
-                                    Value="{StaticResource OptionMark.Disabled.Glyph}" />
+                                    Value="{StaticResource OptionMark.Disabled.Glyph}" />-->
                         </Trigger>
                         <Trigger Property="IsPressed"
                                  Value="true">
-                            <Setter Property="Background"
-                                    TargetName="checkBoxBorder"
-                                    Value="{StaticResource OptionMark.Pressed.Background}" />
+
                             <Setter Property="BorderBrush"
                                     TargetName="checkBoxBorder"
                                     Value="#9575CD" />
                             <!--<Setter Property="Fill"
                                     TargetName="optionMark"
                                     Value="{StaticResource OptionMark.Pressed.Glyph}" />-->
-                            <Setter Property="Fill"
+                            <!--<Setter Property="Fill"
                                     TargetName="indeterminateMark"
-                                    Value="{StaticResource OptionMark.Pressed.Glyph}" />
+                                    Value="{StaticResource OptionMark.Pressed.Glyph}" />-->
                         </Trigger>
                         <Trigger Property="IsChecked"
                                  Value="true">
                             <Setter Property="Opacity"
                                     TargetName="optionMark"
                                     Value="1" />
+                            <Setter Property="Background"
+                                    TargetName="checkBoxBorder"
+                                    Value="{StaticResource AccentColor.Primary}" />
+
                             <Setter Property="Opacity"
                                     TargetName="indeterminateMark"
                                     Value="0" />
@@ -684,10 +676,14 @@
                                  Value="{x:Null}">
                             <Setter Property="Opacity"
                                     TargetName="optionMark"
-                                    Value="0" />
+                                    Value="1" />
+                            <Setter Property="Background"
+                                    TargetName="checkBoxBorder"
+                                    Value="{StaticResource AccentColor.Primary}" />
+
                             <Setter Property="Opacity"
                                     TargetName="indeterminateMark"
-                                    Value="1" />
+                                    Value="0" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -699,9 +695,11 @@
     <Style x:Key="RadioButton.Check.Style"
            TargetType="RadioButton">
         <Setter Property="BorderThickness"
-                Value="2" />
+                Value="0" />
         <Setter Property="BorderBrush"
-                Value="{StaticResource AccentColor.Primary}" />
+                Value="{StaticResource Main.Foreground}" />
+        <Setter Property="Background"
+                Value="#2E2E2E" />
         <Setter Property="FocusVisualStyle"
                 Value="{x:Null}" />
         <Setter Property="Cursor"
@@ -711,9 +709,9 @@
                 <ControlTemplate TargetType="RadioButton">
                     <Grid>
                         <Border x:Name="checkBoxBorder"
-                                CornerRadius="23"
-                                Width="20"
-                                Height="20"
+                                CornerRadius="11"
+                                Width="40"
+                                Height="22"
                                 Padding="0"
                                 Margin="0"
                                 Background="{TemplateBinding Background}"
@@ -723,10 +721,12 @@
                                 VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
                             <Grid x:Name="markGrid">
 
-                                <Image x:Name="optionMark"
-                                       Opacity="0"
-                                       Margin="-4"
-                                       Source="/Images/Check Mark_50px.png" />
+                                <Ellipse x:Name="bell"
+                                         HorizontalAlignment="Left"
+                                         Width="18"
+                                         Height="18"
+                                         Margin="2"
+                                         Fill="Gray" />
 
                             </Grid>
                         </Border>
@@ -734,9 +734,12 @@
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsChecked"
                                  Value="True">
-                            <Setter Property="Opacity"
-                                    TargetName="optionMark"
-                                    Value="1" />
+                            <Setter Property="HorizontalAlignment"
+                                    TargetName="bell"
+                                    Value="Right" />
+                            <Setter Property="Fill"
+                                    TargetName="bell"
+                                    Value="{StaticResource AccentColor.Secondary}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

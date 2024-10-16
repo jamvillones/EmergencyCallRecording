@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:placeHolder="clr-namespace:PlaceholderTextBox;assembly=PlaceholderTextBox"
              xmlns:converter="clr-namespace:ECR.WPF.Utilities.Converters"
+             xmlns:vm="clr-namespace:ECR.WPF.ViewModels"
              KeyboardNavigation.ControlTabNavigation="Cycle"
              KeyboardNavigation.TabNavigation="Cycle"
              FocusManager.FocusedElement="{Binding ElementName=firstControl}"
@@ -28,6 +29,21 @@
             <Setter Property="Cursor"
                     Value="Hand" />
         </Style>
+        <Style TargetType="Border"
+               x:Key="Border.Header.Footer">
+            <Setter Property="Background"
+                    Value="#DFDFDF" />
+            <Setter Property="Padding"
+                    Value="20" />
+            <Setter Property="BorderBrush"
+                    Value="Gray" />
+            <Setter Property="Margin"
+                    Value="1" />
+            <Setter Property="SnapsToDevicePixels"
+                    Value="True" />
+
+        </Style>
+
     </UserControl.Resources>
     <Grid Background="#cfffffff">
         <!--Curtain-->
@@ -45,45 +61,70 @@
                 </Border.Effect>
             </Border>
 
-            <Grid Margin="25">
+            <Grid>
                 <Grid.Resources>
                     <ResourceDictionary Source="/Views/ResourceDictionaries/DataGridResource.xaml" />
                 </Grid.Resources>
 
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto" />
-                    <RowDefinition Height="auto" />
                     <RowDefinition />
                     <RowDefinition Height="AUTO" />
                 </Grid.RowDefinitions>
                 <!--Title-->
-                <TextBlock VerticalAlignment="Center"
-                           FontSize="16"
-                           FontWeight="Bold">ADD NEW AGENCY</TextBlock>
+                <Border Style="{StaticResource Border.Header.Footer}"
+                        CornerRadius="4 4 0 0"
+                        BorderThickness="0 0 0 1">
+                    <TextBlock VerticalAlignment="Center"
+                               FontSize="16"
+                               FontWeight="Bold">
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="Text"
+                                        Value="Add New Agency" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding SaveType}"
+                                                 Value="{x:Static vm:FormSaveType.Edit}">
+                                        <Setter Property="Text"
+                                                Value="Edit Agency Details" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+                </Border>
+
                 <Grid Grid.Row="1"
-                      Margin="0 20">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="auto" />
-                        <ColumnDefinition />
-                    </Grid.ColumnDefinitions>
+                      Margin="20">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="20" />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
 
-                    <Grid Margin="0 0 20 0">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="auto" />
-                            <RowDefinition />
-                        </Grid.RowDefinitions>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
 
-                        <TextBlock>Logo:</TextBlock>
-                        <Border Grid.Row="1"
-                                Width="150"
-                                Height="150"
-                                BorderThickness="10"
-                                BorderBrush="#DDDDDD"
-                                CornerRadius="150"
-                                VerticalAlignment="Center"
-                                HorizontalAlignment="Center"
-                                Background="{Binding Logo, Converter={StaticResource ImageToBackgroundConverter}}">
-                            <!--<Border.Style>
+                        <Grid Margin="0 0 20 0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto" />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+
+                            <TextBlock>Logo:</TextBlock>
+                            <Border Grid.Row="1"
+                                    Width="150"
+                                    Height="150"
+                                    BorderThickness="10"
+                                    BorderBrush="Maroon"
+                                    CornerRadius="150"
+                                    VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                    Background="{Binding Logo, Converter={StaticResource ImageToBackgroundConverter}}">
+                                <!--<Border.Style>
                                 <Style TargetType="Border">
                                     <Setter Property="Background"
                                             Value="{Binding Logo, Converter={StaticResource ImageToBackgroundConverter}}" />
@@ -101,38 +142,38 @@
                                 </Style>
                             </Border.Style>-->
 
-                        </Border>
+                            </Border>
 
-                        <Button Grid.Row="1"
-                                Command="{Binding PickImageCommand}"
-                                Width="150"
-                                Height="150"
-                                Background="Transparent"
-                                Margin="0">
+                            <Button Grid.Row="1"
+                                    Command="{Binding PickImageCommand}"
+                                    Width="150"
+                                    Height="150"
+                                    Background="Transparent"
+                                    Margin="0">
 
-                        </Button>
+                            </Button>
 
-                        <Button Grid.Row="1"
-                                Command="{Binding RemoveLogoCommand}"
-                                Width="35"
-                                Height="35"
-                                HorizontalAlignment="Right"
-                                VerticalAlignment="Bottom"
-                                Padding="10"
-                                BorderThickness="2"
-                                Background="IndianRed"
-                                BorderBrush="White"
-                                Margin="
+                            <Button Grid.Row="1"
+                                    Command="{Binding RemoveLogoCommand}"
+                                    Width="35"
+                                    Height="35"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Bottom"
+                                    Padding="10"
+                                    BorderThickness="3"
+                                    Background="Maroon"
+                                    BorderBrush="White"
+                                    Margin="
                                 3">
-                            <Image Source=" /Images/remove_image_20px.png" />
-                        </Button>
+                                <Image Source=" /Images/remove_image_20px.png" />
+                            </Button>
 
-                    </Grid>
+                        </Grid>
 
-                    <StackPanel Grid.Column="1"
-                                Margin="0 0 0 0">
+                        <StackPanel Grid.Column="1"
+                                    Margin="0 0 0 0">
 
-                        <!--<StackPanel Orientation="Horizontal"
+                            <!--<StackPanel Orientation="Horizontal"
                                     HorizontalAlignment="Left">
 
                             <StackPanel VerticalAlignment="Center">
@@ -142,271 +183,278 @@
                                         Margin="0 0 0 0">Remove Logo</Button>
                             </StackPanel>
                         </StackPanel>-->
-                        <!--<TextBlock VerticalAlignment="Center"
+                            <!--<TextBlock VerticalAlignment="Center"
                                    Margin="20 5 0 10"
                                    FontSize="9"
                                    FontStyle="Italic"
                                    Foreground="{StaticResource AccentColor.Primary}">*Choose the logo that will be asssociated with the agency *</TextBlock>-->
 
-                        <TextBlock>Name:</TextBlock>
-                        <placeHolder:PlaceholderTextbox x:Name="firstControl"
-                                                        Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                                        Margin="{StaticResource Vertical.Spacing}" />
-                        <TextBlock>Address:</TextBlock>
-                        <placeHolder:PlaceholderTextbox Text="{Binding Address, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                                        Margin="{StaticResource Vertical.Spacing}" />
+                            <TextBlock>Name:</TextBlock>
+                            <placeHolder:PlaceholderTextbox x:Name="firstControl"
+                                                            Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                            Margin="{StaticResource Vertical.Spacing}" />
+                            <TextBlock>Address:</TextBlock>
+                            <placeHolder:PlaceholderTextbox Text="{Binding Address, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                            Margin="{StaticResource Vertical.Spacing}" />
 
-                    </StackPanel>
-                </Grid>
-
-                <Grid Grid.Row="2"
-                      Margin="0 0 0 10">
-                    <Grid.Resources>
-                        <converter:ContactTypeToImage x:Key="ContactToImage" />
-                    </Grid.Resources>
-
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="auto" />
-                        <RowDefinition Height="auto" />
-                        <RowDefinition />
-                    </Grid.RowDefinitions>
-                    <TextBlock>Contact Details:</TextBlock>
-
-                    <Grid Grid.Row="1"
-                          Margin="0 10">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="auto" />
-                            <ColumnDefinition />
-                            <ColumnDefinition Width="auto" />
-                        </Grid.ColumnDefinitions>
-                        <ComboBox Width="140"
-                                  Margin="0 0 10 0"
-                                  IsReadOnly="True"
-                                  SelectedItem="{Binding ContactType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                  ItemsSource="{Binding ContactTypeChoices}">
-                            <ComboBox.ItemTemplate>
-                                <DataTemplate>
-                                    <StackPanel Margin="5 0"
-                                                Orientation="Horizontal"
-                                                VerticalAlignment="Center">
-
-                                        <Image Width="15"
-                                               Height="15"
-                                               Margin="0 0 10 0"
-                                               Source="{Binding Converter={StaticResource ContactToImage}}" />
-
-                                        <TextBlock Text="{Binding}"
-                                                   VerticalAlignment="Center" />
-
-                                    </StackPanel>
-                                </DataTemplate>
-                            </ComboBox.ItemTemplate>
-                        </ComboBox>
-
-                        <placeHolder:PlaceholderTextbox Grid.Column="1"
-                                                        PlaceholderText="Value..."
-                                                        Margin="0 0 10 0"
-                                                        Text="{Binding ContactValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                            <TextBox.InputBindings>
-                                <KeyBinding Command="{Binding AddContactCommand}"
-                                            Key="Return" />
-                            </TextBox.InputBindings>
-                        </placeHolder:PlaceholderTextbox>
-
-                        <Button Grid.Column="2"
-                                IsTabStop="False"
-                                Focusable="False"
-                                Width="35"
-                                Padding="10"
-                                Command="{Binding AddContactCommand}"
-                                Background="{StaticResource AccentColor.Primary}"
-                                Margin="0">
-                            <Image Source="/Images/add_list_20px.png" />
-                        </Button>
+                        </StackPanel>
                     </Grid>
 
-                    <DataGrid ItemsSource="{Binding Contacts}"
-                              Grid.Row="2"
-                              Grid.ColumnSpan="3"
-                              BorderThickness="0 0 0 1"
-                              SnapsToDevicePixels="True"
-                              RowStyle="{DynamicResource DataGridRowStyle1}"
-                              ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}"
-                              CellStyle="{DynamicResource DataGridCellStyle1}"
-                              Style="{DynamicResource DataGridStyle1}">
+                    <Grid Grid.Row="2">
+                        <Grid.Resources>
+                            <converter:ContactTypeToImage x:Key="ContactToImage" />
+                        </Grid.Resources>
 
-                        <DataGrid.Columns>
-                            <DataGridTemplateColumn Header="Is Default"
-                                                    Width="auto"
-                                                    IsReadOnly="True"
-                                                    HeaderStyle="{StaticResource DataGridColumnHeader.IndividualCell.Style}">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <RadioButton Style="{StaticResource RadioButton.Check.Style}"
-                                                     GroupName="isdefaultcheck"
-                                                     IsChecked="{Binding IsDefault, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <TextBlock>Contact Details:</TextBlock>
 
-                            </DataGridTemplateColumn>
-                            <DataGridTemplateColumn Header="Contact Information"
-                                                    SortMemberPath="Value"
-                                                    Width="*"
-                                                    HeaderStyle="{StaticResource DataGridColumnHeader.IndividualCell.Style}">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <Grid HorizontalAlignment="Left"
-                                              VerticalAlignment="Center"
-                                              Width="AUTO"
-                                              Height="AUTO">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="auto" />
-                                                <ColumnDefinition />
-                                            </Grid.ColumnDefinitions>
-                                            <Image Width="15"
-                                                   Height="15"
-                                                   Margin="5"
-                                                   ToolTip="{Binding ContactType, Mode=OneTime}"
-                                                   Source="{Binding ContactType, Converter={StaticResource ContactToImage}}" />
-
-                                            <Image Width="12"
-                                                   Height="12"
-                                                   HorizontalAlignment="Right"
-                                                   VerticalAlignment="Bottom"
-                                                   Margin="0"
-                                                   ToolTip="Contact is not yet saved in the records"
-                                                   Visibility="{Binding IsNew, Converter={StaticResource BoolToVisibilityConverter}}"
-                                                   Source="/Images/Add_20px.png" />
-
-                                            <TextBox Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                                     BorderThickness="0"
-                                                     Grid.Column="1"
-                                                     Margin="5 0 0 0"
-                                                     VerticalAlignment="Center"
-                                                     Background="Transparent"
-                                                     Padding="0" />
-                                        </Grid>
-
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
-
-                            <DataGridTemplateColumn Header="Actions"
-                                                    MinWidth="79"
-                                                    HeaderStyle="{StaticResource DataGridColumnHeader.IndividualCell.Last.Style}"
-                                                    Width="auto"
-                                                    CanUserResize="False">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <StackPanel Orientation="Horizontal"
-                                                    Width="auto"
-                                                    HorizontalAlignment="Right">
-                                            <StackPanel.Resources>
-                                                <Style TargetType="Image">
-                                                    <Setter Property="Width"
-                                                            Value="15" />
-                                                </Style>
-                                            </StackPanel.Resources>
-
-                                            <Button Style="{StaticResource gridEditButton}"
-                                                    ToolTip="Copy To Clipboard"
-                                                    Command="{Binding CopyToClipboardCommand}"
-                                                    Margin="0 0 0 0">
-                                                <Image Source="/Images/GridButtons/copy_20px.png" />
-
-                                            </Button>
-
-                                            <Button Margin="5 0 0 0"
-                                                    ToolTip="Remove Contact Information"
-                                                    Command="{Binding Path=DataContext.RemoveContactCommand, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}, Mode=FindAncestor}}"
-                                                    CommandParameter="{Binding}"
-                                                    Style="{StaticResource gridRemoveButton}">
-                                                <Image Source="/Images/GridButtons/minus_20px.png" />
-
-                                            </Button>
-                                        </StackPanel>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
-                        </DataGrid.Columns>
-
-                    </DataGrid>
-                </Grid>
-
-                <Grid Grid.Row="3">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition />
-                        <ColumnDefinition Width="auto" />
-                    </Grid.ColumnDefinitions>
-                    <StackPanel Orientation="Horizontal">
-
-                        <Button Foreground="#E0EAFA"
-                                Background="{StaticResource AccentColor.Primary}"
-                                BorderThickness="0"
-                                Padding="10 0"
-                                HorizontalContentAlignment="Stretch"
-                                Command="{Binding SaveCommand}">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="auto" />
-                                    <ColumnDefinition />
-                                </Grid.ColumnDefinitions>
-                                <Image Width="18"
-                                       Source="/Images/save_close_50px.png" />
-
-                                <TextBlock Grid.Column="2"
-                                           VerticalAlignment="Center"
-                                           HorizontalAlignment="Center">
-                             Save
-                                </TextBlock>
-                            </Grid>
-
-                        </Button>
-                        <Button Background="#878787"
-                                Foreground="White"
-                                HorizontalContentAlignment="Stretch"
-                                Padding="10,0"
-                                Command="{Binding ResetCommand}">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="auto" />
-                                    <ColumnDefinition />
-                                </Grid.ColumnDefinitions>
-                                <Image Width="18"
-                                       Source="/Images/delete_receipt_50px.png" />
-
-                                <TextBlock Grid.Column="2"
-                                           VerticalAlignment="Center"
-                                           HorizontalAlignment="Center">
-                             Discard Changes
-                                </TextBlock>
-                            </Grid>
-                        </Button>
-
-                    </StackPanel>
-                    <Button Background="IndianRed"
-                            Foreground="White"
-                            Grid.Column="1"
-                            Margin="0"
-                            HorizontalContentAlignment="Stretch"
-                            Padding="10,0"
-                            Command="{Binding CloseCommand}">
-                        <Grid>
+                        <Grid Grid.Row="1"
+                              Margin="0 10">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="auto" />
                                 <ColumnDefinition />
+                                <ColumnDefinition Width="auto" />
                             </Grid.ColumnDefinitions>
-                            <Image Width="18"
-                                   Source="/Images/close_window_50px.png" />
+                            <ComboBox Width="140"
+                                      Margin="0 0 10 0"
+                                      IsReadOnly="True"
+                                      SelectedItem="{Binding ContactType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                      ItemsSource="{Binding ContactTypeChoices}">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Margin="5 0"
+                                                    Orientation="Horizontal"
+                                                    VerticalAlignment="Center">
 
-                            <TextBlock Grid.Column="2"
-                                       VerticalAlignment="Center"
-                                       HorizontalAlignment="Center">
-                                 Close
-                            </TextBlock>
+                                            <Image Width="15"
+                                                   Height="15"
+                                                   Margin="0 0 10 0"
+                                                   Source="{Binding Converter={StaticResource ContactToImage}}" />
+
+                                            <TextBlock Text="{Binding}"
+                                                       VerticalAlignment="Center" />
+
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+
+                            <placeHolder:PlaceholderTextbox Grid.Column="1"
+                                                            PlaceholderText="Value..."
+                                                            Margin="0 0 10 0"
+                                                            Text="{Binding ContactValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                <TextBox.InputBindings>
+                                    <KeyBinding Command="{Binding AddContactCommand}"
+                                                Key="Return" />
+                                </TextBox.InputBindings>
+                            </placeHolder:PlaceholderTextbox>
+
+                            <Button Grid.Column="2"
+                                    IsTabStop="False"
+                                    Focusable="False"
+                                    Width="35"
+                                    Padding="10"
+                                    Command="{Binding AddContactCommand}"
+                                    Background="{StaticResource AccentColor.Primary}"
+                                    Margin="0">
+                                <Image Source="/Images/add_list_20px.png" />
+                            </Button>
                         </Grid>
-                    </Button>
+
+                        <DataGrid ItemsSource="{Binding Contacts}"
+                                  Grid.Row="2"
+                                  Grid.ColumnSpan="3"
+                                  SnapsToDevicePixels="True"
+                                  RowStyle="{DynamicResource DataGridRowStyle1}"
+                                  ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}"
+                                  CellStyle="{DynamicResource DataGridCellStyle1}"
+                                  Style="{DynamicResource DataGridStyle1}">
+
+                            <DataGrid.Columns>
+                                <DataGridTemplateColumn Header="Is Default"
+                                                        Width="auto"
+                                                        IsReadOnly="True"
+                                                        HeaderStyle="{StaticResource DataGridColumnHeader.IndividualCell.Style}">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <RadioButton Style="{StaticResource RadioButton.Check.Style}"
+                                                         GroupName="isdefaultcheck"
+                                                         ToolTip="Set as the default contact information"
+                                                         IsChecked="{Binding IsDefault, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+
+                                </DataGridTemplateColumn>
+                                <DataGridTemplateColumn Header="Contact Information"
+                                                        SortMemberPath="Value"
+                                                        Width="*"
+                                                        HeaderStyle="{StaticResource DataGridColumnHeader.IndividualCell.Style}">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Grid HorizontalAlignment="Left"
+                                                  VerticalAlignment="Center"
+                                                  Width="AUTO"
+                                                  Height="AUTO">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="auto" />
+                                                    <ColumnDefinition />
+                                                </Grid.ColumnDefinitions>
+                                                <Image Width="15"
+                                                       Height="15"
+                                                       Margin="5"
+                                                       ToolTip="{Binding ContactType, Mode=OneTime}"
+                                                       Source="{Binding ContactType, Converter={StaticResource ContactToImage}}" />
+
+                                                <Image Width="12"
+                                                       Height="12"
+                                                       HorizontalAlignment="Right"
+                                                       VerticalAlignment="Bottom"
+                                                       Margin="0"
+                                                       ToolTip="Contact is not yet saved in the records"
+                                                       Visibility="{Binding IsNew, Converter={StaticResource BoolToVisibilityConverter}}"
+                                                       Source="/Images/Add_20px.png" />
+
+                                                <TextBox Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                         BorderThickness="0"
+                                                         Grid.Column="1"
+                                                         Margin="5 0 0 0"
+                                                         VerticalAlignment="Center"
+                                                         Background="Transparent"
+                                                         Padding="0" />
+                                            </Grid>
+
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+
+                                <DataGridTemplateColumn Header="Actions"
+                                                        MinWidth="79"
+                                                        HeaderStyle="{StaticResource DataGridColumnHeader.IndividualCell.Last.Style}"
+                                                        Width="auto"
+                                                        CanUserResize="False">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal"
+                                                        Width="auto"
+                                                        HorizontalAlignment="Right">
+                                                <StackPanel.Resources>
+                                                    <Style TargetType="Image">
+                                                        <Setter Property="Width"
+                                                                Value="15" />
+                                                    </Style>
+                                                </StackPanel.Resources>
+
+                                                <Button Style="{StaticResource gridEditButton}"
+                                                        ToolTip="Copy To Clipboard"
+                                                        Command="{Binding CopyToClipboardCommand}"
+                                                        Margin="0 0 0 0">
+                                                    <Image Source="/Images/GridButtons/copy_20px.png" />
+
+                                                </Button>
+
+                                                <Button Margin="5 0 0 0"
+                                                        ToolTip="Remove Contact Information"
+                                                        Command="{Binding Path=DataContext.RemoveContactCommand, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}, Mode=FindAncestor}}"
+                                                        CommandParameter="{Binding}"
+                                                        Style="{StaticResource gridRemoveButton}">
+                                                    <Image Source="/Images/GridButtons/minus_20px.png" />
+
+                                                </Button>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                            </DataGrid.Columns>
+
+                        </DataGrid>
+                    </Grid>
+
                 </Grid>
+
+                <Border Grid.Row="2"
+                        Background="#E0EAFA"
+                        CornerRadius="0 0 4 4"
+                        BorderThickness="0 1 0 0"
+                        Style="{StaticResource Border.Header.Footer}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="auto" />
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Orientation="Horizontal">
+
+                            <Button Foreground="#E0EAFA"
+                                    Background="{StaticResource AccentColor.Primary}"
+                                    BorderThickness="0"
+                                    Padding="10 0"
+                                    HorizontalContentAlignment="Stretch"
+                                    Command="{Binding SaveCommand}">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto" />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <Image Width="18"
+                                           Source="/Images/save_close_50px.png" />
+
+                                    <TextBlock Grid.Column="2"
+                                               VerticalAlignment="Center"
+                                               HorizontalAlignment="Center">
+                             Save
+                                    </TextBlock>
+                                </Grid>
+
+                            </Button>
+                            <Button Background="#878787"
+                                    Foreground="White"
+                                    HorizontalContentAlignment="Stretch"
+                                    Padding="10,0"
+                                    Command="{Binding ResetCommand}">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto" />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <Image Width="18"
+                                           Source="/Images/delete_receipt_50px.png" />
+
+                                    <TextBlock Grid.Column="2"
+                                               VerticalAlignment="Center"
+                                               HorizontalAlignment="Center">
+                             Discard Changes
+                                    </TextBlock>
+                                </Grid>
+                            </Button>
+
+                        </StackPanel>
+                        <Button Background="IndianRed"
+                                Foreground="White"
+                                Grid.Column="1"
+                                Margin="0"
+                                HorizontalContentAlignment="Stretch"
+                                Padding="10,0"
+                                Command="{Binding CloseCommand}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto" />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <Image Width="18"
+                                       Source="/Images/close_window_50px.png" />
+
+                                <TextBlock Grid.Column="2"
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Center">
+                                 Close
+                                </TextBlock>
+                            </Grid>
+                        </Button>
+                    </Grid>
+                </Border>
 
             </Grid>
 

@@ -11,12 +11,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\442476757_1122104629024125_4928465843589381531_n.jpg" />
     <None Remove="Images\Add Male User Group_30px.png" />
     <None Remove="Images\Add_20px.png" />
     <None Remove="Images\add_list_20px.png" />
     <None Remove="Images\Audio Wave_50px.png" />
     <None Remove="Images\audio_wave_50px.png" />
     <None Remove="Images\background.jpg" />
+    <None Remove="Images\background_1.jpg" />
     <None Remove="Images\cash_register_30px.png" />
     <None Remove="Images\Check Mark_50px.png" />
     <None Remove="Images\clipart3022007.png" />
@@ -29,7 +31,6 @@
     <None Remove="Images\delete_receipt_50px.png" />
     <None Remove="Images\Empty_Records_100px.png" />
     <None Remove="Images\Eye_20px.png" />
-    <None Remove="Images\find_user_male_25px.png" />
     <None Remove="Images\GridButtons\copy_20px.png" />
     <None Remove="Images\GridButtons\edit_property_20px.png" />
     <None Remove="Images\GridButtons\minus_20px.png" />
@@ -37,6 +38,9 @@
     <None Remove="Images\Ibajaylogo.png" />
     <None Remove="Images\image_50px.png" />
     <None Remove="Images\Lock_20px.png" />
+    <None Remove="Images\Logos\Kalibo Logo %281%29.png" />
+    <None Remove="Images\Logos\SOU New %281%29.png" />
+    <None Remove="Images\Logos\unnamed.png" />
     <None Remove="Images\MDRRMO logo.png" />
     <None Remove="Images\menu_20px.png" />
     <None Remove="Images\NavButtons\back_30px.png" />
@@ -51,6 +55,7 @@
     <None Remove="Images\remove_image_20px.png" />
     <None Remove="Images\sample_male.jpg" />
     <None Remove="Images\save_close_50px.png" />
+    <None Remove="Images\search_25px.png" />
     <None Remove="Images\shutdown_50px.png" />
     <None Remove="Images\SideButtons\automation_50px.png" />
     <None Remove="Images\SideButtons\location_50px.png" />
@@ -66,8 +71,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Images\442476757_1122104629024125_4928465843589381531_n.jpg" />
     <Resource Include="Images\Add_20px.png" />
     <Resource Include="Images\add_list_20px.png" />
+    <Resource Include="Images\background_1.jpg" />
     <Resource Include="Images\close_window_50px.png" />
     <Resource Include="Images\ContactTypes\Email_20px.png" />
     <Resource Include="Images\ContactTypes\Facebook Messenger_20px.png" />
@@ -77,10 +84,22 @@
     <Resource Include="Images\Empty_Records_100px.png" />
     <Resource Include="Images\GridButtons\copy_20px.png" />
     <Resource Include="Images\image_50px.png" />
+    <Resource Include="Images\Logos\Kalibo Logo (1).png" />
+    <Resource Include="Images\Logos\SOU New (1).png" />
+    <Resource Include="Images\Logos\unnamed.png" />
     <Resource Include="Images\no_phones_100px.png" />
     <Resource Include="Images\photo_gallery_20px.png" />
     <Resource Include="Images\remove_image_20px.png" />
     <Resource Include="Images\save_close_50px.png" />
+    <!--<Resource Include="_04-07-2024).jpg">
+      <T></T>
+    </Resource>
+    <Resource Include="_04-07-2024).jpg">
+      <T></T>
+    </Resource>
+    <Resource Include="_04-07-2024).jpg">
+      <T></T>
+    </Resource>-->
   </ItemGroup>
 
   <ItemGroup>
@@ -106,7 +125,7 @@
     <Resource Include="Images\clipart3022007.png" />
     <Resource Include="Images\closed_eye_20px.png" />
     <Resource Include="Images\Eye_20px.png" />
-    <Resource Include="Images\find_user_male_25px.png" />
+    <Resource Include="Images\search_25px.png" />
     <Resource Include="Images\GridButtons\edit_property_20px.png" />
     <Resource Include="Images\GridButtons\minus_20px.png" />
     <Resource Include="Images\GridButtons\Play Button Circled_50px.png" />
@@ -130,6 +149,21 @@
     <Resource Include="Images\SideButtons\related_companies_50px.png" />
     <Resource Include="Images\Signals\signal_50px.png" />
     <Resource Include="Images\Thumbnail.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
 
 </Project>

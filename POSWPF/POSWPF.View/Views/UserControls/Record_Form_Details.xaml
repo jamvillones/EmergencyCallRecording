@@ -154,7 +154,7 @@
             <TextBlock>Details of the Report:</TextBlock>
             <ph:PlaceholderTextbox AcceptsReturn="True"
                                    TextWrapping="Wrap"
-                                   MinHeight="250"
+                                   MinHeight="200"
                                    Margin="0"
                                    BorderBrush="{StaticResource AccentColor.Primary}"
                                    Text="{Binding Details , Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />

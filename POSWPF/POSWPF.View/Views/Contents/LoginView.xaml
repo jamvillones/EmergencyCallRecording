@@ -10,6 +10,11 @@
              FocusManager.FocusedElement="{Binding ElementName=usernameField}"
              d:DesignHeight="800"
              d:DesignWidth="1246.3">
+    <UserControl.Background>
+        <ImageBrush Opacity="0.1"
+                    ImageSource="/Images/background_1.jpg
+                    " />
+    </UserControl.Background>
     <UserControl.InputBindings>
         <KeyBinding Key="Return"
                     Command="{Binding LoginCommand}" />
@@ -42,26 +47,42 @@
     </UserControl.Resources>
 
     <Grid VerticalAlignment="Center"
+          Margin="40"
           HorizontalAlignment="Center">
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
             <ColumnDefinition  Width="auto" />
         </Grid.ColumnDefinitions>
 
-        <Image Source="/Images/Thumbnail.png"
-               HorizontalAlignment="Center"
-               Margin="0"
-               MaxHeight="450"
-               VerticalAlignment="Center" />
+        <Grid  Height="450">
+            <Image Source="/Images/Logos/SOU New (1).png"
+                   Stretch="Uniform"
+                   Margin="20"
+                   VerticalAlignment="Center" />
 
-        <Grid Margin="0 40 40 40"
+        </Grid>
+        <Border  Margin="0"
+                 HorizontalAlignment="Center"
+                 BorderThickness="5"
+                 BorderBrush="White"
+                 CornerRadius="165"
+                 VerticalAlignment="Top"
+                 Panel.ZIndex="1"
+                 Grid.Column="1">
+
+            <Image Source="/Images/Logos/Kalibo Logo (1).png"
+                   Width="100" />
+        </Border>
+
+        <Grid Margin="0 50 0 40"
               Grid.Column="1"
               Height="450"
               Width="320">
 
             <Border CornerRadius="10"
-                    Background="#E0EAFA"
-                    BorderBrush="Gray"
+                    Background="DarkGray"
+                    BorderBrush="Black"
+                    BorderThickness="0.5"
                     Width="320">
                 <Border.Effect>
                     <DropShadowEffect BlurRadius="10"
@@ -70,6 +91,12 @@
                 </Border.Effect>
             </Border>
 
+            <Image Source=" /Images/Logos/unnamed.png"
+                   HorizontalAlignment="Center"
+                   Margin="10"
+                   VerticalAlignment="Bottom"
+                   Width="70" />
+
             <StackPanel Margin="40,30">
                 <StackPanel.Resources>
                     <Style TargetType="TextBlock">
@@ -77,22 +104,24 @@
                                 Value="0,0,0,5" />
                         <Setter Property="FontSize"
                                 Value="12" />
+                        <Setter Property="Foreground"
+                                Value="White" />
                     </Style>
                 </StackPanel.Resources>
                 <TextBlock FontWeight="Bold"
                            Foreground="{StaticResource AccentColor.Primary}"
                            FontSize="24"
                            TextWrapping="Wrap"
-                           Margin="0,0,0,30">
-                    <Run Text="Login To Your" />
-                    <Run Foreground="Black"
+                           Margin="0 30 0 10 ">
+                    <Run Text="Login To Your"
+                         Foreground="{StaticResource AccentColor.Primary}" />
+                    <Run Foreground="{StaticResource Main.Foreground}"
                          Text="Account" />
                 </TextBlock>
-                <!--<TextBlock Margin="0,0,0,25">Log in to your existing Account</TextBlock>-->
 
-                <TextBlock Foreground="{StaticResource AccentColor.Primary}"><Run Text="Username:" /></TextBlock>
+                <TextBlock><Run Text="Username:" /></TextBlock>
 
-                <Grid Margin="0,0,0,20">
+                <Grid Margin="0,0,0,10">
                     <Image Source="/Images/person_20px.png"
                            HorizontalAlignment="Left"
                            Margin="10,0"
@@ -107,7 +136,7 @@
                                                     Padding="30,10,10,10" />
                 </Grid>
 
-                <TextBlock Foreground="{StaticResource AccentColor.Primary}"><Run Text="Password:" /></TextBlock>
+                <TextBlock><Run Text="Password:" /></TextBlock>
 
                 <views:BindablePasswordBox Password="{Binding Password}"
                                            IsEnabled="{Binding IsLoading, Mode=OneWay, Converter={StaticResource BoolInvertConverter}}"
@@ -122,6 +151,7 @@
                         Content="LOG IN" />
 
                 <Button Background="Transparent"
+                        Foreground="White"
                         BorderThickness="0"
                         FontWeight="Normal"
                         Content="SIGN UP" />

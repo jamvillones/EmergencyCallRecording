@@ -35,6 +35,8 @@
                     <ControlTemplate TargetType="RadioButton">
                         <Border x:Name="templateRoot"
                                 SnapsToDevicePixels="True"
+                                BorderThickness="2"
+                                BorderBrush="Transparent"
                                 CornerRadius="6"
                                 Background="{TemplateBinding Background}">
 
@@ -49,9 +51,12 @@
                                 <Setter Property="TextElement.Foreground"
                                         TargetName="contentPresenter"
                                         Value="White" />
+                                <Setter Property="BorderBrush"
+                                        TargetName="templateRoot"
+                                        Value="{StaticResource Main.Foreground}" />
                                 <Setter Property="Background"
                                         TargetName="templateRoot"
-                                        Value="#6DA9FF" />
+                                        Value="{StaticResource AccentColor.Secondary}" />
                             </Trigger>
 
                         </ControlTemplate.Triggers>
@@ -247,9 +252,9 @@
             <Border CornerRadius="{Binding RelativeSource={RelativeSource self}, Path=ActualWidth, Converter={StaticResource ValueDividerConverter}, ConverterParameter=2}"
                     Height="{Binding RelativeSource={RelativeSource self},Path=ActualWidth}"
                     Width="60"
-                    BorderThickness="3"
+                    BorderThickness="5"
                     Margin="0"
-                    BorderBrush="#d9d9d9">
+                    BorderBrush="{StaticResource Main.Foreground}">
                 <Border.Background>
                     <ImageBrush ImageSource="/Images/sample_male.jpg" />
                 </Border.Background>
@@ -271,7 +276,7 @@
                 Margin="0,40,0,0"
                 Width="200"
                 CornerRadius="0,30,0,0"
-                Background="#247FFF">
+                Background="{StaticResource AccentColor.Primary}">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto" />
@@ -364,8 +369,7 @@
                            Height="0.5"
                            Margin="20,0" />
 
-                <Button Style="{DynamicResource LogoutButtonStyle}"
-                        BorderThickness="0"
+                <Button BorderThickness="0"
                         Background="Transparent"
                         HorizontalContentAlignment="Left"
                         Padding="15,0"

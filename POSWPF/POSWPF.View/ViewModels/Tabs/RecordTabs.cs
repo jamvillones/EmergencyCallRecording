@@ -22,8 +22,8 @@ namespace ECR.View.ViewModels.Tabs {
             OpenedForm = regForm as ObservableObject;
         }
 
-        readonly CallsTab callsTab = new(new DbContextFactory());
-        readonly AgencyTab agencyTab = new(new DbContextFactory());
+        readonly Records_CallsSection callsTab = new(new DbContextFactory());
+        readonly Records_AgenciesSection agencyTab = new(new DbContextFactory());
 
         [ObservableProperty]
         IRegistrationOpener currentTab = null!;
@@ -63,11 +63,11 @@ namespace ECR.View.ViewModels.Tabs {
         event EventHandler<object> OnEdit;
     }
 
-    sealed partial class CallsTab : ObservableObject, IRegistrationOpener {
+    sealed partial class Records_CallsSection : ObservableObject, IRegistrationOpener {
 
         public IDBContextFactory ContextFactory { get; }
 
-        public CallsTab(IDBContextFactory contextFactory) {
+        public Records_CallsSection(IDBContextFactory contextFactory) {
             ContextFactory = contextFactory;
 
             _ = InitializeData();
@@ -186,12 +186,12 @@ namespace ECR.View.ViewModels.Tabs {
         public int TotalItems => Records.Count;
     }
 
-    sealed partial class AgencyTab : ObservableObject, IRegistrationOpener {
+    sealed partial class Records_AgenciesSection : ObservableObject, IRegistrationOpener {
         private readonly IDBContextFactory contextFactory;
 
         public event EventHandler<object>? OnEdit;
 
-        public AgencyTab(IDBContextFactory contextFactory) {
+        public Records_AgenciesSection(IDBContextFactory contextFactory) {
             this.contextFactory = contextFactory;
             _ = LoadDataAsync();
         }

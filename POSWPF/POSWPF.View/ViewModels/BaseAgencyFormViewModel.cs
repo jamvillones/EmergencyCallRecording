@@ -11,7 +11,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 namespace ECR.WPF.ViewModels {
-    public partial class ContactViewModel : ObservableObject {
+    public enum FormSaveType { Register, Edit }
+    public partial class Contact_Item_ViewModel : ObservableObject {
         public int Id { get; set; } = -1;
         public bool IsNew => Id == -1;
 
@@ -30,12 +31,10 @@ namespace ECR.WPF.ViewModels {
             MessageBox.Show("Copied to clipboard.", "", MessageBoxButton.OK, MessageBoxImage.Information);
         }
     }
-    public abstract partial class BaseAgencyFormViewModel : ObservableValidator, ICloseableObject {
-        protected BaseAgencyFormViewModel(IDBContextFactory contextFactory) {
-            this.contextFactory = contextFactory;
-        }
-
+    public abstract partial class Form_BaseAgency_ViewModel(IDBContextFactory contextFactory) : ObservableValidator, ICloseableObject {
         public event EventHandler? OnClose;
+
+        public abstract FormSaveType SaveType { get; }
 
         const string REQUIRED_FIELD_STRING = "*Requred";
         [RelayCommand]
@@ -43,7 +42,7 @@ namespace ECR.WPF.ViewModels {
             this.OnClose?.Invoke(this, EventArgs.Empty);
         }
 
-        public ObservableCollection<ContactViewModel> Contacts { get; set; } = [];
+        public ObservableCollection<Contact_Item_ViewModel> Contacts { get; set; } = [];
 
         public ContactType[] ContactTypeChoices { get; } = [ContactType.Mobile, ContactType.Telephone, ContactType.Email, ContactType.Messenger];
 
@@ -52,7 +51,7 @@ namespace ECR.WPF.ViewModels {
         [RelayCommand(CanExecute = nameof(CanAddContact))]
         void AddContact() {
 
-            var contact = new ContactViewModel() {
+            var contact = new Contact_Item_ViewModel() {
                 ContactType = ContactType,
                 Value = ContactValue.TrimmedAndNullWhenEmpty()!
             };
@@ -63,7 +62,7 @@ namespace ECR.WPF.ViewModels {
         }
 
         [RelayCommand]
-        void RemoveContact(ContactViewModel contact) {
+        void RemoveContact(Contact_Item_ViewModel contact) {
             if (MessageBox.Show("Are you sure you want to remove this contact information?", string.Empty, MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes) {
 
                 Contacts.Remove(contact);
@@ -103,7 +102,7 @@ namespace ECR.WPF.ViewModels {
 
         bool HasLogo => Logo is not null;
 
-        protected IDBContextFactory contextFactory { get; init; }
+        protected IDBContextFactory contextFactory { get; init; } = contextFactory;
 
         protected void InvokeSaveEvent(object p) {
             OnSaveSuccessful?.Invoke(this, p);
@@ -140,7 +139,6 @@ namespace ECR.WPF.ViewModels {
             ResetAgency();
         }
 
-        //public event EventHandler<object>? OnSaveSuccessful;
 
         [RelayCommand]
         void PickImage() {
@@ -160,12 +158,15 @@ namespace ECR.WPF.ViewModels {
         }
     }
 
-    public partial class Form_Add_Agency_ViewModel(IDBContextFactory contextFactory) : BaseAgencyFormViewModel(contextFactory) {
+    public partial class Form_Add_Agency_ViewModel(IDBContextFactory contextFactory) : Form_BaseAgency_ViewModel(contextFactory) {
+        public override FormSaveType SaveType => FormSaveType.Register;
+
         protected override bool ResetAgency() {
             if (base.ResetAgency()) {
 
                 Name = ContactDetails = Address = string.Empty;
                 Logo = null;
+                Contacts.Clear();
                 return true;
             }
 
@@ -179,6 +180,8 @@ namespace ECR.WPF.ViewModels {
                 MessageBox.Show("Fill out required fields first!", "", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
+
+            if (MessageBox.Show("Are you sure you want to add this record?", "Review details before saving", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.No) return;
 
             using (var context = contextFactory.CreateDbContext()) {
 
@@ -204,28 +207,32 @@ namespace ECR.WPF.ViewModels {
             await base.SaveAgency();
         }
     }
-    public partial class Form_Edit_Agency_ViewModel(IDBContextFactory contextFactory) : BaseAgencyFormViewModel(contextFactory) {
+    public partial class Form_Edit_Agency_ViewModel(IDBContextFactory contextFactory) : Form_BaseAgency_ViewModel(contextFactory) {
         private Agency agency = null!;
 
         public Agency AgencyToEdit {
             get { return agency; }
             set {
                 agency = value;
-                Name = agency.Name;
-                Address = agency.Address.TrimmedAndNullWhenEmpty();
-                Logo = agency.Logo?.ToImageSource();
-
-                foreach (var c in agency.ContactDetails.Select(c => new ContactViewModel() { Id = c.Id, ContactType = c.Type, Value = c.Value, IsDefault = c.IsDefault }).ToList())
-                    Contacts.Add(c);
+                SetDetails(agency);
             }
+        }
+
+        public override FormSaveType SaveType => FormSaveType.Edit;
+
+        private void SetDetails(Agency agency) {
+            Name = agency.Name;
+            Address = agency.Address.TrimmedAndNullWhenEmpty();
+            Logo = agency.Logo?.ToImageSource();
+
+            if (Contacts.Any()) Contacts.Clear();
+            foreach (var c in agency.ContactDetails.Select(c => new Contact_Item_ViewModel() { Id = c.Id, ContactType = c.Type, Value = c.Value, IsDefault = c.IsDefault }).ToList())
+                Contacts.Add(c);
         }
 
         protected override bool ResetAgency() {
             if (base.ResetAgency()) {
-                Name = agency.Name;
-                //ContactDetails = agency.ContactInfo;
-                Address = agency.Address;
-                Logo = agency.Logo.ToImageSource();
+                SetDetails(agency);
                 return true;
             }
             return false;
@@ -238,6 +245,8 @@ namespace ECR.WPF.ViewModels {
                 MessageBox.Show("Fill out required fields first!", "", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
+
+            if (MessageBox.Show("Are you sure you want to save these changes to the record?", "Review details before saving", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.No) return;
 
             try {
                 using var context = contextFactory.CreateDbContext();

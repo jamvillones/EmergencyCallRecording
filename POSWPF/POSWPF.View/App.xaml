@@ -12,10 +12,15 @@
             </ResourceDictionary.MergedDictionaries>
 
             <SolidColorBrush x:Key="AccentColor.Primary"
-                             Color="#247FFF" />
+                             Color="#1A1A1A" />
+
+            <SolidColorBrush x:Key="Datagrid.IsSelected.Background"
+                             Color="#B7B7B7" />
 
             <SolidColorBrush x:Key="AccentColor.Secondary"
-                             Color="#005FB8" />
+                             Color="#F7CA0D" />
+
+            <SolidColorBrush x:Key="Main.Foreground">Maroon</SolidColorBrush>
 
             <SolidColorBrush x:Key="Button.Static.Background">#E0EAFA</SolidColorBrush>
 
