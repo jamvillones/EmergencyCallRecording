@@ -288,6 +288,12 @@
                                         </DataGridTemplateColumn.CellTemplate>
                                     </DataGridTemplateColumn>
 
+                                    <DataGridTextColumn Header="Incident Location"
+                                                        HeaderStyle="{StaticResource DataGridColumnHeader.IndividualCell.Style}"
+                                                        IsReadOnly="True"
+                                                        Width="*"
+                                                        Binding="{Binding PlaceOfIncident}" />
+                                    
                                     <DataGridTextColumn Header="Summary"
                                                         HeaderStyle="{StaticResource DataGridColumnHeader.IndividualCell.Style}"
                                                         Binding="{Binding Summary}"
@@ -301,12 +307,6 @@
                                             </Style>
                                         </DataGridTextColumn.ElementStyle>
                                     </DataGridTextColumn>
-
-                                    <DataGridTextColumn Header="Incident Location"
-                                                        HeaderStyle="{StaticResource DataGridColumnHeader.IndividualCell.Style}"
-                                                        IsReadOnly="True"
-                                                        Width="*"
-                                                        Binding="{Binding PlaceOfIncident}" />
 
                                     <DataGridTemplateColumn Header="Endorse To"
                                                             IsReadOnly="True"
