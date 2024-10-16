@@ -96,7 +96,15 @@ namespace ECR.View.ViewModels {
 
         [RelayCommand]
         void CopyDefaultContact() {
-            Clipboard.SetText(DefaultContactDetail?.Value.Replace(" ", ""));
+            try {
+
+                Clipboard.SetText(DefaultContactDetail?.Value.Replace(" ", ""));
+                MessageBox.Show("Default Contact Information Copied in the Clipboard.", string.Empty, MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch (Exception ex) {
+
+                MessageBox.Show(ex.Message, string.Empty, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         public event EventHandler<bool>? OnSelectionChanged;

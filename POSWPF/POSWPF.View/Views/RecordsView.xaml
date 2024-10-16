@@ -479,47 +479,51 @@
                                         <DataTemplate>
                                             <DataTemplate.Resources>
                                                 <converter:ContactTypeToImage x:Key="ContactToImage" />
+
                                             </DataTemplate.Resources>
 
-                                            <Grid HorizontalAlignment="Stretch"
-                                                  VerticalAlignment="Center"
-                                                  Width="AUTO"
-                                                  Height="AUTO">
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="auto" />
-                                                    <ColumnDefinition Width="auto" />
-                                                    <ColumnDefinition />
-                                                </Grid.ColumnDefinitions>
-                                                <Image Width="15"
-                                                       Height="15"
-                                                       Grid.Column="1"
-                                                       Margin="10 0"
-                                                       ToolTip="{Binding DefaultContactDetail.Type, Mode=OneTime}"
-                                                       Source="{Binding DefaultContactDetail.Type, Converter={StaticResource ContactToImage}}" />
-
-                                                <TextBlock Text="{Binding DefaultContactDetail.Value,Mode=OneWay}"
-                                                           Grid.Column="2"
-                                                           Margin="0"
-                                                           VerticalAlignment="Center"
-                                                           TextWrapping="Wrap"
-                                                           Background="Transparent"
-                                                           Padding="0" />
+                                            <Grid VerticalAlignment="Stretch"
+                                                  HorizontalAlignment="Stretch">
 
                                                 <Button Margin="0"
-                                                        Padding="4"
-                                                        Width="20"
-                                                        Height="20"
+                                                        Padding="10 0"
+                                                        Height="auto"
+                                                        MinHeight="28"
                                                         BorderThickness="0"
-                                                        Background="{StaticResource AccentColor.Primary}"
+                                                        Background="Transparent"
+                                                        BorderBrush="Transparent"
                                                         ToolTip="Copy To Clipboard"
-                                                        Foreground="{StaticResource AccentColor.Primary}"
                                                         Command="{Binding CopyDefaultContactCommand}"
-                                                        HorizontalContentAlignment="Center"
-                                                        VerticalContentAlignment="Center"
-                                                        VerticalAlignment="Center">
-                                                    <Image Source="/Images/GridButtons/copy_20px.png" />
-                                                </Button>
+                                                        HorizontalContentAlignment="Stretch">
 
+                                                    <Grid HorizontalAlignment="Stretch"
+                                                          IsHitTestVisible="False"
+                                                          VerticalAlignment="Center"
+                                                          Width="AUTO"
+                                                          Height="AUTO">
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="auto" />
+                                                            <ColumnDefinition Width="auto" />
+                                                            <ColumnDefinition />
+                                                        </Grid.ColumnDefinitions>
+
+                                                        <Image Width="15"
+                                                               Height="15"
+                                                               Grid.Column="1"
+                                                               Margin="0 0 10 0"
+                                                               ToolTip="{Binding DefaultContactDetail.Type, Mode=OneTime}"
+                                                               Source="{Binding DefaultContactDetail.Type, Converter={StaticResource ContactToImage}}" />
+
+                                                        <TextBlock Text="{Binding DefaultContactDetail.Value,Mode=OneWay}"
+                                                                   Grid.Column="2"
+                                                                   Margin="0"
+                                                                   VerticalAlignment="Center"
+                                                                   TextWrapping="Wrap"
+                                                                   Background="Transparent"
+                                                                   Padding="0" />
+
+                                                    </Grid>
+                                                </Button>
                                             </Grid>
 
                                         </DataTemplate>

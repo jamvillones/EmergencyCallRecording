@@ -91,15 +91,7 @@
     <Resource Include="Images\photo_gallery_20px.png" />
     <Resource Include="Images\remove_image_20px.png" />
     <Resource Include="Images\save_close_50px.png" />
-    <!--<Resource Include="_04-07-2024).jpg">
-      <T></T>
-    </Resource>
-    <Resource Include="_04-07-2024).jpg">
-      <T></T>
-    </Resource>
-    <Resource Include="_04-07-2024).jpg">
-      <T></T>
-    </Resource>-->
+    
   </ItemGroup>
 
   <ItemGroup>
