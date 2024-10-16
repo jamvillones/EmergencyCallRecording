@@ -11,7 +11,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Images\442476757_1122104629024125_4928465843589381531_n.jpg" />
     <None Remove="Images\Add Male User Group_30px.png" />
     <None Remove="Images\Add_20px.png" />
     <None Remove="Images\add_list_20px.png" />
@@ -36,7 +35,6 @@
     <None Remove="Images\GridButtons\minus_20px.png" />
     <None Remove="Images\GridButtons\Play Button Circled_50px.png" />
     <None Remove="Images\Ibajaylogo.png" />
-    <None Remove="Images\image_50px.png" />
     <None Remove="Images\Lock_20px.png" />
     <None Remove="Images\Logos\Kalibo Logo %281%29.png" />
     <None Remove="Images\Logos\SOU New %281%29.png" />
@@ -48,6 +46,7 @@
     <None Remove="Images\NavButtons\double_right_30px.png" />
     <None Remove="Images\NavButtons\forward_30px.png" />
     <None Remove="Images\NavButtons\refresh_30px.png" />
+    <None Remove="Images\no_image_96px.png" />
     <None Remove="Images\no_phones_100px.png" />
     <None Remove="Images\person_20px.png" />
     <None Remove="Images\photo_gallery_20px.png" />
@@ -71,7 +70,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Images\442476757_1122104629024125_4928465843589381531_n.jpg" />
     <Resource Include="Images\Add_20px.png" />
     <Resource Include="Images\add_list_20px.png" />
     <Resource Include="Images\background_1.jpg" />
@@ -83,10 +81,10 @@
     <Resource Include="Images\delete_receipt_50px.png" />
     <Resource Include="Images\Empty_Records_100px.png" />
     <Resource Include="Images\GridButtons\copy_20px.png" />
-    <Resource Include="Images\image_50px.png" />
     <Resource Include="Images\Logos\Kalibo Logo (1).png" />
     <Resource Include="Images\Logos\SOU New (1).png" />
     <Resource Include="Images\Logos\unnamed.png" />
+    <Resource Include="Images\no_image_96px.png" />
     <Resource Include="Images\no_phones_100px.png" />
     <Resource Include="Images\photo_gallery_20px.png" />
     <Resource Include="Images\remove_image_20px.png" />

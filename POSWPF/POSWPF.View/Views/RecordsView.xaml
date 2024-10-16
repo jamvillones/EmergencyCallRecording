@@ -232,9 +232,9 @@
 
                                     <DataGridTextColumn Header="Priority Level"
                                                         MinWidth="80"
-                                                        Binding="{Binding Level, Mode=OneWay}"
                                                         IsReadOnly="True"
                                                         Width="auto"
+                                                        Binding="{Binding Level, Mode=OneWay}"
                                                         HeaderStyle="{StaticResource DataGridColumnHeader.IndividualCell.Style}" />
 
                                     <DataGridTextColumn Header="Date/Time"
@@ -256,21 +256,21 @@
                                                         <ColumnDefinition Width="auto" />
                                                         <ColumnDefinition />
                                                     </Grid.ColumnDefinitions>
-                                                    <Border Width="25"
+                                                    <!--<Border Width="25"
                                                             Height="25"
                                                             BorderThickness="2"
-                                                            BorderBrush="Orange"
+                                                            BorderBrush="Gray"
                                                             CornerRadius="50"
                                                             Margin="0 0 10 0"
-                                                            Background="red">
+                                                            Background="#247FFF">
                                                         <TextBlock Text="{Binding CallerDetails, Mode=OneWay, Converter={StaticResource GetFirstTwoLetterConverter}}"
                                                                    FontWeight="Bold"
                                                                    FontSize="10"
                                                                    VerticalAlignment="Center"
                                                                    HorizontalAlignment="Center"
                                                                    Foreground="White"
-                                                                   Margin="0 0 0 1" />
-                                                    </Border>
+                                                                   Margin="0" />
+                                                    </Border>-->
 
                                                     <StackPanel Grid.Column="1">
                                                         <TextBlock Text="{Binding CallerDetails}"
@@ -325,9 +325,9 @@
                                                             Height="25"
                                                             CornerRadius="15"
                                                             BorderThickness="2"
-                                                            BorderBrush="White"
+                                                            BorderBrush="Gray"
                                                             Background="{Binding Agency.Logo, Converter={StaticResource ImageToBackgroundConverter}}">
-                                                        <Border Background="{StaticResource AccentColor.Primary}"
+                                                        <Border Background="#247FFF"
                                                                 CornerRadius="15"
                                                                 Margin="-1"
                                                                 Visibility="{Binding Agency.Logo, Converter={StaticResource NullToVisibilityConverter}}">

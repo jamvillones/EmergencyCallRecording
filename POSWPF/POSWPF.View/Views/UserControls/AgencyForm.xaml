@@ -119,28 +119,27 @@
                                     Width="150"
                                     Height="150"
                                     BorderThickness="10"
-                                    BorderBrush="Maroon"
+                                    BorderBrush="#8D8D8D"
                                     CornerRadius="150"
                                     VerticalAlignment="Center"
-                                    HorizontalAlignment="Center"
-                                    Background="{Binding Logo, Converter={StaticResource ImageToBackgroundConverter}}">
-                                <!--<Border.Style>
-                                <Style TargetType="Border">
-                                    <Setter Property="Background"
-                                            Value="{Binding Logo, Converter={StaticResource ImageToBackgroundConverter}}" />
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding Logo}"
-                                                     Value="{x:Null}">
-                                            <Setter Property="Background">
-                                                <Setter.Value>
-                                                    <ImageBrush Stretch="None"
-                                                                ImageSource="/Images/image_50px.png" />
-                                                </Setter.Value>
-                                            </Setter>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Border.Style>-->
+                                    HorizontalAlignment="Center">
+                                <Border.Style>
+                                    <Style TargetType="Border">
+                                        <Setter Property="Background"
+                                                Value="{Binding Logo, Converter={StaticResource ImageToBackgroundConverter}}" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Logo}"
+                                                         Value="{x:Null}">
+                                                <Setter Property="Background">
+                                                    <Setter.Value>
+                                                        <ImageBrush Stretch="None"
+                                                                    ImageSource="/ECR.WPF;component/Images/no_image_96px.png" />
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Border.Style>
 
                             </Border>
 
