@@ -80,13 +80,14 @@ namespace ECR.View.ViewModels.Tabs {
 
                 var records = await context.Records.AsNoTracking()
                     .Include(r => r.Agency)
+                    .OrderBy(r => r.DateTimeOfReport)
                     .ToListAsync();
 
                 foreach (var rec in records)
                     AddNewItem(new Record_Item_ViewModel() { Record = rec });
 
             }
-            catch (Exception) { throw; }
+            catch (Exception) { }
         }
 
         public ObservableCollection<Record_Item_ViewModel> Records { get; } = [];
@@ -238,12 +239,18 @@ namespace ECR.View.ViewModels.Tabs {
         }
 
         async Task LoadDataAsync() {
-            using (var context = contextFactory.CreateDbContext()) {
-                var agencies = await context.Agencies.Include(a => a.ContactDetails).ToListAsync();
+            using var context = contextFactory.CreateDbContext();
 
-                foreach (var a in agencies)
-                    AddNewItem(CreateAgencyViewModel(a));
-            }
+            var agencies = await context.Agencies
+                .Include(a => a.ContactDetails)
+                .OrderBy(x => x.Name)
+                .ToListAsync();
+
+            if (agencies.Any())
+                Items.Clear();
+
+            foreach (var a in agencies)
+                AddNewItem(CreateAgencyViewModel(a));
         }
 
         private Agency_Item_ViewModel CreateAgencyViewModel(Agency agency) {

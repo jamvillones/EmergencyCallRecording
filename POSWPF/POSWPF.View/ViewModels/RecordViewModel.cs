@@ -1,6 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using ECR.Domain.Models;
 using ECR.WPF.Utilities;
+using System.Windows;
 using System.Windows.Media;
 
 namespace ECR.View.ViewModels {
@@ -90,6 +92,11 @@ namespace ECR.View.ViewModels {
 
         partial void OnIsCheckedChanged(bool value) {
             OnSelectionChanged?.Invoke(this, value);
+        }
+
+        [RelayCommand]
+        void CopyDefaultContact() {
+            Clipboard.SetText(DefaultContactDetail?.Value.Replace(" ", ""));
         }
 
         public event EventHandler<bool>? OnSelectionChanged;

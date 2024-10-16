@@ -98,9 +98,10 @@
                                     CanUserResize="False"
                                     Binding="{Binding Number, Mode=OneWay}" />-->
 
-                <DataGridTextColumn Header="# Audio Name"
+                <DataGridTextColumn Header="Audio Name"
                                     Width="*"
                                     IsReadOnly="True"
+                                    HeaderStyle="{StaticResource DataGridColumnHeader.IndividualCell.Style}"
                                     Binding="{Binding Name, Mode=OneWay, StringFormat={}♪ {0}}">
                     <DataGridTextColumn.ElementStyle>
                         <Style TargetType="{x:Type TextBlock}"
@@ -116,14 +117,16 @@
                                     IsReadOnly="True"
                                     Width="*"
                                     Binding="{Binding Duration, Mode=OneWay,Converter={StaticResource secondsConverter}, StringFormat={}⏱︎ {0}}" />-->
-                <DataGridTextColumn Header="# Date/Time Recorded"
+                <DataGridTextColumn Header="Date/Time Recorded"
                                     IsReadOnly="True"
                                     Width="*"
-                                    Binding="{Binding DateTimeRecorded, Mode=OneWay,StringFormat={}📅 {0}}" />
-                <DataGridTemplateColumn Header=""
+                                    HeaderStyle="{StaticResource DataGridColumnHeader.IndividualCell.Style}"
+                                    Binding="{Binding DateTimeRecorded, Mode=OneWay}" />
+                <DataGridTemplateColumn Header="Actions"
                                         IsReadOnly="True"
                                         CanUserResize="False"
-                                        MinWidth="100"
+                                        MinWidth="80"
+                                        HeaderStyle="{StaticResource DataGridColumnHeader.IndividualCell.Last.Style}"
                                         Width="auto">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
@@ -138,11 +141,13 @@
                                 </StackPanel.Resources>
 
                                 <Button Style="{StaticResource gridEditButton}"
+                                        ToolTip="Play Audio"
                                         Command="{Binding PlayAudioCommand}">
                                     <Image Source="/Images/GridButtons/Play Button Circled_50px.png" />
                                 </Button>
                                 <Button Margin="5 0 0 0"
                                         CommandParameter="{Binding}"
+                                        ToolTip="Remove Audio"
                                         Command="{Binding DataContext.RemoveAudioCommand, RelativeSource={RelativeSource AncestorType=DataGrid, Mode=FindAncestor}}"
                                         Style="{StaticResource gridRemoveButton}">
                                     <Image Source="/Images/GridButtons/minus_20px.png" />

@@ -39,6 +39,7 @@
             <ComboBox Margin="{StaticResource Vertical.Spacing}"
                       Text="{Binding CallType,UpdateSourceTrigger=PropertyChanged}"
                       Background="White"
+                      Height="37"
                       IsEditable="True">
                 <ComboBoxItem>Emergency</ComboBoxItem>
                 <ComboBoxItem>Prank</ComboBoxItem>
@@ -51,6 +52,7 @@
                       ItemsSource="{Binding Agencies}"
                       SelectedItem="{Binding SelectedAgency, Mode=TwoWay}"
                       IsEditable="False"
+                      Text="loading..."
                       Background="White">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>

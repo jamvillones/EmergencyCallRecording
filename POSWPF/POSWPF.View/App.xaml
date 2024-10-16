@@ -417,6 +417,7 @@
                                  Style="{StaticResource ComboBoxEditableTextBox}"
                                  Padding="{TemplateBinding Padding}"
                                  Background="Transparent"
+                                 Height="{TemplateBinding Height}"
                                  BorderThickness="0"
                                  VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" />
                         <!--</Border>-->
@@ -623,7 +624,11 @@
                 <Setter Property="ScrollViewer.VerticalScrollBarVisibility"
                         Value="Auto" />
                 <Setter Property="Padding"
-                        Value="10" />
+                        Value="10,0" />
+                <Setter Property="Height"
+                        Value="37" />
+                <Setter Property="VerticalContentAlignment"
+                        Value="Center" />
                 <Setter Property="ScrollViewer.CanContentScroll"
                         Value="true" />
                 <Setter Property="ScrollViewer.PanningMode"

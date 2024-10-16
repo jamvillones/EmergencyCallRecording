@@ -28,9 +28,12 @@ namespace ECR.WPF.ViewModels {
         private void Audios_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e) {
             OnPropertyChanged(nameof(AudiosIsEmpty));
             OnPropertyChanged(nameof(AudiosNotEmpty));
+
+            //if (AudiosIsEmpty)
+            RemoveAllAudiosCommand.NotifyCanExecuteChanged();
         }
 
-        protected async Task InitializeAgencyList(Agency selected = null) {
+        protected async Task InitializeAgencyList(Agency? selected = null) {
             try {
                 using var context = DbFactory.CreateDbContext();
 
@@ -153,7 +156,6 @@ namespace ECR.WPF.ViewModels {
         private string? _callType;
 
         [ObservableProperty]
-
         private string? _summary = null;
 
         [ObservableProperty]

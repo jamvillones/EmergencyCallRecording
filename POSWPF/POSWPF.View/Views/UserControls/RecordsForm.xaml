@@ -29,7 +29,7 @@
     <Grid Background="#cfffffff">
 
         <Grid Margin="40"
-              MaxWidth="1000">
+              MaxWidth="720">
             <Border Background="#EFF2F7"
                     BorderThickness="0.5"
                     BorderBrush="Black"

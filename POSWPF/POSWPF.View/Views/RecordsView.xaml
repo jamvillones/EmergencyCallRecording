@@ -367,12 +367,14 @@
                                                     </StackPanel.Resources>
 
                                                     <Button Style="{StaticResource gridEditButton}"
+                                                            ToolTip="Edit"
                                                             Command="{Binding DataContext.OpenEditFormCommand, RelativeSource={RelativeSource AncestorType=DataGrid, Mode=FindAncestor}}"
                                                             CommandParameter="{Binding Id}">
                                                         <Image Source="/Images/GridButtons/edit_property_20px.png" />
 
                                                     </Button>
                                                     <Button Margin="5 0 0 0"
+                                                            ToolTip="Remove"
                                                             Command="{Binding DataContext.RemoveItemCommand, RelativeSource={RelativeSource AncestorType=DataGrid, Mode=FindAncestor}}"
                                                             CommandParameter="{Binding}"
                                                             Style="{StaticResource gridRemoveButton}">
@@ -477,27 +479,46 @@
                                             <DataTemplate.Resources>
                                                 <converter:ContactTypeToImage x:Key="ContactToImage" />
                                             </DataTemplate.Resources>
-                                            <Grid HorizontalAlignment="Left"
+
+                                            <Grid HorizontalAlignment="Stretch"
                                                   VerticalAlignment="Center"
                                                   Width="AUTO"
                                                   Height="AUTO">
                                                 <Grid.ColumnDefinitions>
                                                     <ColumnDefinition Width="auto" />
+                                                    <ColumnDefinition Width="auto" />
                                                     <ColumnDefinition />
                                                 </Grid.ColumnDefinitions>
                                                 <Image Width="15"
                                                        Height="15"
-                                                       Margin="5"
+                                                       Grid.Column="1"
+                                                       Margin="10 0"
                                                        ToolTip="{Binding DefaultContactDetail.Type, Mode=OneTime}"
                                                        Source="{Binding DefaultContactDetail.Type, Converter={StaticResource ContactToImage}}" />
 
                                                 <TextBlock Text="{Binding DefaultContactDetail.Value,Mode=OneWay}"
-                                                           Grid.Column="1"
-                                                           Margin="0 0 0 0"
+                                                           Grid.Column="2"
+                                                           Margin="0"
                                                            VerticalAlignment="Center"
                                                            TextWrapping="Wrap"
                                                            Background="Transparent"
                                                            Padding="0" />
+
+                                                <Button Margin="0"
+                                                        Padding="0"
+                                                        Width="22"
+                                                        Height="22"
+                                                        BorderThickness="0"
+                                                        Background="#9DC5FF"
+                                                        ToolTip="Copy To Clipboard"
+                                                        Foreground="{StaticResource AccentColor.Primary}"
+                                                        Command="{Binding CopyDefaultContactCommand}"
+                                                        HorizontalContentAlignment="Center"
+                                                        VerticalContentAlignment="Center"
+                                                        VerticalAlignment="Center">
+                                                    ⧉
+                                                </Button>
+
                                             </Grid>
 
                                         </DataTemplate>
@@ -532,7 +553,7 @@
                                                 </StackPanel.Resources>
 
                                                 <Button Style="{StaticResource gridEditButton}"
-                                                        Margin="0 0 0 0"
+                                                        ToolTip="Edit"
                                                         Command="{Binding Path=DataContext.OpenEditFormCommand, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}, Mode=FindAncestor}}"
                                                         CommandParameter="{Binding Id}">
 
@@ -540,6 +561,7 @@
 
                                                 </Button>
                                                 <Button Margin="5 0 0 0"
+                                                        ToolTip="Remove"
                                                         Command="{Binding Path=DataContext.RemoveAgencyCommand, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}, Mode=FindAncestor}}"
                                                         CommandParameter="{Binding}"
                                                         Style="{StaticResource gridRemoveButton}">
