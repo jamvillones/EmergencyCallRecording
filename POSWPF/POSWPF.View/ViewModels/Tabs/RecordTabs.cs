@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using ECR.Domain.Data;
 using ECR.Domain.Models;
+using ECR.View.Utilities;
 using ECR.WPF.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.ObjectModel;
@@ -12,7 +13,11 @@ namespace ECR.View.ViewModels.Tabs {
         Task Search(string keyword);
     }
     sealed partial class RecordTabs : ObservableObject {
-        public RecordTabs() {
+        public RecordTabs(IViewModelFactory viewModelFactory) {
+            ViewModelFactory = viewModelFactory;
+            callsTab = ViewModelFactory.Get<Records_CallsSection>();
+            agencyTab = ViewModelFactory.Get<Records_AgenciesSection>();
+
             callsTab.OnEdit += OnEdit;
             agencyTab.OnEdit += OnEdit;
             currentTab = callsTab;
@@ -24,14 +29,16 @@ namespace ECR.View.ViewModels.Tabs {
             OpenedForm = regForm as ObservableObject;
         }
 
-        readonly Records_CallsSection callsTab = new(new DbContextFactory());
-        readonly Records_AgenciesSection agencyTab = new(new DbContextFactory());
+        readonly Records_CallsSection callsTab = null!;
+        readonly Records_AgenciesSection agencyTab = null!;
 
         [ObservableProperty]
         IRegistrationOpener currentTab = null!;
 
         [ObservableProperty]
         private ObservableObject? _openedForm = null;
+
+        public IViewModelFactory ViewModelFactory { get; }
 
         [RelayCommand]
         async Task Search(string keyword) {
@@ -87,10 +94,11 @@ namespace ECR.View.ViewModels.Tabs {
     sealed partial class Records_CallsSection : ObservableObject, IRegistrationOpener, ISearchableObject {
 
         public IDBContextFactory ContextFactory { get; }
+        public IViewModelFactory ViewModelFactory { get; }
 
-        public Records_CallsSection(IDBContextFactory contextFactory) {
+        public Records_CallsSection(IDBContextFactory contextFactory, IViewModelFactory viewModelFactory) {
             ContextFactory = contextFactory;
-
+            ViewModelFactory = viewModelFactory;
             _ = InitializeData();
         }
 
@@ -108,8 +116,7 @@ namespace ECR.View.ViewModels.Tabs {
                 if (records.Count != 0) Records.Clear();
 
                 foreach (var rec in records)
-                    AddNewItem(new Record_Item_ViewModel() { Record = rec });
-
+                    Records.Add(CreateRecordViewModel(rec));
             }
             catch (Exception) { }
         }
@@ -124,9 +131,11 @@ namespace ECR.View.ViewModels.Tabs {
             OnEdit?.Invoke(this, regForm);
         }
 
-        void AddNewItem(Record_Item_ViewModel record) {
-            Records.Add(record);
-            record.OnSelectionChanged += Record_OnSelectionChanged;
+        Record_Item_ViewModel CreateRecordViewModel(Record record) {
+            var recordVm = ViewModelFactory.Get<Record_Item_ViewModel>();
+            recordVm.Record = record;
+            recordVm.OnSelectionChanged += Record_OnSelectionChanged;
+            return recordVm;
         }
 
         [RelayCommand]
@@ -169,7 +178,7 @@ namespace ECR.View.ViewModels.Tabs {
         }
 
         public ICloseableObject GetRegistrationForm() {
-            var newRecordForm = new Form_Add_Record_ViewModel(new DbContextFactory());
+            var newRecordForm = ViewModelFactory.Get<Form_Add_Record_ViewModel>();
             newRecordForm.OnSaveSuccessful += NewRecordForm_OnSaveSuccessful;
             return newRecordForm;
         }
@@ -181,8 +190,7 @@ namespace ECR.View.ViewModels.Tabs {
         /// <param name="e"></param>
         private void NewRecordForm_OnSaveSuccessful(object? sender, object e) {
             if (e is Record rec) {
-                Record_Item_ViewModel record = new() { Record = rec };
-                AddNewItem(record);
+                Records.Insert(0, CreateRecordViewModel(rec));
             }
         }
 
@@ -192,7 +200,9 @@ namespace ECR.View.ViewModels.Tabs {
                 .Include(r => r.Agency)
                 .Include(r => r.Audios)
                 .FirstOrDefault(x => x.Id == id);
-            var newRecordForm = new Form_Edit_Record_ViewModel(new DbContextFactory()) { Record = recordToEdit! };
+
+            var newRecordForm = ViewModelFactory.Get<Form_Edit_Record_ViewModel>();
+            newRecordForm.Record = recordToEdit!;
             return newRecordForm;
         }
 
@@ -217,11 +227,13 @@ namespace ECR.View.ViewModels.Tabs {
 
     sealed partial class Records_AgenciesSection : ObservableObject, IRegistrationOpener, ISearchableObject {
         private readonly IDBContextFactory contextFactory;
+        private readonly IViewModelFactory viewModelFactory;
 
         public event EventHandler<object>? OnEdit;
 
-        public Records_AgenciesSection(IDBContextFactory contextFactory) {
+        public Records_AgenciesSection(IDBContextFactory contextFactory, IViewModelFactory viewModelFactory) {
             this.contextFactory = contextFactory;
+            this.viewModelFactory = viewModelFactory;
             _ = LoadDataAsync();
         }
 
@@ -286,10 +298,8 @@ namespace ECR.View.ViewModels.Tabs {
         }
 
         private Agency_Item_ViewModel CreateAgencyViewModel(Agency agency) {
-            var vm = new Agency_Item_ViewModel {
-                Agency = agency
-            };
-
+            var vm = viewModelFactory.Get<Agency_Item_ViewModel>();
+            vm.Agency = agency;
             return vm;
         }
 

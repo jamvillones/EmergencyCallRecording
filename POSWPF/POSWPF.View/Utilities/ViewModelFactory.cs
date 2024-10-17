@@ -7,10 +7,10 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace ECR.View.Utilities {
-    interface IViewModelFactory {
+    public interface IViewModelFactory {
         T Get<T>() where T : ObservableObject;
     }
-    sealed class ViewModelFactory : IViewModelFactory {
+    public sealed class ViewModelFactory : IViewModelFactory {
         public T Get<T>() where T : ObservableObject =>
             App.Host.Services.GetRequiredService<T>();
 

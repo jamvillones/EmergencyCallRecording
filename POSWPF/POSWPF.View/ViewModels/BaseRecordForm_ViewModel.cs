@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using ECR.Domain.Data;
 using ECR.Domain.Models;
+using ECR.View.Utilities;
 using ECR.View.ViewModels;
 using ECR.WPF.Utilities;
 using Microsoft.EntityFrameworkCore;
@@ -18,10 +19,13 @@ namespace ECR.WPF.ViewModels {
     }
 
     public abstract partial class BaseRecordForm_ViewModel : ObservableValidator, ICloseableObject {
-        protected BaseRecordForm_ViewModel(IDBContextFactory dbFactory) {
+        protected BaseRecordForm_ViewModel(IDBContextFactory dbFactory, IViewModelFactory viewModelFactory) {
             DbFactory = dbFactory;
+            ViewModelFactory = viewModelFactory;
             Audios.CollectionChanged += Audios_CollectionChanged;
         }
+
+        protected IViewModelFactory ViewModelFactory { get; } = null!;
 
         public abstract FormSaveType SaveType { get; }
         private void Audios_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e) {
@@ -38,9 +42,9 @@ namespace ECR.WPF.ViewModels {
                 var agencies = await context.Agencies.Include(a => a.ContactDetails).AsNoTracking().ToListAsync();
 
                 foreach (var agency in agencies) {
-                    Agencies.Add(new Agency_Item_ViewModel() {
-                        Agency = agency
-                    });
+                    var agencyVm = ViewModelFactory.Get<Agency_Item_ViewModel>();
+                    agencyVm.Agency = agency;
+                    Agencies.Add(agencyVm);
                 }
 
                 SelectedAgency = Agencies.FirstOrDefault(x => x.Id == selected?.Id) ?? Agencies.First();
@@ -170,7 +174,7 @@ namespace ECR.WPF.ViewModels {
     }
 
     public partial class Form_Add_Record_ViewModel : BaseRecordForm_ViewModel {
-        public Form_Add_Record_ViewModel(IDBContextFactory dbFactory) : base(dbFactory) {
+        public Form_Add_Record_ViewModel(IDBContextFactory dbFactory, IViewModelFactory viewModelFactory) : base(dbFactory, viewModelFactory) {
             _ = InitializeAgencyList();
         }
 
@@ -228,9 +232,10 @@ namespace ECR.WPF.ViewModels {
         }
     }
 
-    public partial class Form_Edit_Record_ViewModel(IDBContextFactory dbFactory) : BaseRecordForm_ViewModel(dbFactory) {
+    public partial class Form_Edit_Record_ViewModel(IDBContextFactory dbFactory, IViewModelFactory viewModelFactory) : BaseRecordForm_ViewModel(dbFactory, viewModelFactory) {
 
         private Record record = null!;
+
         public Record Record {
             get { return record; }
             set {

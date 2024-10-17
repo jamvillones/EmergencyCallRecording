@@ -10,18 +10,31 @@ using System.Text;
 using System.Threading.Tasks;
 using ECR.WPF.ViewModels;
 using ECR.Domain.Data;
+using ECR.View.ViewModels.Contents;
 
 namespace ECR.View.Utilities {
     static class ServicesConfigurationManager {
 
         public static void ConfigureServices(HostBuilderContext context, IServiceCollection services) {
-            services.AddSingleton<MainViewModel>();
             services.AddSingleton<IViewModelFactory, ViewModelFactory>();
-            services.AddTransient<IDBContextFactory, DbContextFactory>();
+
+            services.AddSingleton<MainViewModel>();
+            services.AddSingleton<NotificationHandler>();
             services.AddSingleton<ModalContentManager>();
             services.AddSingleton<RecordsStore>();
 
+            services.AddTransient<IDBContextFactory, DbContextFactory>();
+            services.AddTransient<MainContentViewModel>();
             services.AddTransient<RecordTabs>();
+
+            services.AddTransient<Records_CallsSection>();
+            services.AddTransient<Records_AgenciesSection>();
+
+            services.AddTransient<Form_Add_Record_ViewModel>();
+            services.AddTransient<Form_Edit_Record_ViewModel>();
+
+            services.AddTransient<Agency_Item_ViewModel>();
+            services.AddTransient<Record_Item_ViewModel>();
         }
     }
 }

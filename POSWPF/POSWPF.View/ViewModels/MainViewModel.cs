@@ -1,20 +1,25 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using ECR.View.Utilities;
 using ECR.View.ViewModels.Contents;
 
 namespace ECR.View.ViewModels {
     sealed partial class MainViewModel : ObservableObject {
+        public MainViewModel(IViewModelFactory viewModelFactory) {
+            ViewModelFactory = viewModelFactory;
 
-        [ObservableProperty]
-        ObservableObject _currentPage = new LoginViewModel();
-
-        public MainViewModel() {
             if (_currentPage is LoginViewModel login) {
                 login.OnLoginSuccessful += Login_OnLoginSuccessful;
             }
         }
 
+        [ObservableProperty]
+        ObservableObject _currentPage = new LoginViewModel();
+
+
+        public IViewModelFactory ViewModelFactory { get; }
+
         private void Login_OnLoginSuccessful(object? sender, EventArgs e) {
-            CurrentPage = new MainContentViewModel();
+            CurrentPage = ViewModelFactory.Get<MainContentViewModel>();
             if (CurrentPage is ILogOffable l) {
                 l.OnLogOff += L_OnLogOff;
             }
@@ -25,7 +30,6 @@ namespace ECR.View.ViewModels {
 
             if (CurrentPage is LoginViewModel login)
                 login.OnLoginSuccessful += Login_OnLoginSuccessful;
-
         }
     }
 }

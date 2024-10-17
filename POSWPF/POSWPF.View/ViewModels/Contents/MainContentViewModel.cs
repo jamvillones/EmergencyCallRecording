@@ -1,6 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using ECR.View.Utilities;
 using ECR.View.ViewModels.Tabs;
+using ECR.WPF.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,16 +15,25 @@ namespace ECR.View.ViewModels.Contents {
         event EventHandler OnLogOff;
     }
     sealed partial class MainContentViewModel : ObservableObject, ILogOffable {
-        [ObservableProperty]
-        private ObservableObject _currentTab;
+        public MainContentViewModel(NotificationHandler notificationHandler, IViewModelFactory vmFactory) {
+            NotificationHandler = notificationHandler;
+            VmFactory = vmFactory;
 
-        private RecordTabs recordsTab = new();
+            recordsTab = VmFactory.Get<RecordTabs>();
 
-        public MainContentViewModel() {
             CurrentTab = recordsTab;
+
         }
 
-        public event EventHandler OnLogOff;
+        [ObservableProperty]
+        private ObservableObject _currentTab = null!;
+
+        private readonly RecordTabs recordsTab = null!;
+
+        public NotificationHandler NotificationHandler { get; } = null!;
+        public IViewModelFactory VmFactory { get; } = null!;
+
+        public event EventHandler? OnLogOff;
 
         [RelayCommand]
         public void LogOff() {

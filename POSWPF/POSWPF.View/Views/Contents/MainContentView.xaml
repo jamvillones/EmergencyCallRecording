@@ -4,6 +4,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:popup="clr-namespace:ECR.View.Views.Popups"
+             xmlns:uc="clr-namespace:ECR.WPF.Views.UserControls"
              Background="White"
              mc:Ignorable="d"
              d:DesignHeight="450"
@@ -405,6 +406,23 @@
                         IsTabStop="False"
                         Focusable="False"
                         Content="{Binding CurrentTab}" />
+
+        <ItemsControl Grid.Column="1"
+                      DataContext="{Binding NotificationHandler}"
+                      Panel.ZIndex="20"
+                      Width="auto"
+                      Height="auto"
+                      MaxHeight="410"
+                      Margin="10"
+                      HorizontalAlignment="Right"
+                      VerticalAlignment="Bottom"
+                      ItemsSource="{Binding Notifications}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <uc:NotificationItem_UserControl />
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
 
         <!--<usercontrol:RecordsView Grid.Column="2" />-->
 
