@@ -14,7 +14,7 @@
         MinHeight="580"
         MinWidth="820"
         Height="720"
-        Width="1080">
+        Width="1280">
 
     <Window.Resources>
         <Style TargetType="Button"
