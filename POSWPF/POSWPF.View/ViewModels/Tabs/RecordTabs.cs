@@ -8,7 +8,9 @@ using System.Collections.ObjectModel;
 using System.Windows;
 
 namespace ECR.View.ViewModels.Tabs {
-
+    public interface ISearchableObject {
+        Task Search(string keyword);
+    }
     sealed partial class RecordTabs : ObservableObject {
         public RecordTabs() {
             callsTab.OnEdit += OnEdit;
@@ -31,6 +33,26 @@ namespace ECR.View.ViewModels.Tabs {
         [ObservableProperty]
         private ObservableObject? _openedForm = null;
 
+        [RelayCommand]
+        async Task Search(string keyword) {
+            if (string.IsNullOrWhiteSpace(keyword))
+                return;
+
+            if (CurrentTab is ISearchableObject searchable) {
+                await searchable.Search(keyword.Trim());
+                return;
+            }
+
+            throw new Exception("Current tab is not of type ISearcheable");
+        }
+
+        [RelayCommand]
+        async Task Refresh() {
+            if (CurrentTab is ISearchableObject searchable) {
+                await searchable.Search(string.Empty);
+                return;
+            }
+        }
 
         [RelayCommand]
         private void OpenRegistrationForm() {
@@ -38,7 +60,6 @@ namespace ECR.View.ViewModels.Tabs {
             SubscribeToCloseEvent(regForm);
             OpenedForm = regForm as ObservableObject;
         }
-
 
         void SubscribeToCloseEvent(ICloseableObject closeable) {
             closeable.OnClose += Closeable_OnClose;
@@ -63,7 +84,7 @@ namespace ECR.View.ViewModels.Tabs {
         event EventHandler<object> OnEdit;
     }
 
-    sealed partial class Records_CallsSection : ObservableObject, IRegistrationOpener {
+    sealed partial class Records_CallsSection : ObservableObject, IRegistrationOpener, ISearchableObject {
 
         public IDBContextFactory ContextFactory { get; }
 
@@ -73,15 +94,18 @@ namespace ECR.View.ViewModels.Tabs {
             _ = InitializeData();
         }
 
-        async Task InitializeData() {
+        private string? _keyword;
+        async Task InitializeData(string? keyword = null) {
             try {
                 using var context = ContextFactory.CreateDbContext();
-                Records.Clear();
 
-                var records = await context.Records.AsNoTracking()
+                var records = await context.Records.AsNoTracking().AsQueryable()
                     .Include(r => r.Agency)
-                    .OrderBy(r => r.DateTimeOfReport)
+                    .FilterRecord(keyword!)
+                    .OrderByDescending(r => r.DateTimeOfReport)
                     .ToListAsync();
+
+                if (records.Count != 0) Records.Clear();
 
                 foreach (var rec in records)
                     AddNewItem(new Record_Item_ViewModel() { Record = rec });
@@ -172,6 +196,11 @@ namespace ECR.View.ViewModels.Tabs {
             return newRecordForm;
         }
 
+        public async Task Search(string keyword) {
+            _keyword = keyword;
+            await InitializeData(_keyword);
+        }
+
         public int ItemsSelected => Records.Where(x => x.IsChecked).Count();
 
         public bool AllItemsAreChecked {
@@ -186,7 +215,7 @@ namespace ECR.View.ViewModels.Tabs {
         public int TotalItems => Records.Count;
     }
 
-    sealed partial class Records_AgenciesSection : ObservableObject, IRegistrationOpener {
+    sealed partial class Records_AgenciesSection : ObservableObject, IRegistrationOpener, ISearchableObject {
         private readonly IDBContextFactory contextFactory;
 
         public event EventHandler<object>? OnEdit;
@@ -238,15 +267,18 @@ namespace ECR.View.ViewModels.Tabs {
             }
         }
 
-        async Task LoadDataAsync() {
+        async Task LoadDataAsync(string? keyword = null) {
             using var context = contextFactory.CreateDbContext();
 
             var agencies = await context.Agencies
+                .AsQueryable()
+                .AsNoTracking()
                 .Include(a => a.ContactDetails)
+                .FilterAgency(keyword!)
                 .OrderBy(x => x.Name)
                 .ToListAsync();
 
-            if (agencies.Any())
+            if (agencies.Count != 0)
                 Items.Clear();
 
             foreach (var a in agencies)
@@ -293,6 +325,11 @@ namespace ECR.View.ViewModels.Tabs {
 
             //newRecordForm.OnSaveSuccessful += NewRecordForm_OnSaveSuccessful;
             return newRecordForm;
+        }
+        private string? _keyword = null;
+        public async Task Search(string keyword) {
+            _keyword = keyword;
+            await LoadDataAsync(_keyword);
         }
 
         public int TotalItems => Items.Count;

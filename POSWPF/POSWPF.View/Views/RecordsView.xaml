@@ -86,7 +86,7 @@
 
             <!--Search-->
             <Grid Grid.Row="1"
-                  Margin="0 10">
+                  Margin="0 20">
                 <Grid Height="40">
                     <Border Background="LightGray"
                             BorderThickness="0"
@@ -98,6 +98,7 @@
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition />
+                                <ColumnDefinition Width="AUTO" />
                                 <ColumnDefinition Width="AUTO" />
                             </Grid.ColumnDefinitions>
 
@@ -111,7 +112,15 @@
                                                             CornerRadius="9"
                                                             FontSize="12"
                                                             VerticalAlignment="Center"
-                                                            VerticalContentAlignment="Center" />
+                                                            VerticalContentAlignment="Center">
+                                <placeholder:PlaceholderTextbox.InputBindings>
+                                    <KeyBinding Key="Return"
+                                                Command="{ Binding SearchCommand}"
+                                                CommandParameter="{Binding ElementName=searchControl, Path=Text}" />
+                                    <KeyBinding Key="Esc"
+                                                Command="{ Binding RefreshCommand}" />
+                                </placeholder:PlaceholderTextbox.InputBindings>
+                            </placeholder:PlaceholderTextbox>
 
                             <Button Grid.Column="1"
                                     Background="Transparent"
@@ -119,12 +128,30 @@
                                     IsTabStop="False"
                                     Padding="2,0,0,0"
                                     Margin="2"
+                                    Command="{Binding SearchCommand}"
+                                    CommandParameter="{Binding ElementName=searchControl, Path=Text}"
                                     Template="{StaticResource Template.Round.Button}"
                                     BorderThickness="0"
                                     Height="35"
                                     Width="35">
                                 <Image Width="18"
                                        Source="/Images/search_25px.png" />
+                            </Button>
+
+                            <Button Grid.Column="2"
+                                    Background="Transparent"
+                                    Focusable="False"
+                                    IsTabStop="False"
+                                    Padding="0,0,0,0"
+                                    Margin="0 2 2 2"
+                                    Command="{Binding RefreshCommand}"
+                                    CommandParameter=""
+                                    Template="{StaticResource Template.Round.Button}"
+                                    BorderThickness="0"
+                                    Height="35"
+                                    Width="35">
+                                <Image Width="18"
+                                       Source="/Images/refresh_25px.png" />
                             </Button>
                         </Grid>
                     </Border>
@@ -293,7 +320,7 @@
                                                         IsReadOnly="True"
                                                         Width="*"
                                                         Binding="{Binding PlaceOfIncident}" />
-                                    
+
                                     <DataGridTextColumn Header="Summary"
                                                         HeaderStyle="{StaticResource DataGridColumnHeader.IndividualCell.Style}"
                                                         Binding="{Binding Summary}"
