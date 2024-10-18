@@ -19,14 +19,15 @@ namespace ECR.WPF.ViewModels {
     }
 
     public abstract partial class BaseRecordForm_ViewModel : ObservableValidator, ICloseableObject {
-        protected BaseRecordForm_ViewModel(IDBContextFactory dbFactory, IViewModelFactory viewModelFactory) {
+        protected BaseRecordForm_ViewModel(IDBContextFactory dbFactory, IViewModelFactory viewModelFactory, NotificationHandler handler) {
             DbFactory = dbFactory;
             ViewModelFactory = viewModelFactory;
+            Handler = handler;
             Audios.CollectionChanged += Audios_CollectionChanged;
         }
 
         protected IViewModelFactory ViewModelFactory { get; } = null!;
-
+        public NotificationHandler Handler { get; }
         public abstract FormSaveType SaveType { get; }
         private void Audios_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e) {
             OnPropertyChanged(nameof(AudiosIsEmpty));
@@ -174,7 +175,7 @@ namespace ECR.WPF.ViewModels {
     }
 
     public partial class Form_Add_Record_ViewModel : BaseRecordForm_ViewModel {
-        public Form_Add_Record_ViewModel(IDBContextFactory dbFactory, IViewModelFactory viewModelFactory) : base(dbFactory, viewModelFactory) {
+        public Form_Add_Record_ViewModel(IDBContextFactory dbFactory, IViewModelFactory viewModelFactory, NotificationHandler handler) : base(dbFactory, viewModelFactory, handler) {
             _ = InitializeAgencyList();
         }
 
@@ -214,6 +215,7 @@ namespace ECR.WPF.ViewModels {
 
             InvokeSaveEvent(record);
             Close();
+            Handler.RaiseNotification("Record Saved!", "Record is successfully created!");
             return true;
         }
 
@@ -232,7 +234,7 @@ namespace ECR.WPF.ViewModels {
         }
     }
 
-    public partial class Form_Edit_Record_ViewModel(IDBContextFactory dbFactory, IViewModelFactory viewModelFactory) : BaseRecordForm_ViewModel(dbFactory, viewModelFactory) {
+    public partial class Form_Edit_Record_ViewModel(IDBContextFactory dbFactory, IViewModelFactory viewModelFactory, NotificationHandler handler) : BaseRecordForm_ViewModel(dbFactory, viewModelFactory, handler) {
 
         private Record record = null!;
 
@@ -308,6 +310,8 @@ namespace ECR.WPF.ViewModels {
 
                 InvokeSaveEvent(toSave);
                 Close();
+
+                Handler.RaiseNotification("Record Saved!", "Changes on record is successfully applied!");
 
             }
             catch (Exception) {

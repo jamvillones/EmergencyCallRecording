@@ -57,7 +57,7 @@
                                         Value="{StaticResource Main.Foreground}" />
                                 <Setter Property="Background"
                                         TargetName="templateRoot"
-                                        Value="{StaticResource AccentColor.Secondary}" />
+                                        Value="{StaticResource Main.Foreground}" />
                             </Trigger>
 
                         </ControlTemplate.Triggers>

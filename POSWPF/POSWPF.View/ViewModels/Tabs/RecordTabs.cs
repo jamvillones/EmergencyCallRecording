@@ -226,14 +226,14 @@ namespace ECR.View.ViewModels.Tabs {
     }
 
     sealed partial class Records_AgenciesSection : ObservableObject, IRegistrationOpener, ISearchableObject {
-        private readonly IDBContextFactory contextFactory;
-        private readonly IViewModelFactory viewModelFactory;
+        private IDBContextFactory ContextFactory { get; }
+        private IViewModelFactory ViewModelFactory { get; }
 
         public event EventHandler<object>? OnEdit;
 
         public Records_AgenciesSection(IDBContextFactory contextFactory, IViewModelFactory viewModelFactory) {
-            this.contextFactory = contextFactory;
-            this.viewModelFactory = viewModelFactory;
+            this.ContextFactory = contextFactory;
+            this.ViewModelFactory = viewModelFactory;
             _ = LoadDataAsync();
         }
 
@@ -244,7 +244,7 @@ namespace ECR.View.ViewModels.Tabs {
                 return;
 
             try {
-                using (var context = contextFactory.CreateDbContext()) {
+                using (var context = ContextFactory.CreateDbContext()) {
                     var agency = await context.Agencies.FirstOrDefaultAsync(x => x.Id == vm.Id);
                     context.Agencies.Remove(agency!);
                     await context.SaveChangesAsync();
@@ -280,7 +280,7 @@ namespace ECR.View.ViewModels.Tabs {
         }
 
         async Task LoadDataAsync(string? keyword = null) {
-            using var context = contextFactory.CreateDbContext();
+            using var context = ContextFactory.CreateDbContext();
 
             var agencies = await context.Agencies
                 .AsQueryable()
@@ -298,7 +298,7 @@ namespace ECR.View.ViewModels.Tabs {
         }
 
         private Agency_Item_ViewModel CreateAgencyViewModel(Agency agency) {
-            var vm = viewModelFactory.Get<Agency_Item_ViewModel>();
+            var vm = ViewModelFactory.Get<Agency_Item_ViewModel>();
             vm.Agency = agency;
             return vm;
         }
@@ -317,7 +317,7 @@ namespace ECR.View.ViewModels.Tabs {
         public ObservableCollection<Agency_Item_ViewModel> Items { get; } = [];
 
         public ICloseableObject GetRegistrationForm() {
-            var newRecordForm = new Form_Add_Agency_ViewModel(new DbContextFactory());
+            var newRecordForm = ViewModelFactory.Get<Form_Add_Agency_ViewModel>();
             newRecordForm.OnSaveSuccessful += NewRecordForm_OnSaveSuccessful;
             return newRecordForm;
         }
@@ -329,9 +329,10 @@ namespace ECR.View.ViewModels.Tabs {
         }
 
         public ICloseableObject GetEditForm(int id) {
-            using var context = contextFactory.CreateDbContext();
+            using var context = ContextFactory.CreateDbContext();
             var agency = context.Agencies.Include(a => a.ContactDetails).FirstOrDefault(a => a.Id == id);
-            var newRecordForm = new Form_Edit_Agency_ViewModel(new DbContextFactory()) { AgencyToEdit = agency! };
+            var newRecordForm = ViewModelFactory.Get<Form_Edit_Agency_ViewModel>();
+            newRecordForm.AgencyToEdit = agency!;
 
             //newRecordForm.OnSaveSuccessful += NewRecordForm_OnSaveSuccessful;
             return newRecordForm;

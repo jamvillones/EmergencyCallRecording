@@ -8,83 +8,113 @@
              xmlns:views="clr-namespace:ECR.View.Views"
              mc:Ignorable="d"
              FocusManager.FocusedElement="{Binding ElementName=usernameField}"
-             d:DesignHeight="800"
-             d:DesignWidth="1246.3">
-    <UserControl.Background>
-        <ImageBrush Opacity="0.7"
-                    ImageSource="/Images/background_1.jpg
-                    " />
-    </UserControl.Background>
+             d:DesignHeight="720"
+             Background="White"
+             d:DesignWidth="1280">
+
     <UserControl.InputBindings>
         <KeyBinding Key="Return"
                     Command="{Binding LoginCommand}" />
 
     </UserControl.InputBindings>
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="5*" />
+            <ColumnDefinition Width="3*"
+                              MinWidth="400" />
+        </Grid.ColumnDefinitions>
 
-        <Image Source=" /Images/Logos/unnamed.png"
-               HorizontalAlignment="Left"
-               Margin="20"
-               VerticalAlignment="Top"
-               Width="150" />
+        <Grid>
+            <Grid.Background>
+                <ImageBrush Opacity="0.5"
+                            Stretch="UniformToFill"
+                            ImageSource="/Images/background_1.jpg
+             " />
+            </Grid.Background>
 
-        <StackPanel VerticalAlignment="Bottom"
+            <Image Source=" /Images/Logos/unnamed.png"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Panel.ZIndex="2"
+                   Margin="20"
+                   Width="150" />
+
+            <Border Background="#5affffff"
+                    Padding="10"
+                    CornerRadius="5"
+                    VerticalAlignment="Bottom"
                     HorizontalAlignment="Left"
-                    Margin="50">
-            <TextBlock Foreground="Black"
-                       FontWeight="Bold"
-                       FontSize="13">MUNICIPALITY OF KALIBO</TextBlock>
-            <UniformGrid Columns="2">
-                <UniformGrid.Resources>
-                    <Style TargetType="TextBlock">
-                        <Setter Property="FontSize"
-                                Value="13" />
-                    </Style>
-                </UniformGrid.Resources>
-                <TextBlock>Pantelco:</TextBlock>
-                <TextBlock>159</TextBlock>
-                <TextBlock>Smart:</TextBlock>
-                <TextBlock>0998 998 5647</TextBlock>
-                <TextBlock>TNT:</TextBlock>
-                <TextBlock>0907 895 1984</TextBlock>
-                <TextBlock>Globe:</TextBlock>
-                <TextBlock>0917 717 7461</TextBlock>
-            </UniformGrid>
-        </StackPanel>
+                    Margin="10">
 
-        <Grid Margin="70"
-              VerticalAlignment="Center"
-              HorizontalAlignment="Center">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-                <ColumnDefinition  Width="auto" />
-            </Grid.ColumnDefinitions>
+                <StackPanel>
+                    <TextBlock Foreground="Black"
+                               FontWeight="Bold"
+                               FontSize="13">MUNICIPALITY OF KALIBO</TextBlock>
+                    <UniformGrid Columns="2">
+                        <UniformGrid.Resources>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="FontSize"
+                                        Value="13" />
+                            </Style>
+                        </UniformGrid.Resources>
+                        <TextBlock>Pantelco:</TextBlock>
+                        <TextBlock>159</TextBlock>
+                        <TextBlock>Smart:</TextBlock>
+                        <TextBlock>0998 998 5647</TextBlock>
+                        <TextBlock>TNT:</TextBlock>
+                        <TextBlock>0907 895 1984</TextBlock>
+                        <TextBlock>Globe:</TextBlock>
+                        <TextBlock>0917 717 7461</TextBlock>
+                    </UniformGrid>
+                </StackPanel>
+            </Border>
 
-            <Grid Height="440"
-                  Margin="40 0"
-                  VerticalAlignment="Stretch">
-                <Grid.RowDefinitions>
-                    <RowDefinition />
-                    <RowDefinition Height="AUTO" />
-                </Grid.RowDefinitions>
+            <Grid Margin="20"
+                  VerticalAlignment="Center"
+                  HorizontalAlignment="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition  Width="auto" />
+                </Grid.ColumnDefinitions>
 
-                <Image Source="/Images/Logos/SOU New (1).png"
-                       VerticalAlignment="Center"
-                       HorizontalAlignment="Center"
-                       Stretch="Uniform" />
+                <Grid Height="440"
+                      Margin="40 0"
+                      VerticalAlignment="Stretch">
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition Height="AUTO" />
+                    </Grid.RowDefinitions>
 
-                <TextBlock Foreground="Black"
-                           Grid.Row="1"
-                           TextWrapping="Wrap"
-                           FontWeight="Bold"
-                           TextAlignment="Center"
-                           Margin="0 5 0 0"
-                           MaxWidth="550"
-                           FontSize="36">EMERGENCY OPERATIONS TELECOMMUNICATIONS SYSTEM</TextBlock>
+                    <Border VerticalAlignment="Center"
+                            Width="350"
+                            Height="350"
+                            BorderThickness="10"
+                            BorderBrush="Black"
+                            CornerRadius="175"
+                            Background="White"
+                            HorizontalAlignment="Center"
+                            Padding="20 50 20 20">
+                        <Border>
+                            <Border.Background>
+                                <ImageBrush Stretch="Uniform"
+                                            ImageSource="/Images/Logos/SOU New (1).png" />
+                            </Border.Background>
+                        </Border>
+                    </Border>
 
-            </Grid>
+                    <TextBlock Foreground="Maroon"
+                               Grid.Row="1"
+                               TextWrapping="Wrap"
+                               TextAlignment="Center"
+                               Margin="0 5 0 0"
+                               MaxWidth="600"
+                               FontSize="30"
+                               FontWeight="Bold"
+                               FontFamily="Tahoma">EMERGENCY OPERATIONS TELECOMMUNICATIONS SYSTEM</TextBlock>
 
-            <!--<Border  Margin="0"
+                </Grid>
+
+                <!--<Border  Margin="0"
                  HorizontalAlignment="Center"
                  BorderThickness="5"
                  BorderBrush="White"
@@ -97,86 +127,88 @@
                    Width="100" />
         </Border>-->
 
-            <Grid Margin="0 0 0 0"
-                  Grid.Column="1"
-                  Height="450"
-                  Width="320">
-
-                <Border CornerRadius="10"
-                        Background="DarkGray"
-                        BorderBrush="Black"
-                        BorderThickness="0.5"
-                        Width="320">
-                    <Border.Effect>
-                        <DropShadowEffect BlurRadius="10"
-                                          Opacity="0.4"
-                                          ShadowDepth="0" />
-                    </Border.Effect>
-                </Border>
-
-                <StackPanel Margin="40,30">
-                    <StackPanel.Resources>
-                        <Style TargetType="TextBlock">
-                            <Setter Property="Margin"
-                                    Value="0,0,0,5" />
-                            <Setter Property="FontSize"
-                                    Value="12" />
-                            <Setter Property="Foreground"
-                                    Value="White" />
-                        </Style>
-                    </StackPanel.Resources>
-                    <TextBlock FontWeight="Bold"
-                               Foreground="{StaticResource AccentColor.Primary}"
-                               FontSize="24"
-                               TextWrapping="Wrap"
-                               Margin="0 30 0 10 ">
-                    <Run Text="Login"
-                         Foreground="{StaticResource AccentColor.Secondary}" />
-                     <Run Text="To Your" />
-                    <Run Foreground="{StaticResource Main.Foreground}"
-                         Text="Account" />
-                    </TextBlock>
-
-                    <TextBlock><Run Text="Username:" /></TextBlock>
-
-                    <Grid Margin="0,0,0,10">
-                        <Image Source="/Images/person_20px.png"
-                               HorizontalAlignment="Left"
-                               Margin="10,0"
-                               Panel.ZIndex="1"
-                               Width="15"
-                               Height="15" />
-                        <placeholder:PlaceholderTextbox x:Name="usernameField"
-                                                        Margin="0"
-                                                        Background="White"
-                                                        IsEnabled="{Binding IsLoading, Mode=OneWay, Converter={StaticResource BoolInvertConverter}}"
-                                                        Text="{Binding Username, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                                        Padding="30,10,10,10" />
-                    </Grid>
-
-                    <TextBlock><Run Text="Password:" /></TextBlock>
-
-                    <views:BindablePasswordBox Password="{Binding Password}"
-                                               IsEnabled="{Binding IsLoading, Mode=OneWay, Converter={StaticResource BoolInvertConverter}}"
-                                               Margin="0,0,0,30" />
-
-                    <Button BorderBrush="{StaticResource AccentColor.Primary}"
-                            Background="{StaticResource AccentColor.Primary}"
-                            Foreground="White"
-                            BorderThickness="0"
-                            Command="{Binding LoginCommand}"
-                            Margin="0,0,0,5"
-                            Content="LOG IN" />
-
-                    <Button Background="Transparent"
-                            Foreground="White"
-                            BorderThickness="0"
-                            FontWeight="Normal"
-                            Content="SIGN UP" />
-
-                </StackPanel>
-
             </Grid>
+        </Grid>
+
+        <Grid Margin="0 0 0 0"
+              Grid.Column="1"
+              Height="450"
+              Width="320">
+
+            <Border CornerRadius="10"
+                    Background="DarkGray"
+                    BorderBrush="Black"
+                    BorderThickness="0"
+                    Width="320">
+                <Border.Effect>
+                    <DropShadowEffect BlurRadius="10"
+                                      Opacity="0.4"
+                                      ShadowDepth="0" />
+                </Border.Effect>
+            </Border>
+
+            <StackPanel Margin="50,30">
+                <StackPanel.Resources>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="Margin"
+                                Value="0,0,0,2" />
+                        <Setter Property="FontSize"
+                                Value="12" />
+                        <Setter Property="Foreground"
+                                Value="White" />
+                    </Style>
+                </StackPanel.Resources>
+                <TextBlock FontWeight="Bold"
+                           Foreground="{StaticResource AccentColor.Primary}"
+                           FontSize="20"
+                           TextWrapping="Wrap"
+                           Margin="0 30 ">
+                        <Run Text="Login"
+                             Foreground="{StaticResource AccentColor.Primary}" />
+                        <Run Text="To Your" />
+                        <Run Foreground="{StaticResource Main.Foreground}"
+                             Text="Account" />
+                </TextBlock>
+
+                <TextBlock><Run Text="Username:" /></TextBlock>
+
+                <Grid Margin="0,0,0,5">
+                    <Image Source="/Images/person_20px.png"
+                           HorizontalAlignment="Left"
+                           Margin="10,0"
+                           Panel.ZIndex="1"
+                           Width="15"
+                           Height="15" />
+                    <placeholder:PlaceholderTextbox x:Name="usernameField"
+                                                    Margin="0"
+                                                    Background="White"
+                                                    IsEnabled="{Binding IsLoading, Mode=OneWay, Converter={StaticResource BoolInvertConverter}}"
+                                                    Text="{Binding Username, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                    Padding="30,10,10,10" />
+                </Grid>
+
+                <TextBlock><Run Text="Password:" /></TextBlock>
+
+                <views:BindablePasswordBox Password="{Binding Password}"
+                                           IsEnabled="{Binding IsLoading, Mode=OneWay, Converter={StaticResource BoolInvertConverter}}"
+                                           Margin="0,0,0,30" />
+
+                <Button BorderBrush="{StaticResource AccentColor.Primary}"
+                        Background="{StaticResource AccentColor.Primary}"
+                        Foreground="White"
+                        BorderThickness="0"
+                        Command="{Binding LoginCommand}"
+                        Margin="0,0,0,5"
+                        Content="LOG IN" />
+
+                <Button Background="Transparent"
+                        Foreground="White"
+                        BorderThickness="0"
+                        FontWeight="Normal"
+                        Content="SIGN UP" />
+
+            </StackPanel>
+
         </Grid>
 
     </Grid>

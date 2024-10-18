@@ -551,13 +551,13 @@
         <Setter Property="Cursor"
                 Value="Hand" />
         <Setter Property="Background"
-                Value="White" />
+                Value="LightGray" />
         <Setter Property="BorderBrush"
-                Value="{StaticResource Main.Foreground}" />
+                Value="#2E2E2E" />
         <Setter Property="Foreground"
                 Value="White" />
         <Setter Property="BorderThickness"
-                Value="2" />
+                Value="1" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type CheckBox}">
@@ -569,7 +569,7 @@
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
                         <Border x:Name="checkBoxBorder"
-                                CornerRadius="50"
+                                CornerRadius="5"
                                 Padding="1"
                                 Background="{TemplateBinding Background}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
@@ -578,19 +578,19 @@
                                 Margin="1"
                                 VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
                             <Grid x:Name="markGrid">
-                                <!--<Path x:Name="optionMark"
+                                <Path x:Name="optionMark"
                                       Data="F1 M 9.97498,1.22334L 4.6983,9.09834L 4.52164,9.09834L 0,5.19331L 1.27664,3.52165L 4.255,6.08833L 8.33331,1.52588e-005L 9.97498,1.22334 Z "
-                                      Fill="{StaticResource OptionMark.Static.Glyph}"
+                                      Fill="Black"
                                       Margin="1"
                                       Opacity="0"
-                                      Stretch="None" />-->
+                                      Stretch="None" />
 
-                                <Image x:Name="optionMark"
+                                <!--<Image x:Name="optionMark"
                                        Opacity="0"
                                        Width="20"
                                        Height="20"
                                        Margin="-3"
-                                       Source="/Images/Check Mark_50px.png" />
+                                       Source="/Images/Check Mark_50px.png" />-->
                                 <Rectangle x:Name="indeterminateMark"
                                            Fill="{StaticResource OptionMark.Static.Glyph}"
                                            Margin="2"
@@ -651,7 +651,7 @@
 
                             <Setter Property="BorderBrush"
                                     TargetName="checkBoxBorder"
-                                    Value="#9575CD" />
+                                    Value="#6DA9FF" />
                             <!--<Setter Property="Fill"
                                     TargetName="optionMark"
                                     Value="{StaticResource OptionMark.Pressed.Glyph}" />-->
@@ -666,7 +666,7 @@
                                     Value="1" />
                             <Setter Property="Background"
                                     TargetName="checkBoxBorder"
-                                    Value="{StaticResource AccentColor.Primary}" />
+                                    Value="white" />
 
                             <Setter Property="Opacity"
                                     TargetName="indeterminateMark"
@@ -707,29 +707,31 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="RadioButton">
-                    <Grid>
+                    <Grid Width="38">
                         <Border x:Name="checkBoxBorder"
-                                CornerRadius="11"
-                                Width="40"
-                                Height="22"
+                                CornerRadius="5"
+                                Height="10"
                                 Padding="0"
-                                Margin="0"
+                                Margin="5 0"
                                 Background="{TemplateBinding Background}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
-                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
-                            <Grid x:Name="markGrid">
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Center">
 
-                                <Ellipse x:Name="bell"
-                                         HorizontalAlignment="Left"
-                                         Width="18"
-                                         Height="18"
-                                         Margin="2"
-                                         Fill="Gray" />
-
-                            </Grid>
                         </Border>
+                        <Grid x:Name="markGrid"
+                              VerticalAlignment="Center">
+                            <Ellipse x:Name="bell"
+                                     HorizontalAlignment="Left"
+                                     Width="18"
+                                     Height="18"
+                                     Margin="0"
+                                     StrokeThickness="1.5"
+                                     Stroke="White"
+                                     Fill="{StaticResource AccentColor.Secondary}" />
+
+                        </Grid>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsChecked"
@@ -739,7 +741,7 @@
                                     Value="Right" />
                             <Setter Property="Fill"
                                     TargetName="bell"
-                                    Value="{StaticResource AccentColor.Secondary}" />
+                                    Value="{StaticResource Main.Foreground}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

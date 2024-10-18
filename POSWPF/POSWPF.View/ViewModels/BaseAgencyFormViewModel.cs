@@ -31,7 +31,7 @@ namespace ECR.WPF.ViewModels {
             MessageBox.Show("Copied to clipboard.", "", MessageBoxButton.OK, MessageBoxImage.Information);
         }
     }
-    public abstract partial class Form_BaseAgency_ViewModel(IDBContextFactory contextFactory) : ObservableValidator, ICloseableObject {
+    public abstract partial class Form_BaseAgency_ViewModel(IDBContextFactory contextFactory, NotificationHandler notificationHandler) : ObservableValidator, ICloseableObject {
         public event EventHandler? OnClose;
 
         public abstract FormSaveType SaveType { get; }
@@ -53,7 +53,8 @@ namespace ECR.WPF.ViewModels {
 
             var contact = new Contact_Item_ViewModel() {
                 ContactType = ContactType,
-                Value = ContactValue.TrimmedAndNullWhenEmpty()!
+                Value = ContactValue.TrimmedAndNullWhenEmpty()!,
+                IsDefault = Contacts.Count == 0
             };
 
             Contacts.Add(contact);
@@ -70,10 +71,8 @@ namespace ECR.WPF.ViewModels {
                 if (contact.IsDefault) {
 
                     var newDefaultContact = Contacts.FirstOrDefault();
-
                     if (newDefaultContact is not null)
                         newDefaultContact.IsDefault = true;
-
                 }
             }
         }
@@ -103,6 +102,7 @@ namespace ECR.WPF.ViewModels {
         bool HasLogo => Logo is not null;
 
         protected IDBContextFactory contextFactory { get; init; } = contextFactory;
+        public NotificationHandler NotificationHandler { get; } = notificationHandler;
 
         protected void InvokeSaveEvent(object p) {
             OnSaveSuccessful?.Invoke(this, p);
@@ -158,7 +158,7 @@ namespace ECR.WPF.ViewModels {
         }
     }
 
-    public partial class Form_Add_Agency_ViewModel(IDBContextFactory contextFactory) : Form_BaseAgency_ViewModel(contextFactory) {
+    public partial class Form_Add_Agency_ViewModel(IDBContextFactory contextFactory, NotificationHandler notificationHandler) : Form_BaseAgency_ViewModel(contextFactory, notificationHandler) {
         public override FormSaveType SaveType => FormSaveType.Register;
 
         protected override bool ResetAgency() {
@@ -202,12 +202,13 @@ namespace ECR.WPF.ViewModels {
                 await context.SaveChangesAsync();
 
                 InvokeSaveEvent(result.Entity);
+                NotificationHandler.RaiseNotification("New Agency Added!", "Agency Added: " + Name);
             }
 
             await base.SaveAgency();
         }
     }
-    public partial class Form_Edit_Agency_ViewModel(IDBContextFactory contextFactory) : Form_BaseAgency_ViewModel(contextFactory) {
+    public partial class Form_Edit_Agency_ViewModel(IDBContextFactory contextFactory, NotificationHandler notificationHandler) : Form_BaseAgency_ViewModel(contextFactory, notificationHandler) {
         private Agency agency = null!;
 
         public Agency AgencyToEdit {
@@ -281,6 +282,7 @@ namespace ECR.WPF.ViewModels {
                 await context.SaveChangesAsync();
 
                 InvokeSaveEvent(agencyToEdit);
+                NotificationHandler.RaiseNotification("Changes on Agency Saved!", "Agency Editted: " + Name);
 
             }
             catch (Exception ex) {

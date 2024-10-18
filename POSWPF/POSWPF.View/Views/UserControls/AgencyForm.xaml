@@ -123,24 +123,16 @@
                                     CornerRadius="150"
                                     VerticalAlignment="Center"
                                     HorizontalAlignment="Center">
-                                <Border.Style>
-                                    <Style TargetType="Border">
-                                        <Setter Property="Background"
-                                                Value="{Binding Logo, Converter={StaticResource ImageToBackgroundConverter}}" />
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Logo}"
-                                                         Value="{x:Null}">
-                                                <Setter Property="Background">
-                                                    <Setter.Value>
-                                                        <ImageBrush Stretch="None"
-                                                                    ImageSource="/ECR.WPF;component/Images/no_image_96px.png" />
-                                                    </Setter.Value>
-                                                </Setter>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </Border.Style>
-
+                                <Border.Background>
+                                    <Binding Path="Logo"
+                                             Converter="{StaticResource ImageToBackgroundConverter}"
+                                             Mode="TwoWay">
+                                        <Binding.TargetNullValue>
+                                            <ImageBrush Stretch="None"
+                                                        ImageSource="/ECR.WPF;component/Images/no_image_96px.png" />
+                                        </Binding.TargetNullValue>
+                                    </Binding>
+                                </Border.Background>
                             </Border>
 
                             <Button Grid.Row="1"

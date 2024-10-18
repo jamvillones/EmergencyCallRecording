@@ -14,7 +14,6 @@
              Background="White"
              d:DesignHeight="800"
              d:DesignWidth="1200"
-             d:DataContext="{d:DesignInstance Type= tabs:RecordTabs,IsDesignTimeCreatable=True}"
              FocusManager.FocusedElement="{Binding ElementName=searchControl}">
 
     <UserControl.Resources>
@@ -306,7 +305,7 @@
                                                         <TextBlock FontSize="10"
                                                                    TextTrimming="CharacterEllipsis"
                                                                    Foreground="{StaticResource AccentColor.Primary}">
-                                                          <Run Foreground="LightGray"
+                                                          <Run Foreground="#6DA9FF"
                                                                Text="{Binding CallType, Mode=OneWay}" />
                                                         </TextBlock>
                                                     </StackPanel>
@@ -352,9 +351,9 @@
                                                             Height="25"
                                                             CornerRadius="15"
                                                             BorderThickness="2"
-                                                            BorderBrush="Gray"
+                                                            BorderBrush="White"
                                                             Background="{Binding Agency.Logo, Converter={StaticResource ImageToBackgroundConverter}}">
-                                                        <Border Background="#247FFF"
+                                                        <Border Background="{StaticResource AccentColor.Primary}"
                                                                 CornerRadius="15"
                                                                 Margin="-1"
                                                                 Visibility="{Binding Agency.Logo, Converter={StaticResource NullToVisibilityConverter}}">
