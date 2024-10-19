@@ -67,7 +67,7 @@ namespace ECR.View.ViewModels {
     }
 
     public sealed partial class Agency_Item_ViewModel : ObservableObject {
-        public Agency_Item_ViewModel(NotificationHandler notificationHandler) {
+        public Agency_Item_ViewModel(INotificationHandler notificationHandler) {
             NotificationHandler = notificationHandler;
         }
 
@@ -86,7 +86,7 @@ namespace ECR.View.ViewModels {
         }
 
         public int Id { get; set; } = -1;
-        public NotificationHandler NotificationHandler { get; }
+        public INotificationHandler NotificationHandler { get; }
 
         [ObservableProperty]
         string name = "";

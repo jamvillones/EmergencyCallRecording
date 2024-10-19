@@ -511,16 +511,18 @@
                                             <Grid VerticalAlignment="Stretch"
                                                   HorizontalAlignment="Stretch">
 
-                                                <Button Margin="0"
+                                                <Button Style="{StaticResource Button.Stateless}"
+                                                        Margin="0"
                                                         Padding="10 0"
                                                         Height="auto"
                                                         MinHeight="28"
-                                                        BorderThickness="0"
                                                         Background="Transparent"
                                                         BorderBrush="Transparent"
+                                                        BorderThickness="0"
                                                         ToolTip="Copy To Clipboard"
                                                         Command="{Binding CopyDefaultContactCommand}"
-                                                        HorizontalContentAlignment="Stretch">
+                                                        HorizontalContentAlignment="Stretch"
+                                                        VerticalContentAlignment="Center">
 
                                                     <Grid HorizontalAlignment="Stretch"
                                                           IsHitTestVisible="False"

@@ -19,15 +19,17 @@ namespace ECR.WPF.ViewModels {
     }
 
     public abstract partial class BaseRecordForm_ViewModel : ObservableValidator, ICloseableObject {
-        protected BaseRecordForm_ViewModel(IDBContextFactory dbFactory, IViewModelFactory viewModelFactory, NotificationHandler handler) {
+        protected BaseRecordForm_ViewModel(IDBContextFactory dbFactory, IViewModelFactory viewModelFactory, INotificationHandler handler) {
             DbFactory = dbFactory;
             ViewModelFactory = viewModelFactory;
             Handler = handler;
             Audios.CollectionChanged += Audios_CollectionChanged;
         }
+        protected IDBContextFactory DbFactory { get; }
 
         protected IViewModelFactory ViewModelFactory { get; } = null!;
-        public NotificationHandler Handler { get; }
+        public INotificationHandler Handler { get; }
+
         public abstract FormSaveType SaveType { get; }
         private void Audios_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e) {
             OnPropertyChanged(nameof(AudiosIsEmpty));
@@ -171,11 +173,10 @@ namespace ECR.WPF.ViewModels {
         public bool AudiosNotEmpty => Audios.Count > 0;
         #endregion
 
-        protected IDBContextFactory DbFactory { get; init; }
     }
 
     public partial class Form_Add_Record_ViewModel : BaseRecordForm_ViewModel {
-        public Form_Add_Record_ViewModel(IDBContextFactory dbFactory, IViewModelFactory viewModelFactory, NotificationHandler handler) : base(dbFactory, viewModelFactory, handler) {
+        public Form_Add_Record_ViewModel(IDBContextFactory dbFactory, IViewModelFactory viewModelFactory, INotificationHandler handler) : base(dbFactory, viewModelFactory, handler) {
             _ = InitializeAgencyList();
         }
 
@@ -234,7 +235,7 @@ namespace ECR.WPF.ViewModels {
         }
     }
 
-    public partial class Form_Edit_Record_ViewModel(IDBContextFactory dbFactory, IViewModelFactory viewModelFactory, NotificationHandler handler) : BaseRecordForm_ViewModel(dbFactory, viewModelFactory, handler) {
+    public partial class Form_Edit_Record_ViewModel(IDBContextFactory dbFactory, IViewModelFactory viewModelFactory, INotificationHandler handler) : BaseRecordForm_ViewModel(dbFactory, viewModelFactory, handler) {
 
         private Record record = null!;
 

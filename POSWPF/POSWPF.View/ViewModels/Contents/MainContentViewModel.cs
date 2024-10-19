@@ -15,23 +15,22 @@ namespace ECR.View.ViewModels.Contents {
         event EventHandler OnLogOff;
     }
     sealed partial class MainContentViewModel : ObservableObject, ILogOffable {
-        public MainContentViewModel(NotificationHandler notificationHandler, IViewModelFactory vmFactory) {
+        public MainContentViewModel(INotificationHandler notificationHandler, IViewModelFactory vmFactory) {
             NotificationHandler = notificationHandler;
             VmFactory = vmFactory;
 
             recordsTab = VmFactory.Get<RecordTabs>();
-
             CurrentTab = recordsTab;
 
         }
+        public INotificationHandler NotificationHandler { get; } = null!;
+        public IViewModelFactory VmFactory { get; } = null!;
 
         [ObservableProperty]
         private ObservableObject _currentTab = null!;
 
         private readonly RecordTabs recordsTab = null!;
 
-        public NotificationHandler NotificationHandler { get; } = null!;
-        public IViewModelFactory VmFactory { get; } = null!;
 
         public event EventHandler? OnLogOff;
 

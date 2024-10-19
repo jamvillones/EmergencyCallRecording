@@ -8,7 +8,11 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace ECR.WPF.ViewModels {
-    public partial class NotificationHandler : ObservableObject {
+    public interface INotificationHandler {
+        void RaiseNotification(string title, string description);
+    }
+
+    public partial class NotificationHandler : ObservableObject, INotificationHandler {
 
         public void RaiseNotification(string title, string description) {
             var newNotif = new Notification_Item_ViewModel() { Title = title, Details = description };

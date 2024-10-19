@@ -24,7 +24,7 @@
 
             <SolidColorBrush x:Key="Button.Static.Background">#E0EAFA</SolidColorBrush>
 
-            <SolidColorBrush x:Key="Button.MouseOver.Background"
+            <!--<SolidColorBrush x:Key="Button.MouseOver.Background"
                              Color="#E0EAFA" />
             <SolidColorBrush x:Key="Button.Pressed.Background"
                              Color="#E5F1FB" />
@@ -37,7 +37,7 @@
             <SolidColorBrush x:Key="Button.Disabled.Border"
                              Color="#FFADB2B5" />
             <SolidColorBrush x:Key="Button.Disabled.Foreground"
-                             Color="White" />
+                             Color="White" />-->
             <Style x:Key="FocusVisual">
                 <Setter Property="Control.Template">
                     <Setter.Value>
@@ -706,12 +706,12 @@
                         <Setter Property="Opacity"
                                 TargetName="hoverIndicator"
                                 Value="0.6" />
-                        <Setter Property="BorderBrush"
+                        <!--<Setter Property="BorderBrush"
                                 TargetName="border"
                                 Value="{StaticResource Button.Disabled.Border}" />
                         <Setter Property="TextElement.Foreground"
                                 TargetName="contentPresenter"
-                                Value="{StaticResource Button.Disabled.Foreground}" />
+                                Value="{StaticResource Button.Disabled.Foreground}" />-->
                     </Trigger>
                 </ControlTemplate.Triggers>
             </ControlTemplate>
@@ -723,6 +723,30 @@
                         Value="Hand" />
                 <Setter Property="Height"
                         Value="40" />
+            </Style>
+
+            <Style TargetType="Button"
+                   x:Key="Button.Stateless">
+                <Setter Property="OverridesDefaultStyle"
+                        Value="True" />
+                <Setter Property="Cursor"
+                        Value="Hand" />
+                <Setter Property="IsTabStop"
+                        Value="False" />
+                <Setter Property="Focusable"
+                        Value="False" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border Background="{TemplateBinding Background}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}">
+                                <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
             </Style>
 
             <Style TargetType="Border"

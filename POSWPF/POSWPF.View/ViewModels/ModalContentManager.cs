@@ -6,7 +6,6 @@ namespace ECR.WPF.ViewModels {
         ICloseableObject? currentModal = null;
 
         public ICloseableObject OpenModal(ICloseableObject modal) {
-
             CurrentModal = modal;
             modal.OnClose += Modal_OnClose;
             return modal;

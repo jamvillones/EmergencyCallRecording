@@ -17,13 +17,13 @@ namespace ECR.View.Utilities {
 
         public static void ConfigureServices(HostBuilderContext context, IServiceCollection services) {
             services.AddSingleton<IViewModelFactory, ViewModelFactory>();
+            services.AddSingleton<INotificationHandler, NotificationHandler>();
+            services.AddTransient<IDBContextFactory, DbContextFactory>();
 
             services.AddSingleton<MainViewModel>();
-            services.AddSingleton<NotificationHandler>();
             services.AddSingleton<ModalContentManager>();
             services.AddSingleton<RecordsStore>();
 
-            services.AddTransient<IDBContextFactory, DbContextFactory>();
             services.AddTransient<MainContentViewModel>();
             services.AddTransient<RecordTabs>();
 
@@ -37,6 +37,7 @@ namespace ECR.View.Utilities {
 
             services.AddTransient<Agency_Item_ViewModel>();
             services.AddTransient<Record_Item_ViewModel>();
+            services.AddTransient<Contact_Item_ViewModel>();
         }
     }
 }
