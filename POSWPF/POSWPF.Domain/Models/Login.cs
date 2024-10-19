@@ -1,9 +1,12 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-
+using System.Net.Mail;
 namespace ECR.Domain.Models;
+
 [Table(nameof(Login))]
+[Index(nameof(Username), IsUnique = true)]
 public partial class Login {
     public int Id { get; set; }
 

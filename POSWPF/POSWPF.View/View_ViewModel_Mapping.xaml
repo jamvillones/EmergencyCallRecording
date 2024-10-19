@@ -7,7 +7,6 @@
                     xmlns:views="clr-namespace:ECR.View.Views">
     <DataTemplate DataType="{x:Type vmContents:MainContentViewModel}">
         <vContents:MainContentView />
-        <!--<views:SignatureCaptureView></views:SignatureCaptureView>-->
     </DataTemplate>
 
     <DataTemplate DataType="{x:Type vmContents:LoginViewModel}">

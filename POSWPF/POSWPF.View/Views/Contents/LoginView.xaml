@@ -6,6 +6,9 @@
              xmlns:local="clr-namespace:ECR.View.Views.Contents"
              xmlns:placeholder="clr-namespace:PlaceholderTextBox;assembly=PlaceholderTextBox"
              xmlns:views="clr-namespace:ECR.View.Views"
+             xmlns:contents="clr-namespace:ECR.View.ViewModels.Contents"
+             xmlns:signup="clr-namespace:ECR.WPF.Views.UserControls"
+             xmlns:vm="clr-namespace:ECR.WPF.ViewModels"
              mc:Ignorable="d"
              FocusManager.FocusedElement="{Binding ElementName=usernameField}"
              d:DesignHeight="720"
@@ -17,6 +20,46 @@
                     Command="{Binding LoginCommand}" />
 
     </UserControl.InputBindings>
+
+    <UserControl.Resources>
+
+        <DataTemplate x:Key="Failed.Login.DataTemplate">
+            <Border Margin="0,10"
+                    Padding="8"
+                    BorderThickness="1"
+                    CornerRadius="5"
+                    BorderBrush="Wheat"
+                    Background="Maroon">
+                <StackPanel>
+
+                    <TextBlock FontWeight="Bold"
+                               Foreground="White">Login Failed!</TextBlock>
+                    <TextBlock TextWrapping="Wrap"
+                               Foreground="Wheat"
+                               FontSize="11">Username and/or Password might be incorrect.</TextBlock>
+                </StackPanel>
+            </Border>
+        </DataTemplate>
+
+        <DataTemplate x:Key="No.Connection.DataTemplate">
+            <Border Margin="0,10"
+                    Padding="8"
+                    BorderThickness="1"
+                    CornerRadius="5"
+                    BorderBrush="Wheat"
+                    Background="#F9DB5D">
+                <StackPanel>
+
+                    <TextBlock FontWeight="Bold"
+                               Foreground="Black">Conntection Not Established!</TextBlock>
+                    <TextBlock TextWrapping="Wrap"
+                               Foreground="#1F1F1F"
+                               FontSize="11">Failed to Connect to the Server!</TextBlock>
+                </StackPanel>
+            </Border>
+        </DataTemplate>
+
+    </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="5*" />
@@ -113,20 +156,6 @@
                                FontFamily="Tahoma">EMERGENCY OPERATIONS TELECOMMUNICATIONS SYSTEM</TextBlock>
 
                 </Grid>
-
-                <!--<Border  Margin="0"
-                 HorizontalAlignment="Center"
-                 BorderThickness="5"
-                 BorderBrush="White"
-                 CornerRadius="165"
-                 VerticalAlignment="Top"
-                 Panel.ZIndex="1"
-                 Grid.Column="1">
-
-            <Image Source="/Images/Logos/Kalibo Logo (1).png"
-                   Width="100" />
-        </Border>-->
-
             </Grid>
         </Grid>
 
@@ -190,12 +219,39 @@
                 <TextBlock><Run Text="Password:" /></TextBlock>
 
                 <views:BindablePasswordBox Password="{Binding Password}"
-                                           IsEnabled="{Binding IsLoading, Mode=OneWay, Converter={StaticResource BoolInvertConverter}}"
-                                           Margin="0,0,0,30" />
+                                           IsEnabled="{Binding IsLoading, Mode=OneWay, Converter={StaticResource BoolInvertConverter}}" />
+
+                <ContentControl DataContext="{Binding}"
+                                Margin="0,10">
+                    <ContentControl.Style>
+                        <Style TargetType="ContentControl">
+                            <Setter Property="ContentTemplate"
+                                    Value="{x:Null}" />
+
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding LoginStatus}"
+                                             Value="{x:Static contents:LoginStatus.Disconnected}">
+                                    <Setter Property="ContentTemplate"
+                                            Value="{StaticResource No.Connection.DataTemplate}" />
+
+                                </DataTrigger>
+
+                                <DataTrigger Binding="{Binding LoginStatus}"
+                                             Value="{x:Static contents:LoginStatus.Failed}">
+                                    <Setter Property="ContentTemplate"
+                                            Value="{StaticResource  Failed.Login.DataTemplate}" />
+
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ContentControl.Style>
+                </ContentControl>
 
                 <Button BorderBrush="{StaticResource AccentColor.Primary}"
                         Background="{StaticResource AccentColor.Primary}"
                         Foreground="White"
+                        IsTabStop="False"
+                        Focusable="False"
                         BorderThickness="0"
                         Command="{Binding LoginCommand}"
                         Margin="0,0,0,5"
@@ -203,13 +259,31 @@
 
                 <Button Background="Transparent"
                         Foreground="White"
+                        IsTabStop="False"
+                        Focusable="False"
                         BorderThickness="0"
                         FontWeight="Normal"
-                        Content="SIGN UP" />
+                        Content="SIGN UP"
+                        Command="{Binding OpenSignupFormCommand}" />
 
             </StackPanel>
 
         </Grid>
+
+        <!--<signup:SignUp_Form Grid.ColumnSpan="2" />-->
+
+        <ContentControl Content="{Binding SignupForm}"
+                        Grid.ColumnSpan="2">
+            <ContentControl.Resources>
+                <DataTemplate DataType="{x:Type vm:SignUp_Form_ViewModel}">
+                    <signup:SignUp_Form />
+                </DataTemplate>
+
+                <!--<DataTemplate DataType="vm:SignUp_Form_ViewModel">
+                    <signup:SignUp_Form />
+                </DataTemplate>-->
+            </ContentControl.Resources>
+        </ContentControl>
 
     </Grid>
 

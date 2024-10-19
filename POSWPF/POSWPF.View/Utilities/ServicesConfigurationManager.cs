@@ -25,6 +25,7 @@ namespace ECR.View.Utilities {
             services.AddSingleton<RecordsStore>();
 
             services.AddTransient<MainContentViewModel>();
+            services.AddTransient<LoginViewModel>();
             services.AddTransient<RecordTabs>();
 
             services.AddTransient<Records_CallsSection>();
@@ -38,6 +39,11 @@ namespace ECR.View.Utilities {
             services.AddTransient<Agency_Item_ViewModel>();
             services.AddTransient<Record_Item_ViewModel>();
             services.AddTransient<Contact_Item_ViewModel>();
+
+            services.AddTransient<SignUp_Form_ViewModel>();
+
+            services.AddKeyedTransient<IPasswordHandler, Register_Login_PasswordHandler>(FormSaveType.Register);
+            services.AddKeyedTransient<IPasswordHandler, Edit_Login_PasswordHandler>(FormSaveType.Edit);
         }
     }
 }

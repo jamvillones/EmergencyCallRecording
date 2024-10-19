@@ -1,0 +1,418 @@
+﻿<UserControl x:Class="ECR.WPF.Views.UserControls.SignUp_Form"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:ECR.WPF.Views.UserControls"
+             xmlns:placeHolder="clr-namespace:PlaceholderTextBox;assembly=PlaceholderTextBox"
+             xmlns:converter="clr-namespace:ECR.WPF.Utilities.Converters"
+             xmlns:views="clr-namespace:ECR.View.Views"
+             xmlns:vm="clr-namespace:ECR.WPF.ViewModels"
+             mc:Ignorable="d"
+             d:DesignHeight="700"
+             d:DesignWidth="1250">
+    <UserControl.Resources>
+        <Thickness x:Key="Vertical.Spacing">0,0,0,20</Thickness>
+
+        <Style TargetType="Button">
+            <Setter Property="Template"
+                    Value="{StaticResource Template.Round.Button}" />
+            <Setter Property="Width"
+                    Value="140" />
+            <Setter Property="Height"
+                    Value="35" />
+            <Setter Property="Margin"
+                    Value="0,0,10,0" />
+            <Setter Property="BorderThickness"
+                    Value="0" />
+            <Setter Property="Cursor"
+                    Value="Hand" />
+        </Style>
+
+        <Style TargetType="Border"
+               x:Key="Border.Header.Footer">
+            <Setter Property="Background"
+                    Value="#DFDFDF" />
+            <Setter Property="Padding"
+                    Value="20" />
+            <Setter Property="BorderBrush"
+                    Value="Gray" />
+            <Setter Property="Margin"
+                    Value="1" />
+            <Setter Property="SnapsToDevicePixels"
+                    Value="True" />
+
+        </Style>
+
+        <converter:CircularCornerRadiusConverter x:Key="CircularCornerRadiusConverter" />
+
+        <Style x:Key="Button.Circular"
+               TargetType="{x:Type Button}">
+            <Setter Property="OverridesDefaultStyle"
+                    Value="True" />
+            <Setter Property="Cursor"
+                    Value="Hand" />
+            <Setter Property="Width"
+                    Value="140" />
+            <Setter Property="Margin"
+                    Value="0,0,0,0" />
+            <Setter Property="BorderThickness"
+                    Value="2" />
+            <Setter Property="BorderBrush"
+                    Value="Transparent" />
+            <Setter Property="Cursor"
+                    Value="Hand" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="templateRoot"
+                                Width="{TemplateBinding Width}"
+                                Height="{TemplateBinding Width}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                Background="{TemplateBinding Background}"
+                                SnapsToDevicePixels="True"
+                                CornerRadius="{TemplateBinding Property=Width, Converter={StaticResource CircularCornerRadiusConverter}}">
+
+                            <Grid>
+
+                                <ContentPresenter Margin="{TemplateBinding Padding}"
+                                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+
+                                <Border Opacity="0"
+                                        x:Name="mask"
+                                        SnapsToDevicePixels="True"
+                                        BorderThickness="0"
+                                        CornerRadius="{TemplateBinding Property=Width, Converter={StaticResource CircularCornerRadiusConverter}}"
+                                        Background="#dfdfdf" />
+
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver"
+                                     Value="True">
+                                <!--<Setter TargetName="templateRoot"
+                                        Property="Background"
+                                        Value="#0f000000" />-->
+                                <Setter Property="Opacity"
+                                        TargetName="mask"
+                                        Value="0.2" />
+
+                                <Setter TargetName="templateRoot"
+                                        Property="BorderBrush"
+                                        Value="maroon" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+    </UserControl.Resources>
+
+    <Grid Background="#cfffffff">
+        <!--Curtain-->
+        <Grid Margin="40"
+              MaxHeight="650"
+              MaxWidth="700">
+
+            <Border Background="#EFF2F7"
+                    BorderThickness="0.5"
+                    BorderBrush="Black"
+                    CornerRadius="5">
+                <Border.Effect>
+                    <DropShadowEffect BlurRadius="10"
+                                      ShadowDepth="0"
+                                      Opacity="0.4" />
+                </Border.Effect>
+            </Border>
+
+            <Grid>
+                <Grid.Resources>
+                    <ResourceDictionary Source="/Views/ResourceDictionaries/DataGridResource.xaml" />
+                </Grid.Resources>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition />
+                    <RowDefinition Height="AUTO" />
+                </Grid.RowDefinitions>
+                <!--Title-->
+                <Border Style="{StaticResource Border.Header.Footer}"
+                        CornerRadius="4 4 0 0"
+                        BorderThickness="0 0 0 1">
+                    <TextBlock VerticalAlignment="Center"
+                               FontSize="16"
+                               FontWeight="Bold">
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="Text"
+                                        Value="Sign Up" />
+                                <Style.Triggers>
+                                    <!--<DataTrigger Binding="{Binding SaveType}"
+                                                 Value="{x:Static vm:FormSaveType.Edit}">
+                                        <Setter Property="Text"
+                                                Value="Edit Agency Details" />
+                                    </DataTrigger>-->
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+                </Border>
+
+                <Grid x:Name="contentGrid"
+                      Grid.Row="1"
+                      Margin="20">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+
+                    <Border BorderThickness="0 0 0 1"
+                            SnapsToDevicePixels="True"
+                            Margin="0 0 0 20"
+                            BorderBrush="{StaticResource AccentColor.Primary}">
+
+                        <StackPanel Orientation="Horizontal">
+                            <StackPanel.Resources>
+                                <ResourceDictionary Source="/Views/ResourceDictionaries/HorizontalRadioButtonStyle.xaml" />
+                            </StackPanel.Resources>
+                            <RadioButton x:Name="detailsRB"
+                                         IsChecked="True">Details</RadioButton>
+                            <RadioButton x:Name="passwordRB">Password</RadioButton>
+                        </StackPanel>
+                    </Border>
+
+                    <Grid Grid.Row="1"
+                          Visibility="{Binding ElementName=detailsRB, Path=IsChecked, Converter={StaticResource BoolToVisibilityConverter}}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+
+                        <Grid Margin="0 0 40 0"
+                              VerticalAlignment="Top">
+
+                            <TextBlock>Image:</TextBlock>
+
+                            <Border Grid.Row="1"
+                                    Width="250"
+                                    Height="250"
+                                    BorderThickness="10"
+                                    BorderBrush="#8D8D8D"
+                                    CornerRadius="150"
+                                    VerticalAlignment="Center"
+                                    HorizontalAlignment="Center">
+                                <Border.Background>
+                                    <Binding Path="Photo"
+                                             Converter="{StaticResource ImageToBackgroundConverter}"
+                                             Mode="TwoWay">
+                                        <Binding.TargetNullValue>
+                                            <ImageBrush Stretch="None"
+                                                        ImageSource="/ECR.WPF;component/Images/no_image_96px.png" />
+                                        </Binding.TargetNullValue>
+                                    </Binding>
+                                </Border.Background>
+                            </Border>
+
+                            <Button Style="{StaticResource Button.Circular}"
+                                    Grid.Row="1"
+                                    Command="{Binding PickPhotoCommand}"
+                                    Width="250"
+                                    Height="250"
+                                    BorderThickness="10"
+                                    Background="Transparent"
+                                    Margin="0">
+
+                            </Button>
+
+                            <Button Grid.Row="1"
+                                    Command="{Binding RemovePhotoCommand}"
+                                    Style="{StaticResource Button.Circular}"
+                                    Width="65"
+                                    Height="65"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Bottom"
+                                    Padding="20"
+                                    BorderThickness="5"
+                                    Background="Maroon"
+                                    BorderBrush="White"
+                                    Margin="10">
+                                <Image Source="/Images/remove_image_20px.png" />
+                            </Button>
+
+                        </Grid>
+
+                        <StackPanel Grid.Column="1"
+                                    Margin="0 0 0 0">
+                            <TextBlock>Username:</TextBlock>
+                            <placeHolder:PlaceholderTextbox x:Name="firstControl"
+                                                            Text="{Binding Username, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                            Margin="{StaticResource Vertical.Spacing}" />
+
+                            <TextBlock>First Name:</TextBlock>
+                            <placeHolder:PlaceholderTextbox Text="{Binding FirstName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                            Margin="{StaticResource Vertical.Spacing}" />
+
+                            <TextBlock>Middle Name:</TextBlock>
+                            <placeHolder:PlaceholderTextbox PlaceholderText="optional..."
+                                                            Text="{Binding MiddleName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                            Margin="{StaticResource Vertical.Spacing}" />
+
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+
+                                    <ColumnDefinition />
+                                    <ColumnDefinition Width="10" />
+                                    <ColumnDefinition Width="130" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="AUTO" />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+
+                                <TextBlock>Last Name:</TextBlock>
+                                <placeHolder:PlaceholderTextbox Text="{Binding LastName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                                Margin="{StaticResource Vertical.Spacing}"
+                                                                Grid.Row="1" />
+
+                                <TextBlock Grid.Column="2">Extension Name:</TextBlock>
+                                <placeHolder:PlaceholderTextbox PlaceholderText="optional..."
+                                                                Grid.Column="2"
+                                                                Text="{Binding ExtensionName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                                Margin="{StaticResource Vertical.Spacing}"
+                                                                Grid.Row="1" />
+                            </Grid>
+                            <TextBlock>Position:</TextBlock>
+                            <placeHolder:PlaceholderTextbox Text="{Binding Position, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                            PlaceholderText="optional..."
+                                                            Margin="{StaticResource Vertical.Spacing}" />
+
+                        </StackPanel>
+                    </Grid>
+
+                    <Grid Grid.Row="1"
+                          Visibility="{Binding ElementName=passwordRB, Path=IsChecked, Converter={StaticResource BoolToVisibilityConverter}}">
+                        <ContentControl Content="{Binding PasswordHandler}"
+                                        Validation.ErrorTemplate="{x:Null}">
+                            <ContentControl.Resources>
+                                <DataTemplate DataType="{x:Type vm:Register_Login_PasswordHandler}">
+                                    <StackPanel Validation.ErrorTemplate="{x:Null}">
+                                        <TextBlock><Run Text="Password:" /></TextBlock>
+                                        <views:BindablePasswordBox Password="{Binding Password}"
+                                                                   Margin="{StaticResource Vertical.Spacing}" />
+
+                                        <TextBlock><Run Text="Confirm Password:" /></TextBlock>
+                                        <views:BindablePasswordBox Password="{Binding ConfirmPassword}" />
+                                    </StackPanel>
+                                </DataTemplate>
+
+                                <DataTemplate DataType="{x:Type vm:Edit_Login_PasswordHandler}">
+                                    <StackPanel>
+
+                                        <TextBlock><Run Text="Old Password:" /></TextBlock>
+                                        <views:BindablePasswordBox Password="{Binding OldPassword}"
+                                                                   Margin="{StaticResource Vertical.Spacing}" />
+
+                                        <TextBlock><Run Text="New Password:" /></TextBlock>
+                                        <views:BindablePasswordBox Password="{Binding NewPassword}"
+                                                                   Margin="{StaticResource Vertical.Spacing}" />
+
+                                        <TextBlock><Run Text="Confirm New Password:" /></TextBlock>
+                                        <views:BindablePasswordBox Password="{Binding ConfirmNewPassword}" />
+
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ContentControl.Resources>
+                        </ContentControl>
+                    </Grid>
+                </Grid>
+
+                <Border Grid.Row="2"
+                        Background="#E0EAFA"
+                        CornerRadius="0 0 4 4"
+                        BorderThickness="0 1 0 0"
+                        Style="{StaticResource Border.Header.Footer}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="auto" />
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Orientation="Horizontal">
+
+                            <Button Foreground="#E0EAFA"
+                                    Background="{StaticResource AccentColor.Primary}"
+                                    BorderThickness="0"
+                                    Padding="10 0"
+                                    HorizontalContentAlignment="Stretch"
+                                    Command="{Binding SaveCommand}">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto" />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <Image Width="18"
+                                           Source="/Images/save_close_50px.png" />
+
+                                    <TextBlock Grid.Column="2"
+                                               VerticalAlignment="Center"
+                                               HorizontalAlignment="Center">
+                         Save
+                                    </TextBlock>
+                                </Grid>
+
+                            </Button>
+                            <Button Background="#878787"
+                                    Foreground="White"
+                                    HorizontalContentAlignment="Stretch"
+                                    Padding="10,0"
+                                    Command="{Binding ResetCommand}">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto" />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <Image Width="18"
+                                           Source="/Images/delete_receipt_50px.png" />
+
+                                    <TextBlock Grid.Column="2"
+                                               VerticalAlignment="Center"
+                                               HorizontalAlignment="Center">
+                         Discard Changes
+                                    </TextBlock>
+                                </Grid>
+                            </Button>
+
+                        </StackPanel>
+                        <Button Background="IndianRed"
+                                Foreground="White"
+                                Grid.Column="1"
+                                Margin="0"
+                                HorizontalContentAlignment="Stretch"
+                                Padding="10,0"
+                                Command="{Binding CloseCommand}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto" />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <Image Width="18"
+                                       Source="/Images/close_window_50px.png" />
+
+                                <TextBlock Grid.Column="2"
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Center">
+                             Close
+                                </TextBlock>
+                            </Grid>
+                        </Button>
+                    </Grid>
+                </Border>
+
+            </Grid>
+
+        </Grid>
+
+    </Grid>
+</UserControl>

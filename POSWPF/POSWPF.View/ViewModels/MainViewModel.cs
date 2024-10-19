@@ -7,13 +7,15 @@ namespace ECR.View.ViewModels {
         public MainViewModel(IViewModelFactory viewModelFactory) {
             ViewModelFactory = viewModelFactory;
 
+            CurrentPage = viewModelFactory.Get<LoginViewModel>();
+
             if (_currentPage is LoginViewModel login) {
                 login.OnLoginSuccessful += Login_OnLoginSuccessful;
             }
         }
 
         [ObservableProperty]
-        ObservableObject _currentPage = new LoginViewModel();
+        ObservableObject _currentPage;
 
 
         public IViewModelFactory ViewModelFactory { get; }
@@ -26,7 +28,7 @@ namespace ECR.View.ViewModels {
         }
 
         private void L_OnLogOff(object? sender, EventArgs e) {
-            CurrentPage = new LoginViewModel();
+            CurrentPage = ViewModelFactory.Get<LoginViewModel>();
 
             if (CurrentPage is LoginViewModel login)
                 login.OnLoginSuccessful += Login_OnLoginSuccessful;
