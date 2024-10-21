@@ -101,7 +101,14 @@ namespace ECR.WPF.ViewModels {
         [ObservableProperty]
         [NotifyDataErrorInfo]
         [Required(ErrorMessage = REQUIRED_FIELD_STRING)]
-        private string name = null!;
+        private string firstName = null!;
+
+        [ObservableProperty]
+        private string? middleName = null;
+        [ObservableProperty]
+        private string? lastName = null;
+        [ObservableProperty]
+        private string? extensionName = null;
 
         [ObservableProperty]
         private string? contactDetails = null;
@@ -173,7 +180,7 @@ namespace ECR.WPF.ViewModels {
         protected override bool ResetAgency() {
             if (base.ResetAgency()) {
 
-                Name = ContactDetails = Address = string.Empty;
+                FirstName = LastName = MiddleName = ExtensionName = ContactDetails = Address = string.Empty;
                 Logo = null;
                 Contacts.Clear();
                 return true;
@@ -194,8 +201,13 @@ namespace ECR.WPF.ViewModels {
 
             using (var context = contextFactory.CreateDbContext()) {
 
-                var agency = new Agency() {
-                    Name = Name.TrimmedAndNullWhenEmpty()!,
+                var agencyToAdd = new Agency() {
+                    Name = new Name() {
+                        First = FirstName.TrimmedAndNullWhenEmpty()!,
+                        Middle = MiddleName.TrimmedAndNullWhenEmpty(),
+                        Last = LastName.TrimmedAndNullWhenEmpty(),
+                        Extension = ExtensionName.TrimmedAndNullWhenEmpty()
+                    },
                     Address = Address.TrimmedAndNullWhenEmpty(),
                     Logo = Logo.ToByteArray(),
                     ContactDetails = Contacts.Select(c =>
@@ -207,11 +219,11 @@ namespace ECR.WPF.ViewModels {
                     .ToList()
                 };
 
-                var result = context.Agencies.Add(agency);
+                var result = context.Agencies.Add(agencyToAdd);
                 await context.SaveChangesAsync();
 
                 InvokeSaveEvent(result.Entity);
-                NotificationHandler.RaiseNotification("New Agency Added!", "Agency Added: " + Name);
+                NotificationHandler.RaiseNotification("New Agency Added!", "Agency Added: " + agencyToAdd.Name.ToString());
             }
 
             await base.SaveAgency();
@@ -231,7 +243,11 @@ namespace ECR.WPF.ViewModels {
         public override FormSaveType SaveType => FormSaveType.Edit;
 
         private void SetDetails(Agency agency) {
-            Name = agency.Name;
+            FirstName = agency.Name.First;
+            MiddleName = agency.Name.Middle.TrimmedAndNullWhenEmpty();
+            LastName = agency.Name.Last.TrimmedAndNullWhenEmpty();
+            ExtensionName = agency.Name.Extension.TrimmedAndNullWhenEmpty();
+
             Address = agency.Address.TrimmedAndNullWhenEmpty();
             Logo = agency.Logo?.ToImageSource();
 
@@ -279,7 +295,13 @@ namespace ECR.WPF.ViewModels {
 
                 if (agencyToEdit is null) return;
 
-                agencyToEdit.Name = Name.TrimmedAndNullWhenEmpty()!;
+                agencyToEdit.Name = new Name() {
+                    First = FirstName.TrimmedAndNullWhenEmpty()!,
+                    Middle = MiddleName.TrimmedAndNullWhenEmpty(),
+                    Last = LastName.TrimmedAndNullWhenEmpty(),
+                    Extension = ExtensionName.TrimmedAndNullWhenEmpty()
+                };
+
                 agencyToEdit.Address = Address.TrimmedAndNullWhenEmpty();
                 agencyToEdit.Logo = Logo.ToByteArray();
 
@@ -303,7 +325,7 @@ namespace ECR.WPF.ViewModels {
                 await context.SaveChangesAsync();
 
                 InvokeSaveEvent(agencyToEdit);
-                NotificationHandler.RaiseNotification("Changes on Agency Saved!", "Agency Editted: " + Name);
+                NotificationHandler.RaiseNotification("Changes on Agency Saved!", "Agency Editted: " + agencyToEdit.Name.ToString());
 
             }
             catch (Exception ex) {

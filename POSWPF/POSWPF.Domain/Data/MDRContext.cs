@@ -23,6 +23,9 @@ public partial class MDRContext : DbContext {
         modelBuilder.Entity<Login>()
             .OwnsOne(l => l.Name);
 
+        modelBuilder.Entity<Agency>()
+            .OwnsOne(a => a.Name);
+
         modelBuilder.Entity<Record>()
             .OwnsOne(r => r.Call);
 

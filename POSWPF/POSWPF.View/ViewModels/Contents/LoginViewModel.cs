@@ -1,21 +1,23 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using ECR.Domain.Data;
+using ECR.Domain.Models;
 using ECR.View.Utilities;
+using ECR.WPF.Utilities;
 using ECR.WPF.ViewModels;
 using Microsoft.EntityFrameworkCore;
 
 namespace ECR.View.ViewModels.Contents {
 
-    public enum LoginStatus { Pending, Okay, Failed, Disconnected }
-    sealed partial class LoginViewModel(IDBContextFactory dBContextFactory, IViewModelFactory viewModelFactory) : ObservableObject {
+    sealed partial class LoginViewModel(IDBContextFactory dBContextFactory, IViewModelFactory viewModelFactory, ILoginHandler loginHandler) : ObservableObject {
         public IDBContextFactory DBContextFactory { get; } = dBContextFactory;
         public IViewModelFactory ViewModelFactory { get; } = viewModelFactory;
+        public ILoginHandler LoginHandler { get; } = loginHandler;
 
         public event EventHandler? OnLoginSuccessful;
 
         [ObservableProperty]
-        LoginStatus loginStatus = LoginStatus.Pending;
+        LoginStatusType loginStatus = LoginStatusType.Pending;
 
         [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(LoginCommand))]
@@ -46,34 +48,18 @@ namespace ECR.View.ViewModels.Contents {
         bool CanLogin => !string.IsNullOrEmpty(Username) && !string.IsNullOrEmpty(Password);
 
 
+
         [RelayCommand(CanExecute = nameof(CanLogin))]
         async Task Login() {
             IsLoading = true;
+            LoginStatus = LoginStatusType.Pending;
 
-            if (await TryLoginAsync(Username!, Password!)) {
+            if (await LoginHandler.TryLoginAsync(Username!, Password!)) {
                 OnLoginSuccessful?.Invoke(this, EventArgs.Empty);
-                return;
             }
 
+            LoginStatus = LoginHandler.LoginStatus;
             IsLoading = false;
-        }
-
-        async Task<bool> TryLoginAsync(string username, string password) {
-            LoginStatus = LoginStatus.Pending;
-
-            try {
-                using var context = DBContextFactory.CreateDbContext();
-                var login = await context.Logins.AsNoTracking().FirstOrDefaultAsync(x => x.Username == username && x.Password == password);
-                await Task.Delay(1000);
-                LoginStatus = login is null ? LoginStatus.Failed : LoginStatus.Okay;
-
-            }
-            catch {
-                LoginStatus = LoginStatus.Disconnected;
-                return false;
-            }
-
-            return LoginStatus != LoginStatus.Failed;
         }
     }
 }

@@ -18,7 +18,10 @@ namespace ECR.Domain.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Logo = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name_First = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name_Middle = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Name_Last = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Name_Extension = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -32,11 +35,12 @@ namespace ECR.Domain.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Username = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Username = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Name_First = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Name_Middle = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Name_Last = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Name_Extension = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Position = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Photo = table.Column<byte[]>(type: "varbinary(max)", nullable: true)
                 },
@@ -77,8 +81,11 @@ namespace ECR.Domain.Migrations
                     CallType = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Details = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PriorityLevel = table.Column<int>(type: "int", nullable: false),
+                    Call_Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Call_ContactDetail = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Call_Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IncidentLocation = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Landmark = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DateTimeOfReport = table.Column<DateTime>(type: "datetime2", nullable: false),
                     AgencyId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
@@ -100,32 +107,13 @@ namespace ECR.Domain.Migrations
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DateRecorded = table.Column<DateTime>(type: "datetime2", nullable: false),
                     FilePath = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    RecordId = table.Column<int>(type: "int", nullable: true)
+                    RecordId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Audio", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Audio_Record_RecordId",
-                        column: x => x.RecordId,
-                        principalTable: "Record",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Callers",
-                columns: table => new
-                {
-                    RecordId = table.Column<int>(type: "int", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ContactDetail = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Address = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Callers", x => x.RecordId);
-                    table.ForeignKey(
-                        name: "FK_Callers_Record_RecordId",
                         column: x => x.RecordId,
                         principalTable: "Record",
                         principalColumn: "Id",
@@ -143,6 +131,12 @@ namespace ECR.Domain.Migrations
                 column: "AgencyId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Login_Username",
+                table: "Login",
+                column: "Username",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Record_AgencyId",
                 table: "Record",
                 column: "AgencyId");
@@ -153,9 +147,6 @@ namespace ECR.Domain.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Audio");
-
-            migrationBuilder.DropTable(
-                name: "Callers");
 
             migrationBuilder.DropTable(
                 name: "ContactDetail");

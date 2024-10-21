@@ -108,7 +108,8 @@
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
 
-                        <Grid Margin="0 0 40 0">
+                        <Grid Margin="0 0 40 0"
+                              VerticalAlignment="Top">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="auto" />
                                 <RowDefinition />
@@ -164,29 +165,27 @@
                         <StackPanel Grid.Column="1"
                                     Margin="0 0 0 0">
 
-                            <!--<StackPanel Orientation="Horizontal"
-                                    HorizontalAlignment="Left">
-
-                            <StackPanel VerticalAlignment="Center">
-                                <Button Margin="0 0 0 10"
-                                        Command="{Binding PickImageCommand}">Pick Logo</Button>
-                                <Button Command="{Binding RemoveLogoCommand}"
-                                        Margin="0 0 0 0">Remove Logo</Button>
-                            </StackPanel>
-                        </StackPanel>-->
-                            <!--<TextBlock VerticalAlignment="Center"
-                                   Margin="20 5 0 10"
-                                   FontSize="9"
-                                   FontStyle="Italic"
-                                   Foreground="{StaticResource AccentColor.Primary}">*Choose the logo that will be asssociated with the agency *</TextBlock>-->
-
-                            <TextBlock>Name:</TextBlock>
+                            <TextBlock>First Name:</TextBlock>
                             <placeHolder:PlaceholderTextbox x:Name="firstControl"
-                                                            Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                            PlaceholderText="required..."
+                                                            Text="{Binding FirstName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                            Margin="0 0 0 5" />
+                            <TextBlock>Middle Name:</TextBlock>
+                            <placeHolder:PlaceholderTextbox PlaceholderText="optional..."
+                                                            Text="{Binding MiddleName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                            Margin="0 0 0 5" />
+
+                            <TextBlock>Last Name:</TextBlock>
+                            <placeHolder:PlaceholderTextbox PlaceholderText="optional..."
+                                                            Text="{Binding LastName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                            Margin="0 0 0 5" />
+                            <TextBlock>Extension Name:</TextBlock>
+                            <placeHolder:PlaceholderTextbox PlaceholderText="optional..."
+                                                            Text="{Binding ExtensionName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                             Margin="{StaticResource Vertical.Spacing}" />
                             <TextBlock>Address:</TextBlock>
-                            <placeHolder:PlaceholderTextbox Text="{Binding Address, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                                            Margin="{StaticResource Vertical.Spacing}" />
+                            <placeHolder:PlaceholderTextbox PlaceholderText="optional..."
+                                                            Text="{Binding Address, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                         </StackPanel>
                     </Grid>

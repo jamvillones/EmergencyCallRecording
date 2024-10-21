@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using ECR.WPF.ViewModels;
 using ECR.Domain.Data;
 using ECR.View.ViewModels.Contents;
+using ECR.WPF.Utilities;
 
 namespace ECR.View.Utilities {
     static class ServicesConfigurationManager {
@@ -19,9 +20,11 @@ namespace ECR.View.Utilities {
             services.AddSingleton<IViewModelFactory, ViewModelFactory>();
             services.AddSingleton<INotificationHandler, NotificationHandler>();
             services.AddTransient<IDBContextFactory, DbContextFactory>();
+            services.AddSingleton<ILoginHandler, LoginHandler>();
+            services.AddSingleton<IModalViewer, ModalViewer>();
+
 
             services.AddSingleton<MainViewModel>();
-            services.AddSingleton<ModalContentManager>();
             services.AddSingleton<RecordsStore>();
 
             services.AddTransient<MainContentViewModel>();
@@ -41,6 +44,7 @@ namespace ECR.View.Utilities {
             services.AddTransient<Contact_Item_ViewModel>();
 
             services.AddTransient<SignUp_Form_ViewModel>();
+            services.AddTransient<EditLogin_Form_ViewModel>();
 
             services.AddKeyedTransient<IPasswordHandler, Register_Login_PasswordHandler>(FormSaveType.Register);
             services.AddKeyedTransient<IPasswordHandler, Edit_Login_PasswordHandler>(FormSaveType.Edit);

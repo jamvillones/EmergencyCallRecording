@@ -19,8 +19,8 @@ namespace ECR.Domain.Data {
         public static IQueryable<Agency> FilterAgency(this IQueryable<Agency> agencies, string keyword) {
             if (string.IsNullOrWhiteSpace(keyword)) return agencies;
 
-            return agencies.Where(a => a.Name.Contains(keyword) ||
-            (a.Address != null && a.Address.Contains(keyword)) || 
+            return agencies.Where(a => a.Name.First.Contains(keyword) ||
+            (a.Address != null && a.Address.Contains(keyword)) ||
             a.ContactDetails.Any(c => c.Value.Contains(keyword)));
         }
     }

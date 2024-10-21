@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:ECR.View.Views.Contents"
              xmlns:placeholder="clr-namespace:PlaceholderTextBox;assembly=PlaceholderTextBox"
              xmlns:views="clr-namespace:ECR.View.Views"
+             xmlns:models="clr-namespace:ECR.Domain.Models;assembly=ECR.Domain"
              xmlns:contents="clr-namespace:ECR.View.ViewModels.Contents"
              xmlns:signup="clr-namespace:ECR.WPF.Views.UserControls"
              xmlns:vm="clr-namespace:ECR.WPF.ViewModels"
@@ -124,8 +125,8 @@
                       Margin="40 0"
                       VerticalAlignment="Stretch">
                     <Grid.RowDefinitions>
-                        <RowDefinition />
                         <RowDefinition Height="AUTO" />
+                        <RowDefinition />
                     </Grid.RowDefinitions>
 
                     <Border VerticalAlignment="Center"
@@ -135,8 +136,9 @@
                             BorderBrush="Black"
                             CornerRadius="175"
                             Background="White"
+                            Grid.Row="1"
                             HorizontalAlignment="Center"
-                            Padding="20 50 20 20">
+                            Padding="15 50 15 15">
                         <Border>
                             <Border.Background>
                                 <ImageBrush Stretch="Uniform"
@@ -145,15 +147,14 @@
                         </Border>
                     </Border>
 
-                    <TextBlock Foreground="Maroon"
-                               Grid.Row="1"
+                    <TextBlock Foreground="Black"
+                               Grid.Row="0"
                                TextWrapping="Wrap"
                                TextAlignment="Center"
-                               Margin="0 5 0 0"
+                               Margin="0 5"
+                               FontSize="26"
                                MaxWidth="600"
-                               FontSize="30"
-                               FontWeight="Bold"
-                               FontFamily="Tahoma">EMERGENCY OPERATIONS TELECOMMUNICATIONS SYSTEM</TextBlock>
+                               FontWeight="Bold">EMERGENCY OPERATIONS TELECOMMUNICATIONS SYSTEM</TextBlock>
 
                 </Grid>
             </Grid>
@@ -230,14 +231,14 @@
 
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding LoginStatus}"
-                                             Value="{x:Static contents:LoginStatus.Disconnected}">
+                                             Value="{x:Static models:LoginStatusType.Disconnected}">
                                     <Setter Property="ContentTemplate"
                                             Value="{StaticResource No.Connection.DataTemplate}" />
 
                                 </DataTrigger>
 
                                 <DataTrigger Binding="{Binding LoginStatus}"
-                                             Value="{x:Static contents:LoginStatus.Failed}">
+                                             Value="{x:Static models:LoginStatusType.Failed}">
                                     <Setter Property="ContentTemplate"
                                             Value="{StaticResource  Failed.Login.DataTemplate}" />
 

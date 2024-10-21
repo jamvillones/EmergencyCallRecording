@@ -207,4 +207,34 @@ namespace ECR.WPF.ViewModels {
         }
     }
 
+    class EditLogin_Form_ViewModel(IDBContextFactory dBContextFactory, [FromKeyedServices(FormSaveType.Edit)] IPasswordHandler passwordHandler) : Base_SignUp_ViewModel(dBContextFactory, passwordHandler) {
+
+        private Login _login = null!;
+
+        public Login Login {
+            get { return _login; }
+            set {
+                _login = value;
+
+                Photo = _login.Photo.ToImageSource();
+                Username = _login.Username;
+                FirstName = _login.Name.First;
+                MiddleName = _login.Name.Middle!;
+                LastName = _login.Name.Last!;
+                ExtensionName = _login.Name.Extension!;
+
+                Position = _login.Position!;
+            }
+        }
+
+        protected override Task DiscardLogin() {
+            throw new NotImplementedException();
+        }
+
+        protected override Task SaveLogin() {
+            throw new NotImplementedException();
+        }
+    }
+
+
 }

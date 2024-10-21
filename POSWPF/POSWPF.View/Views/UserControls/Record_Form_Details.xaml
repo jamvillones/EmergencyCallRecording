@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:ph="clr-namespace:PlaceholderTextBox;assembly=PlaceholderTextBox"
              xmlns:converter="clr-namespace:ECR.WPF.Utilities.Converters"
+             xmlns:utilities="clr-namespace:ECR.WPF.Utilities"
              mc:Ignorable="d"
              KeyboardNavigation.ControlTabNavigation="Cycle"
              KeyboardNavigation.TabNavigation="Cycle"
@@ -49,34 +50,56 @@
             <TextBlock>Endorse To:</TextBlock>
 
             <ComboBox Margin="{StaticResource Vertical.Spacing}"
-                      ItemsSource="{Binding Agencies}"
+                      ItemsSource="{Binding Agencies, Mode=OneTime}"
                       SelectedItem="{Binding SelectedAgency, Mode=TwoWay}"
+                      SelectedValue="{Binding SelectedAgency, Mode=TwoWay}"
                       IsEditable="False"
-                      Text="loading..."
                       Background="White">
+
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel HorizontalAlignment="Stretch"
                                     VerticalAlignment="Center"
                                     Orientation="Horizontal">
 
-                            <Border Width="20"
-                                    Height="20"
-                                    CornerRadius="15"
+                            <Border Width="30"
+                                    Height="30"
+                                    CornerRadius="25"
                                     BorderThickness="2"
                                     BorderBrush="White"
-                                    Margin="0"
-                                    Background="{Binding Logo, Converter={StaticResource ImageToBackgroundConverter}}">
-                                <Border Background="{StaticResource AccentColor.Primary}"
-                                        CornerRadius="10"
-                                        Margin="-1"
-                                        Visibility="{Binding Logo, Converter={StaticResource NullToVisibilityConverter}}">
-                                    <TextBlock HorizontalAlignment="Center"
-                                               VerticalAlignment="Center"
-                                               FontWeight="Bold"
-                                               Foreground="White"
-                                               Text="{Binding Name, Mode=OneWay, Converter={StaticResource GetFirstTwoLetterConverter}}" />
-                                </Border>
+                                    Margin="0">
+                                <Border.Resources>
+                                    <utilities:BindingProxy x:Key="proxy"
+                                                            Data="{Binding}" />
+                                </Border.Resources>
+
+                                <Border.Background>
+                                    <Binding Path="Logo"
+                                             Converter="{StaticResource ImageToBackgroundConverter}">
+                                        <Binding.TargetNullValue>
+                                            <VisualBrush>
+                                                <VisualBrush.Visual>
+                                                    <Border Background="{StaticResource Main.Foreground}"
+                                                            VerticalAlignment="Center"
+                                                            HorizontalAlignment="Center"
+                                                            Width="50"
+                                                            Height="50"
+                                                            Margin="-2"
+                                                            BorderThickness="0"
+                                                            SnapsToDevicePixels="True"
+                                                            CornerRadius="25">
+                                                        <TextBlock Foreground="White"
+                                                                   FontSize="22"
+                                                                   VerticalAlignment="Center"
+                                                                   HorizontalAlignment="Center"
+                                                                   FontWeight="Bold"
+                                                                   Text="{Binding Data.Name, Source={StaticResource proxy}, Converter={StaticResource GetFirstTwoLetterConverter}}" />
+                                                    </Border>
+                                                </VisualBrush.Visual>
+                                            </VisualBrush>
+                                        </Binding.TargetNullValue>
+                                    </Binding>
+                                </Border.Background>
                             </Border>
 
                             <TextBlock Margin="10 0"
@@ -86,6 +109,7 @@
                                 <Run Foreground="{StaticResource AccentColor.Primary}"> - </Run>
                                 <Run Text="{Binding DefaultContactDetail.Value, Mode=OneWay}" />
                             </TextBlock>
+
                         </StackPanel>
 
                     </DataTemplate>

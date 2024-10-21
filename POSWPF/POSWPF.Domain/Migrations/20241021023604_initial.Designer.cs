@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ECR.Domain.Migrations
 {
     [DbContext(typeof(MDRContext))]
-    [Migration("20241015032043_add_datetime_record")]
-    partial class add_datetime_record
+    [Migration("20241021023604_initial")]
+    partial class initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -38,10 +38,6 @@ namespace ECR.Domain.Migrations
 
                     b.Property<byte[]>("Logo")
                         .HasColumnType("varbinary(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -125,9 +121,12 @@ namespace ECR.Domain.Migrations
 
                     b.Property<string>("Username")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Username")
+                        .IsUnique();
 
                     b.ToTable("Login");
                 });
@@ -170,6 +169,38 @@ namespace ECR.Domain.Migrations
                     b.ToTable("Record");
                 });
 
+            modelBuilder.Entity("ECR.Domain.Models.Agency", b =>
+                {
+                    b.OwnsOne("ECR.Domain.Models.Name", "Name", b1 =>
+                        {
+                            b1.Property<int>("AgencyId")
+                                .HasColumnType("int");
+
+                            b1.Property<string>("Extension")
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<string>("First")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<string>("Last")
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<string>("Middle")
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.HasKey("AgencyId");
+
+                            b1.ToTable("Agency");
+
+                            b1.WithOwner()
+                                .HasForeignKey("AgencyId");
+                        });
+
+                    b.Navigation("Name")
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("ECR.Domain.Models.Audio", b =>
                 {
                     b.HasOne("ECR.Domain.Models.Record", "Record")
@@ -198,6 +229,9 @@ namespace ECR.Domain.Migrations
                         {
                             b1.Property<int>("LoginId")
                                 .HasColumnType("int");
+
+                            b1.Property<string>("Extension")
+                                .HasColumnType("nvarchar(max)");
 
                             b1.Property<string>("First")
                                 .IsRequired()

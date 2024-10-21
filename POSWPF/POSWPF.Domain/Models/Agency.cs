@@ -13,7 +13,8 @@ namespace ECR.Domain.Models {
         /// the optional logo of the organization the call is referred
         /// </summary>
         public byte[]? Logo { get; set; } = [];
-        public string Name { get; set; } = null!;
+
+        public Name Name { get; set; } = null!;
         public string? Address { get; set; } = string.Empty;
         public List<ContactDetail> ContactDetails { get; set; } = [];
         public List<Record> Records { get; set; } = [];

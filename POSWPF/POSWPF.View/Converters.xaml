@@ -5,7 +5,7 @@
     <converter:BoolInvertConverter x:Key="BoolInvertConverter" />
     <converter:ValueDividerConverter x:Key="ValueDividerConverter" />
     <converter:ImageSourceToBackground x:Key="ImageToBackgroundConverter" />
-    <converter:GetFirstTwoInitialsFromNameConverter x:Key="GetFirstTwoLetterConverter" />
+    <converter:GetInitialsFromNameConverter x:Key="GetFirstTwoLetterConverter" />
     <converter:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
 
 </ResourceDictionary>

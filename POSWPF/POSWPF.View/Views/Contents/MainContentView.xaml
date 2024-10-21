@@ -5,6 +5,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:popup="clr-namespace:ECR.View.Views.Popups"
              xmlns:uc="clr-namespace:ECR.WPF.Views.UserControls"
+             xmlns:utilities="clr-namespace:ECR.WPF.Utilities"
              Background="White"
              mc:Ignorable="d"
              d:DesignHeight="450"
@@ -225,6 +226,9 @@
             </Setter>
         </Style>
 
+        <utilities:BindingProxy x:Key="proxy"
+                                Data="{Binding}" />
+
     </UserControl.Resources>
     <Grid>
         <!--<Grid.RowDefinitions>
@@ -236,33 +240,59 @@
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
 
-        <ToggleButton Style="{DynamicResource EmptyToggleStyle}"
-                      WindowChrome.IsHitTestVisibleInChrome="True"
-                      x:Name="userToggle"
-                      IsEnabled="{Binding ElementName=userPopup, Path=IsOpen,Converter={StaticResource BoolInvertConverter}}"
-                      BorderThickness="0"
-                      Background="Transparent"
-                      IsTabStop="False"
-                      Focusable="False"
-                      Panel.ZIndex="1"
-                      Cursor="Hand"
-                      Margin="10"
-                      Padding="0"
-                      VerticalAlignment="Top"
-                      HorizontalAlignment="Left">
+        <Button WindowChrome.IsHitTestVisibleInChrome="True"
+                x:Name="userToggle"
+                BorderThickness="0"
+                Background="Transparent"
+                IsTabStop="False"
+                Focusable="False"
+                Panel.ZIndex="1"
+                Cursor="Hand"
+                Margin="10"
+                Padding="0"
+                Width="auto"
+                Height="auto"
+                Command="{Binding ShowCurrentUserCommand}"
+                VerticalAlignment="Top"
+                HorizontalAlignment="Left">
             <Border CornerRadius="{Binding RelativeSource={RelativeSource self}, Path=ActualWidth, Converter={StaticResource ValueDividerConverter}, ConverterParameter=2}"
                     Height="{Binding RelativeSource={RelativeSource self},Path=ActualWidth}"
                     Width="60"
                     BorderThickness="5"
-                    Margin="0"
-                    BorderBrush="{StaticResource Main.Foreground}">
+                    SnapsToDevicePixels="True"
+                    BorderBrush="White">
                 <Border.Background>
-                    <ImageBrush ImageSource="/Images/sample_male.jpg" />
+                    <Binding Path="CurrentLoginPhoto"
+                             Converter="{StaticResource ImageToBackgroundConverter}">
+                        <Binding.TargetNullValue>
+                            <VisualBrush>
+                                <VisualBrush.Visual>
+                                    <Border Background="{StaticResource Main.Foreground}"
+                                            VerticalAlignment="Center"
+                                            HorizontalAlignment="Center"
+                                            Width="50"
+                                            Height="50"
+                                            Margin="-2"
+                                            BorderThickness="0"
+                                            SnapsToDevicePixels="True"
+                                            CornerRadius="25">
+                                        <TextBlock Foreground="White"
+                                                   FontSize="22"
+                                                   VerticalAlignment="Center"
+                                                   HorizontalAlignment="Center"
+                                                   FontWeight="Bold"
+                                                   Text="{Binding Data.CurrentLoginName, Source={StaticResource proxy}, Converter={StaticResource GetFirstTwoLetterConverter}}" />
+                                    </Border>
+                                </VisualBrush.Visual>
+                            </VisualBrush>
+                        </Binding.TargetNullValue>
+                    </Binding>
                 </Border.Background>
-            </Border>
-        </ToggleButton>
 
-        <Popup Placement="Left"
+            </Border>
+        </Button>
+
+        <!--<Popup Placement="Left"
                x:Name="userPopup"
                IsOpen="{Binding ElementName=userToggle, Path=IsChecked}"
                PlacementTarget="{Binding ElementName=userToggle}"
@@ -271,7 +301,7 @@
                StaysOpen="False"
                AllowsTransparency="True">
             <popup:UserOptionsUserControl DataContext="{Binding}" />
-        </Popup>
+        </Popup>-->
 
         <Border Grid.Row="1"
                 Margin="0,40,0,0"
@@ -291,8 +321,18 @@
                             Margin="20,35,20,10">
                     <TextBlock Foreground="White"
                                FontSize="16"
-                               FontWeight="Bold">Jamil Villones</TextBlock>
-                    <TextBlock Foreground="#d9d9d9">Software Developer</TextBlock>
+                               FontWeight="Bold"
+                               TextTrimming="CharacterEllipsis"
+                               Text="{Binding CurrentLoginName, Mode=OneWay}" />
+                    <TextBlock Foreground="#d9d9d9">
+                        <TextBlock.Text>
+                            <Binding Path="CurrentLoginPosition">
+                                <Binding.TargetNullValue>
+                                    *Position not Specified
+                                </Binding.TargetNullValue>
+                            </Binding>
+                        </TextBlock.Text>
+                    </TextBlock>
                 </StackPanel>
 
                 <Rectangle Grid.Row="1"
@@ -406,6 +446,12 @@
                         IsTabStop="False"
                         Focusable="False"
                         Content="{Binding CurrentTab}" />
+
+        <ContentControl Grid.Column="1"
+                        Margin="10 40 0 0"
+                        IsTabStop="False"
+                        Focusable="False"
+                        Content="{Binding ModalViewer.CurrentModal}" />
 
         <ItemsControl Grid.Column="1"
                       DataContext="{Binding NotificationHandler}"

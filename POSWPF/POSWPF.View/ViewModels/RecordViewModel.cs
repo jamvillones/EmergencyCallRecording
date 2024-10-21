@@ -88,8 +88,10 @@ namespace ECR.View.ViewModels {
         public int Id { get; set; } = -1;
         public INotificationHandler NotificationHandler { get; }
 
+        public string FullName => this.Name.ToString();
+
         [ObservableProperty]
-        string name = "";
+        Name name = null!;
 
         [ObservableProperty]
         ContactDetail? defaultContactDetail = null;

@@ -10,6 +10,7 @@
              xmlns:uc="clr-namespace:ECR.WPF.Views.UserControls"
              xmlns:converter="clr-namespace:ECR.WPF.Utilities.Converters"
              xmlns:popup="clr-namespace:ECR.View.Views.Popups"
+             xmlns:utilities="clr-namespace:ECR.WPF.Utilities"
              mc:Ignorable="d"
              Background="White"
              d:DesignHeight="800"
@@ -22,7 +23,7 @@
                 <ResourceDictionary Source="/Views/ResourceDictionaries/DataGridResource.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
-            <converter:GetFirstTwoInitialsFromNameConverter x:Key="GetFirstTwo" />
+            <converter:GetInitialsFromNameConverter x:Key="GetFirstTwo" />
 
             <ControlTemplate x:Key="ArrowToggleButtonTemplate"
                              TargetType="{x:Type ToggleButton}">
@@ -63,11 +64,11 @@
     </UserControl.Resources>
 
     <Grid>
-        <ContentControl Content="{Binding OpenedForm}"
+        <!--<ContentControl Content="{Binding OpenedForm}"
                         IsTabStop="False"
                         Focusable="False"
                         Panel.ZIndex="10"
-                        Validation.ErrorTemplate="{x:Null}" />
+                        Validation.ErrorTemplate="{x:Null}" />-->
 
         <Grid x:Name="mainContent"
               Grid.Row="1"
@@ -342,6 +343,10 @@
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
                                                 <Grid HorizontalAlignment="Stretch">
+                                                    <Grid.Resources>
+                                                        <utilities:BindingProxy x:Key="proxy"
+                                                                                Data="{Binding}" />
+                                                    </Grid.Resources>
                                                     <Grid.ColumnDefinitions>
                                                         <ColumnDefinition Width="auto" />
                                                         <ColumnDefinition />
@@ -351,18 +356,33 @@
                                                             Height="25"
                                                             CornerRadius="15"
                                                             BorderThickness="2"
-                                                            BorderBrush="White"
-                                                            Background="{Binding Agency.Logo, Converter={StaticResource ImageToBackgroundConverter}}">
-                                                        <Border Background="{StaticResource AccentColor.Primary}"
-                                                                CornerRadius="15"
-                                                                Margin="-1"
-                                                                Visibility="{Binding Agency.Logo, Converter={StaticResource NullToVisibilityConverter}}">
-                                                            <TextBlock HorizontalAlignment="Center"
-                                                                       VerticalAlignment="Center"
-                                                                       FontWeight="Bold"
-                                                                       Foreground="White"
-                                                                       Text="{Binding Agency.Name, Mode=OneWay, Converter={StaticResource GetFirstTwoLetterConverter}}" />
-                                                        </Border>
+                                                            BorderBrush="White">
+                                                        <Border.Background>
+
+                                                            <Binding Path="Agency.Logo"
+                                                                     Converter="{StaticResource ImageToBackgroundConverter}">
+                                                                <Binding.TargetNullValue>
+                                                                    <VisualBrush Stretch="UniformToFill">
+                                                                        <VisualBrush.Visual>
+                                                                            <Border Background="{StaticResource Main.Foreground}"
+                                                                                    VerticalAlignment="Center"
+                                                                                    HorizontalAlignment="Center"
+                                                                                    BorderThickness="0"
+                                                                                    Padding="10"
+                                                                                    SnapsToDevicePixels="True"
+                                                                                    CornerRadius="25">
+                                                                                <TextBlock Foreground="White"
+                                                                                           FontSize="13"
+                                                                                           VerticalAlignment="Center"
+                                                                                           HorizontalAlignment="Center"
+                                                                                           FontWeight="Bold"
+                                                                                           Text="{Binding Data.Agency.Name, Source={StaticResource proxy}, Converter={StaticResource GetFirstTwoLetterConverter}}" />
+                                                                            </Border>
+                                                                        </VisualBrush.Visual>
+                                                                    </VisualBrush>
+                                                                </Binding.TargetNullValue>
+                                                            </Binding>
+                                                        </Border.Background>
                                                     </Border>
 
                                                     <TextBlock Margin="10 0 0 0"
@@ -456,12 +476,18 @@
                                 <!--Image-->
                                 <DataGridTemplateColumn Header="Name"
                                                         IsReadOnly="True"
-                                                        SortMemberPath="Name"
+                                                        SortMemberPath="FullName"
                                                         HeaderStyle="{StaticResource DataGridColumnHeader.IndividualCell.Style}">
 
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
+
                                             <Grid HorizontalAlignment="Stretch">
+                                                <Grid.Resources>
+                                                    <utilities:BindingProxy x:Key="proxy"
+                                                                            Data="{Binding}" />
+                                                </Grid.Resources>
+
                                                 <Grid.ColumnDefinitions>
                                                     <ColumnDefinition Width="auto" />
                                                     <ColumnDefinition />
@@ -471,18 +497,32 @@
                                                         Height="25"
                                                         CornerRadius="15"
                                                         BorderThickness="2"
-                                                        BorderBrush="White"
-                                                        Background="{Binding Logo, Converter={StaticResource ImageToBackgroundConverter}}">
-                                                    <Border Background="{StaticResource AccentColor.Primary}"
-                                                            CornerRadius="15"
-                                                            Margin="-1"
-                                                            Visibility="{Binding Logo, Converter={StaticResource NullToVisibilityConverter}}">
-                                                        <TextBlock HorizontalAlignment="Center"
-                                                                   VerticalAlignment="Center"
-                                                                   FontWeight="Bold"
-                                                                   Foreground="White"
-                                                                   Text="{Binding Name, Mode=OneWay, Converter={StaticResource GetFirstTwoLetterConverter}}" />
-                                                    </Border>
+                                                        BorderBrush="White">
+                                                    <Border.Background>
+                                                        <Binding Path="Logo"
+                                                                 Converter="{StaticResource ImageToBackgroundConverter}">
+                                                            <Binding.TargetNullValue>
+                                                                <VisualBrush>
+                                                                    <VisualBrush.Visual>
+                                                                        <Border Background="{StaticResource Main.Foreground}"
+                                                                                VerticalAlignment="Center"
+                                                                                HorizontalAlignment="Center"
+                                                                                Padding="10"
+                                                                                BorderThickness="0"
+                                                                                SnapsToDevicePixels="True"
+                                                                                CornerRadius="25">
+                                                                            <TextBlock Foreground="White"
+                                                                                       FontSize="13"
+                                                                                       VerticalAlignment="Center"
+                                                                                       HorizontalAlignment="Center"
+                                                                                       FontWeight="Bold"
+                                                                                       Text="{Binding Data.Name, Source={StaticResource proxy}, Converter={StaticResource GetFirstTwoLetterConverter}}" />
+                                                                        </Border>
+                                                                    </VisualBrush.Visual>
+                                                                </VisualBrush>
+                                                            </Binding.TargetNullValue>
+                                                        </Binding>
+                                                    </Border.Background>
                                                 </Border>
 
                                                 <TextBlock Margin="10 0 0 0"

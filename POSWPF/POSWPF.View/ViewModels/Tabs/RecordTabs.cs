@@ -13,8 +13,9 @@ namespace ECR.View.ViewModels.Tabs {
         Task Search(string keyword);
     }
     sealed partial class RecordTabs : ObservableObject {
-        public RecordTabs(IViewModelFactory viewModelFactory) {
+        public RecordTabs(IViewModelFactory viewModelFactory, IModalViewer modalViewer) {
             ViewModelFactory = viewModelFactory;
+            ModalViewer = modalViewer;
             callsTab = ViewModelFactory.Get<Records_CallsSection>();
             agencyTab = ViewModelFactory.Get<Records_AgenciesSection>();
 
@@ -25,8 +26,7 @@ namespace ECR.View.ViewModels.Tabs {
 
         private void OnEdit(object? sender, object e) {
             var regForm = (ICloseableObject)e;
-            SubscribeToCloseEvent(regForm);
-            OpenedForm = regForm as ObservableObject;
+            ModalViewer.SetModal(regForm);
         }
 
         readonly Records_CallsSection callsTab = null!;
@@ -35,10 +35,11 @@ namespace ECR.View.ViewModels.Tabs {
         [ObservableProperty]
         IRegistrationOpener currentTab = null!;
 
-        [ObservableProperty]
-        private ObservableObject? _openedForm = null;
+        //[ObservableProperty]
+        //private ObservableObject? _openedForm = null;
 
         public IViewModelFactory ViewModelFactory { get; }
+        public IModalViewer ModalViewer { get; }
 
         [RelayCommand]
         async Task Search(string keyword) {
@@ -64,16 +65,17 @@ namespace ECR.View.ViewModels.Tabs {
         [RelayCommand]
         private void OpenRegistrationForm() {
             var regForm = CurrentTab.GetRegistrationForm();
-            SubscribeToCloseEvent(regForm);
-            OpenedForm = regForm as ObservableObject;
+            ModalViewer.SetModal(regForm);
+            //SubscribeToCloseEvent(regForm);
+            //OpenedForm = regForm as ObservableObject;
         }
 
-        void SubscribeToCloseEvent(ICloseableObject closeable) {
-            closeable.OnClose += Closeable_OnClose;
-        }
-        private void Closeable_OnClose(object? sender, EventArgs e) {
-            OpenedForm = null;
-        }
+        //void SubscribeToCloseEvent(ICloseableObject closeable) {
+        //    closeable.OnClose += Closeable_OnClose;
+        //}
+        //private void Closeable_OnClose(object? sender, EventArgs e) {
+        //    OpenedForm = null;
+        //}
 
         [RelayCommand]
         void SwitchToCalls() {
@@ -234,6 +236,7 @@ namespace ECR.View.ViewModels.Tabs {
         public Records_AgenciesSection(IDBContextFactory contextFactory, IViewModelFactory viewModelFactory) {
             this.ContextFactory = contextFactory;
             this.ViewModelFactory = viewModelFactory;
+
             _ = LoadDataAsync();
         }
 
@@ -287,7 +290,8 @@ namespace ECR.View.ViewModels.Tabs {
                 .AsNoTracking()
                 .Include(a => a.ContactDetails)
                 .FilterAgency(keyword!)
-                .OrderBy(x => x.Name)
+                .OrderBy(x => x.Name.First)
+                    .ThenBy(x => x.Name.Last)
                 .ToListAsync();
 
             if (agencies.Count != 0)
