@@ -392,7 +392,7 @@
                             <TextBlock Grid.Column="2"> Users</TextBlock>
                         </Grid>
                     </RadioButton>
-                    <RadioButton>
+                    <!--<RadioButton>
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="auto" />
@@ -403,7 +403,7 @@
                                    Source="/Images/SideButtons/automation_50px.png" />
                             <TextBlock Grid.Column="2"> Settings</TextBlock>
                         </Grid>
-                    </RadioButton>
+                    </RadioButton>-->
                 </StackPanel>
 
                 <Rectangle Grid.Row="3"

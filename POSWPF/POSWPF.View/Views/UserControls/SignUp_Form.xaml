@@ -150,11 +150,11 @@
                                 <Setter Property="Text"
                                         Value="Sign Up" />
                                 <Style.Triggers>
-                                    <!--<DataTrigger Binding="{Binding SaveType}"
+                                    <DataTrigger Binding="{Binding SaveType}"
                                                  Value="{x:Static vm:FormSaveType.Edit}">
                                         <Setter Property="Text"
-                                                Value="Edit Agency Details" />
-                                    </DataTrigger>-->
+                                                Value="Edit Login Details" />
+                                    </DataTrigger>
                                 </Style.Triggers>
                             </Style>
                         </TextBlock.Style>

@@ -54,6 +54,9 @@ namespace ECR.WPF.ViewModels.Tabs {
         [RelayCommand]
         async Task Search(string text) {
 
+            if (string.IsNullOrWhiteSpace(text))
+                return;
+
             _keyword = text.Trim();
             await LoadDataAsync(_keyword);
         }

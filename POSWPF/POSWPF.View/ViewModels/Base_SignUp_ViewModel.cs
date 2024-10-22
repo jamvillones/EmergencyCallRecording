@@ -47,9 +47,9 @@ namespace ECR.WPF.ViewModels {
     }
 
     partial class Edit_Login_PasswordHandler : ObservableValidator, IPasswordHandler {
-        public string GetPassword => throw new NotImplementedException();
+        public string GetPassword => "";
 
-        public bool IsPasswordValid => throw new NotImplementedException();
+        public bool IsPasswordValid => (string.IsNullOrWhiteSpace(NewPassword) && string.IsNullOrWhiteSpace(ConfirmNewPassword)) || NewPassword == ConfirmNewPassword;
 
         [ObservableProperty]
         [NotifyDataErrorInfo]
@@ -58,27 +58,25 @@ namespace ECR.WPF.ViewModels {
 
 
         [ObservableProperty]
-        [NotifyDataErrorInfo]
-        [Required(ErrorMessage = "*Required!")]
         string newPassword = null!;
 
         [ObservableProperty]
-        [NotifyDataErrorInfo]
-        [Required(ErrorMessage = "*Required!")]
         string confirmNewPassword = null!;
 
         public bool ValidatePassword() {
-            throw new NotImplementedException();
+            ValidateAllProperties();
+            return HasErrors;
         }
 
         public void Reset() {
-            throw new NotImplementedException();
         }
     }
 
     abstract partial class Base_SignUp_ViewModel(IDBContextFactory dBContextFactory, IPasswordHandler passwordHandler) : ObservableValidator, ICloseableObject {
         public IDBContextFactory DBContextFactory { get; } = dBContextFactory;
         public IPasswordHandler PasswordHandler { get; } = passwordHandler;
+
+        public abstract FormSaveType SaveType { get; }
 
         [ObservableProperty]
         ImageSource? photo = null;
@@ -155,6 +153,8 @@ namespace ECR.WPF.ViewModels {
     }
 
     class SignUp_Form_ViewModel(IDBContextFactory dBContextFactory, [FromKeyedServices(FormSaveType.Register)] IPasswordHandler passwordHandler) : Base_SignUp_ViewModel(dBContextFactory, passwordHandler) {
+        public override FormSaveType SaveType => FormSaveType.Register;
+
         protected override async Task DiscardLogin() {
             await Task.CompletedTask;
             Photo = null;
@@ -222,23 +222,70 @@ namespace ECR.WPF.ViewModels {
             set {
                 _login = value;
 
-                Photo = _login.Photo.ToImageSource();
-                Username = _login.Username;
-                FirstName = _login.Name.First;
-                MiddleName = _login.Name.Middle!;
-                LastName = _login.Name.Last!;
-                ExtensionName = _login.Name.Extension!;
-
-                Position = _login.Position!;
+                SetDetails(_login);
             }
         }
 
-        protected override Task DiscardLogin() {
-            throw new NotImplementedException();
+        public override FormSaveType SaveType => FormSaveType.Edit;
+
+        void SetDetails(Login login) {
+            Photo = login.Photo.ToImageSource();
+            Username = login.Username;
+            FirstName = login.Name.First;
+            MiddleName = login.Name.Middle!;
+            LastName = login.Name.Last!;
+            ExtensionName = login.Name.Extension!;
+
+            Position = login.Position!;
         }
 
-        protected override Task SaveLogin() {
-            throw new NotImplementedException();
+        protected override async Task DiscardLogin() {
+            await Task.CompletedTask;
+            SetDetails(_login);
+        }
+
+        protected override async Task SaveLogin() {
+            try {
+                using var context = DBContextFactory.CreateDbContext();
+                var toSave = await context.Logins.FirstOrDefaultAsync(x => x.Id == _login.Id);
+                if (toSave is null) return;
+
+                string password = toSave.Password;
+                if (PasswordHandler is Edit_Login_PasswordHandler handler) {
+
+                    if (handler.OldPassword != toSave.Password) {
+                        MessageBox.Show("Please provide the current password to save changes.", "Save aborted", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
+                    if (!handler.IsPasswordValid) {
+                        MessageBox.Show("To Save changes, Old Password must be supplied. If you want to change password, New Password and Confirm should match!", "Save aborted", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
+                    if (!string.IsNullOrWhiteSpace(handler.NewPassword))
+                        password = handler.NewPassword;
+                }
+
+
+                toSave.Username = Username;
+                toSave.Name = new Name() {
+                    First = FirstName,
+                    Middle = MiddleName.TrimmedAndNullWhenEmpty(),
+                    Last = LastName.TrimmedAndNullWhenEmpty(),
+                    Extension = ExtensionName.TrimmedAndNullWhenEmpty()
+
+                };
+                toSave.Position = Position.TrimmedAndNullWhenEmpty();
+                toSave.Password = password;
+                await context.SaveChangesAsync();
+
+                InvokeSaveEvent(toSave!);
+
+                Close();
+            }
+            catch (Exception) {
+
+                throw;
+            }
         }
     }
 
