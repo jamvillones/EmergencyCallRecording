@@ -20,6 +20,8 @@ namespace ECR.WPF.Utilities {
 
         public IDBContextFactory DBContextFactory { get; }
 
+        public bool IsAdmin => Login?.Username == "admin";
+
         public async Task<bool> TryLoginAsync(string username, string password) {
             LoginStatus = LoginStatusType.Pending;
 

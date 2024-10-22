@@ -19,4 +19,6 @@ public partial class Login {
     public string? Position { get; set; }
 
     public byte[]? Photo { get; set; } = [];
+
+
 }

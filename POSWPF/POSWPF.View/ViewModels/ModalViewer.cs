@@ -26,4 +26,6 @@ namespace ECR.WPF.ViewModels {
             CurrentModal = null;
         }
     }
+
+
 }

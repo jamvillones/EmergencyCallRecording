@@ -2,7 +2,6 @@
 using Microsoft.Extensions.Hosting;
 using ECR.View.Stores;
 using ECR.View.ViewModels;
-using ECR.View.ViewModels.Tabs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +11,8 @@ using ECR.WPF.ViewModels;
 using ECR.Domain.Data;
 using ECR.View.ViewModels.Contents;
 using ECR.WPF.Utilities;
+using ECR.WPF.ViewModels.Tabs;
+using ECR.WPF.Views;
 
 namespace ECR.View.Utilities {
     static class ServicesConfigurationManager {
@@ -30,6 +31,7 @@ namespace ECR.View.Utilities {
             services.AddTransient<MainContentViewModel>();
             services.AddTransient<LoginViewModel>();
             services.AddTransient<RecordTabs>();
+            services.AddTransient<Login_Tab>();
 
             services.AddTransient<Records_CallsSection>();
             services.AddTransient<Records_AgenciesSection>();

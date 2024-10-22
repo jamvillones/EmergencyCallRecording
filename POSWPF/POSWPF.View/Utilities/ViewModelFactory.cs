@@ -15,4 +15,6 @@ namespace ECR.View.Utilities {
             App.Host.Services.GetRequiredService<T>();
 
     }
+
+   
 }

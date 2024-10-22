@@ -2,9 +2,10 @@
 using CommunityToolkit.Mvvm.Input;
 using ECR.Domain.Models;
 using ECR.View.Utilities;
-using ECR.View.ViewModels.Tabs;
 using ECR.WPF.Utilities;
 using ECR.WPF.ViewModels;
+using ECR.WPF.ViewModels.Tabs;
+using ECR.WPF.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,7 +25,10 @@ namespace ECR.View.ViewModels.Contents {
             VmFactory = vmFactory;
             LoginHandler = loginHandler;
             ModalViewer = modalViewer;
+
             recordsTab = VmFactory.Get<RecordTabs>();
+            loginTab = VmFactory.Get<Login_Tab>();
+
             CurrentTab = recordsTab;
 
             CurrentLoginPhoto = LoginHandler.Login!.Photo?.ToImageSource()!;
@@ -41,8 +45,19 @@ namespace ECR.View.ViewModels.Contents {
         private ObservableObject _currentTab = null!;
 
         private readonly RecordTabs recordsTab = null!;
+        private readonly Login_Tab loginTab = null!;
 
         public event EventHandler? OnLogOff;
+
+        [RelayCommand]
+        void SwitchToRecords() {
+            CurrentTab = recordsTab;
+        }
+
+        [RelayCommand]
+        void SwitchToLogins() {
+            CurrentTab = loginTab;
+        }
 
         [RelayCommand]
         public void LogOff() {

@@ -3,12 +3,12 @@ using CommunityToolkit.Mvvm.Input;
 using ECR.Domain.Data;
 using ECR.Domain.Models;
 using ECR.View.Utilities;
-using ECR.WPF.ViewModels;
+using ECR.View.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.ObjectModel;
 using System.Windows;
 
-namespace ECR.View.ViewModels.Tabs {
+namespace ECR.WPF.ViewModels.Tabs {
     public interface ISearchableObject {
         Task Search(string keyword);
     }

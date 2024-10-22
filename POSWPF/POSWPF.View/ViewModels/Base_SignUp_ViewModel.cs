@@ -130,6 +130,10 @@ namespace ECR.WPF.ViewModels {
         string position = null!;
 
         public event EventHandler? OnClose;
+        public event EventHandler<Login>? OnSave;
+        protected void InvokeSaveEvent(Login login) {
+            OnSave?.Invoke(this, login);
+        }
 
         [RelayCommand]
         void Save() {
@@ -194,6 +198,8 @@ namespace ECR.WPF.ViewModels {
 
                 await context.Logins.AddAsync(newLogin);
                 await context.SaveChangesAsync();
+
+                InvokeSaveEvent(newLogin);
                 MessageBox.Show("Login Saved!", "Login Saved!", MessageBoxButton.OK, MessageBoxImage.Information);
                 Close();
             }

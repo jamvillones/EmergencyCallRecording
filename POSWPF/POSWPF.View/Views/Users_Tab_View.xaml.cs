@@ -13,15 +13,12 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ECR.WPF.Views
-{
+namespace ECR.WPF.Views {
     /// <summary>
-    /// Interaction logic for RecordsView.xaml
+    /// Interaction logic for Users_Tab_View.xaml
     /// </summary>
-    public partial class RecordsView : UserControl
-    {
-        public RecordsView()
-        {
+    public partial class Users_Tab_View : UserControl {
+        public Users_Tab_View() {
             InitializeComponent();
         }
     }

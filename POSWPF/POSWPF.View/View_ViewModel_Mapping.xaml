@@ -2,10 +2,10 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:vmContents="clr-namespace:ECR.View.ViewModels.Contents"
                     xmlns:vContents="clr-namespace:ECR.View.Views.Contents"
-                    xmlns:tabs="clr-namespace:ECR.View.ViewModels.Tabs"
+                    xmlns:tabs="clr-namespace:ECR.WPF.ViewModels.Tabs"
                     xmlns:vm ="clr-namespace:ECR.WPF.ViewModels"
                     xmlns:usercontrol="clr-namespace:ECR.View.Views"
-                    xmlns:views="clr-namespace:ECR.View.Views"
+                    xmlns:views="clr-namespace:ECR.WPF.Views"
                     xmlns:signup="clr-namespace:ECR.WPF.Views.UserControls">
     <DataTemplate DataType="{x:Type vmContents:MainContentViewModel}">
         <vContents:MainContentView />
@@ -19,7 +19,15 @@
         <views:RecordsView />
     </DataTemplate>
 
+    <DataTemplate DataType="{x:Type tabs:Login_Tab}">
+        <views:Users_Tab_View />
+    </DataTemplate>
+
     <DataTemplate DataType="{x:Type vm:EditLogin_Form_ViewModel}">
+        <signup:SignUp_Form />
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type vm:SignUp_Form_ViewModel}">
         <signup:SignUp_Form />
     </DataTemplate>
 

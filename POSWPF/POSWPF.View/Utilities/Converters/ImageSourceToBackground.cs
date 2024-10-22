@@ -15,6 +15,8 @@ namespace ECR.WPF.Utilities.Converters {
         public object? Convert(object value, Type targetType, object parameter, CultureInfo culture) {
             //if (value is null)
             //    return new ImageBrush(new BitmapImage(new Uri("pack://application:,,,/Images/image_50px.png"))) { Stretch = Stretch.None };
+            if (value is byte[] bytes)
+                return new ImageBrush(bytes.ToImageSource()) { Stretch = Stretch.UniformToFill };
 
             if (value is ImageSource image)
                 return new ImageBrush(image) { Stretch = Stretch.UniformToFill };

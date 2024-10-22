@@ -23,5 +23,15 @@ namespace ECR.Domain.Data {
             (a.Address != null && a.Address.Contains(keyword)) ||
             a.ContactDetails.Any(c => c.Value.Contains(keyword)));
         }
+
+        public static IQueryable<Login> FilterLogin(this IQueryable<Login> logins, string? keyword) {
+            if (string.IsNullOrWhiteSpace(keyword)) return logins;
+            if (string.IsNullOrWhiteSpace(keyword)) return logins;
+
+            return logins.Where(l =>
+                 l.Name.First.Contains(keyword) ||
+                (l.Name.Middle != null && l.Name.Middle.Contains(keyword)) ||
+                (l.Name.Last != null && l.Name.Last.Contains(keyword)));
+        }
     }
 }

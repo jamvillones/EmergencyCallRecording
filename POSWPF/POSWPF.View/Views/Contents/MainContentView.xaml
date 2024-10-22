@@ -343,7 +343,8 @@
                 <StackPanel Orientation="Vertical"
                             Grid.Row="2"
                             Margin="10">
-                    <RadioButton IsChecked="True">
+                    <RadioButton IsChecked="True"
+                                 Command="{Binding SwitchToRecordsCommand}">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="auto" />
@@ -379,7 +380,7 @@
                             <TextBlock Grid.Column="2">Locations</TextBlock>
                         </Grid>
                     </RadioButton>-->
-                    <RadioButton>
+                    <RadioButton Command="{Binding SwitchToLoginsCommand}">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="auto" />
