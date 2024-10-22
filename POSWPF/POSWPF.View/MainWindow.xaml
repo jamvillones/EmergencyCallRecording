@@ -8,7 +8,7 @@
         xmlns:popup="clr-namespace:ECR.View.Views.Popups"
         mc:Ignorable="d"
         WindowStyle="SingleBorderWindow"
-        Title="MDRRMO"
+        Title="EMERGENCY OPERATIONS TELECOMMUNICATIONS SYSTEM"
         x:Name="_MainWindow"
         WindowStartupLocation="CenterScreen"
         MinHeight="580"
