@@ -130,7 +130,7 @@
                                              Mode="TwoWay">
                                         <Binding.TargetNullValue>
                                             <ImageBrush Stretch="None"
-                                                        ImageSource="/ECR.WPF;component/Images/no_image_96px.png" />
+                                                        ImageSource="/Images/no_image_96px.png" />
                                         </Binding.TargetNullValue>
                                     </Binding>
                                 </Border.Background>

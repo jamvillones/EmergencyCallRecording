@@ -7,6 +7,8 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
     <ApplicationIcon>icons8_dashboard_layout.ico</ApplicationIcon>
+    <StartupObject>ECR.View.App</StartupObject>
+    <AssemblyName>EMERGENCY OPERATIONS TELECOMMUNICATIONS SYSTEM</AssemblyName>
     <!--<StartupObject>POSWPF.View.App</StartupObject>-->
   </PropertyGroup>
 
