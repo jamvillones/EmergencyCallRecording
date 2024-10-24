@@ -26,6 +26,7 @@
                                 BorderThickness="{TemplateBinding BorderThickness}"
                                 CornerRadius="{TemplateBinding CornerRadius}">
                             <Grid>
+                                <Grid Width="{TemplateBinding InitialWidth}" />
                                 <TextBlock x:Name="placeHolder"
                                            Text="{TemplateBinding PlaceholderText}"
                                            Visibility="{TemplateBinding IsEmpty, Converter={StaticResource BoolToVisibilityConverter}}"

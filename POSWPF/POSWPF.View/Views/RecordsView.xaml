@@ -3,18 +3,15 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:local="clr-namespace:ECR.View.Views"
              xmlns:tabs="clr-namespace:ECR.WPF.ViewModels.Tabs"
-             xmlns:vm="clr-namespace:ECR.WPF.ViewModels"
              xmlns:placeholder="clr-namespace:PlaceholderTextBox;assembly=PlaceholderTextBox"
-             xmlns:uc="clr-namespace:ECR.WPF.Views.UserControls"
              xmlns:converter="clr-namespace:ECR.WPF.Utilities.Converters"
-             xmlns:popup="clr-namespace:ECR.View.Views.Popups"
              xmlns:utilities="clr-namespace:ECR.WPF.Utilities"
+             xmlns:uc="clr-namespace:ECR.WPF.Views.UserControls"
              mc:Ignorable="d"
              Background="White"
              d:DesignHeight="800"
-             d:DesignWidth="1200"
+             d:DesignWidth="715.113"
              FocusManager.FocusedElement="{Binding ElementName=searchControl}">
 
     <UserControl.Resources>
@@ -82,80 +79,80 @@
             </Grid.RowDefinitions>
 
             <TextBlock Foreground="{StaticResource AccentColor.Primary}"
-                       FontWeight="Bold">Records</TextBlock>
+                       FontWeight="Bold"
+                       FontSize="16">RECORDS</TextBlock>
 
             <!--Search-->
             <Grid Grid.Row="1"
+                  HorizontalAlignment="Right"
+                  Width="auto"
                   Margin="0 20">
-                <Grid Height="40">
-                    <Border Background="LightGray"
-                            BorderThickness="0"
-                            CornerRadius="4"
-                            Width="580"
-                            HorizontalAlignment="Left"
-                            Margin="0"
-                            BorderBrush="{StaticResource AccentColor.Primary}">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition />
-                                <ColumnDefinition Width="AUTO" />
-                                <ColumnDefinition Width="AUTO" />
-                            </Grid.ColumnDefinitions>
+                <Border Background="LightGray"
+                        BorderThickness="0"
+                        CornerRadius="4"
+                        Margin="0"
+                        BorderBrush="{StaticResource AccentColor.Primary}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="AUTO" />
+                            <ColumnDefinition Width="AUTO" />
+                        </Grid.ColumnDefinitions>
 
-                            <placeholder:PlaceholderTextbox Grid.Column="0"
-                                                            x:Name="searchControl"
-                                                            Background="Transparent"
-                                                            BorderThickness="0"
-                                                            PlaceholderText="search records..."
-                                                            Padding="10,8"
-                                                            Margin="0"
-                                                            CornerRadius="9"
-                                                            FontSize="12"
-                                                            VerticalAlignment="Center"
-                                                            VerticalContentAlignment="Center">
-                                <placeholder:PlaceholderTextbox.InputBindings>
-                                    <KeyBinding Key="Return"
-                                                Command="{ Binding SearchCommand}"
-                                                CommandParameter="{Binding ElementName=searchControl, Path=Text}" />
-                                    <KeyBinding Key="Esc"
-                                                Command="{ Binding RefreshCommand}" />
-                                </placeholder:PlaceholderTextbox.InputBindings>
-                            </placeholder:PlaceholderTextbox>
+                        <placeholder:PlaceholderTextbox Grid.Column="0"
+                                                        InitialWidth="400"
+                                                        x:Name="searchControl"
+                                                        Background="Transparent"
+                                                        BorderThickness="0"
+                                                        PlaceholderText="search records..."
+                                                        Padding="10,8"
+                                                        Margin="0"
+                                                        CornerRadius="9"
+                                                        FontSize="12"
+                                                        VerticalAlignment="Center"
+                                                        VerticalContentAlignment="Center">
+                            <placeholder:PlaceholderTextbox.InputBindings>
+                                <KeyBinding Key="Return"
+                                            Command="{ Binding SearchCommand}"
+                                            CommandParameter="{Binding ElementName=searchControl, Path=Text}" />
+                                <KeyBinding Key="Esc"
+                                            Command="{ Binding RefreshCommand}" />
+                            </placeholder:PlaceholderTextbox.InputBindings>
+                        </placeholder:PlaceholderTextbox>
 
-                            <Button Grid.Column="1"
-                                    Background="Transparent"
-                                    Focusable="False"
-                                    IsTabStop="False"
-                                    Padding="2,0,0,0"
-                                    Margin="2"
-                                    Command="{Binding SearchCommand}"
-                                    CommandParameter="{Binding ElementName=searchControl, Path=Text}"
-                                    Template="{StaticResource Template.Round.Button}"
-                                    BorderThickness="0"
-                                    Height="35"
-                                    Width="35">
-                                <Image Width="18"
-                                       Source="/Images/search_25px.png" />
-                            </Button>
+                        <Button Grid.Column="1"
+                                Background="Transparent"
+                                Focusable="False"
+                                IsTabStop="False"
+                                Padding="2,0,0,0"
+                                Margin="2"
+                                Command="{Binding SearchCommand}"
+                                CommandParameter="{Binding ElementName=searchControl, Path=Text}"
+                                Template="{StaticResource Template.Round.Button}"
+                                BorderThickness="0"
+                                Height="35"
+                                Width="35">
+                            <Image Width="18"
+                                   Source="/Images/search_25px.png" />
+                        </Button>
 
-                            <Button Grid.Column="2"
-                                    Background="Transparent"
-                                    Focusable="False"
-                                    IsTabStop="False"
-                                    Padding="0,0,0,0"
-                                    Margin="0 2 2 2"
-                                    Command="{Binding RefreshCommand}"
-                                    CommandParameter=""
-                                    Template="{StaticResource Template.Round.Button}"
-                                    BorderThickness="0"
-                                    Height="35"
-                                    Width="35">
-                                <Image Width="18"
-                                       Source="/Images/refresh_25px.png" />
-                            </Button>
-                        </Grid>
-                    </Border>
-                </Grid>
+                        <Button Grid.Column="2"
+                                Background="Transparent"
+                                Focusable="False"
+                                IsTabStop="False"
+                                Padding="0,0,0,0"
+                                Margin="0 2 2 2"
+                                Command="{Binding RefreshCommand}"
+                                CommandParameter=""
+                                Template="{StaticResource Template.Round.Button}"
+                                BorderThickness="0"
+                                Height="35"
+                                Width="35">
+                            <Image Width="18"
+                                   Source="/Images/refresh_25px.png" />
+                        </Button>
+                    </Grid>
+                </Border>
             </Grid>
 
             <!--Navigation-->
@@ -224,9 +221,11 @@
                                 <RowDefinition />
                             </Grid.RowDefinitions>
 
+                            <uc:Pagination_View DataContext="{Binding Paginator}" />
+
                             <DataGrid x:Name="membersDataGrid"
                                       Grid.Row="1"
-                                      Margin="0"
+                                      Margin="0 10 0 0"
                                       ItemsSource="{Binding Records}"
                                       RowStyle="{DynamicResource DataGridRowStyle1}"
                                       ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}"
@@ -249,7 +248,7 @@
                                                     <TextBlock>
                                                       <Run Text="{Binding Path=DataContext.ItemsSelected, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}, Mode=FindAncestor}}" />
                                                       <Run Text="I" />
-                                                      <Run Text="{Binding Path=DataContext.TotalItems, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}, Mode=FindAncestor}}" />
+                                                      <Run Text="{Binding Path=DataContext.ItemsInView, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}, Mode=FindAncestor}}" />
                                                     </TextBlock>
                                                 </CheckBox>
                                             </DataTemplate>

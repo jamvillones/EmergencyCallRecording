@@ -4,8 +4,10 @@ using ECR.Domain.Data;
 using ECR.Domain.Models;
 using ECR.View.Utilities;
 using ECR.View.ViewModels;
+using ECR.WPF.Utilities;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.ObjectModel;
+using System.Drawing.Printing;
 using System.Windows;
 
 namespace ECR.WPF.ViewModels.Tabs {
@@ -13,6 +15,10 @@ namespace ECR.WPF.ViewModels.Tabs {
         Task Search(string keyword);
     }
     sealed partial class RecordTabs : ObservableObject {
+        public RecordTabs() {
+
+
+        }
         public RecordTabs(IViewModelFactory viewModelFactory, IModalViewer modalViewer) {
             ViewModelFactory = viewModelFactory;
             ModalViewer = modalViewer;
@@ -97,22 +103,45 @@ namespace ECR.WPF.ViewModels.Tabs {
 
         public IDBContextFactory ContextFactory { get; }
         public IViewModelFactory ViewModelFactory { get; }
+        public IPaginator Paginator { get; }
 
-        public Records_CallsSection(IDBContextFactory contextFactory, IViewModelFactory viewModelFactory) {
+        public Records_CallsSection(IDBContextFactory contextFactory, IViewModelFactory viewModelFactory, IPaginator paginator) {
             ContextFactory = contextFactory;
             ViewModelFactory = viewModelFactory;
+            Paginator = paginator;
+            Paginator.OnPageChanged += Paginator_OnPageChanged;
+            Paginator.PageSizeChanged += Paginator_PageSizeChanged;
             _ = InitializeData();
+
         }
+
+        private async void Paginator_PageSizeChanged(object? sender, EventArgs e) {
+            Paginator.CurrentPage = 1;
+            await InitializeData();
+        }
+
+        private async void Paginator_OnPageChanged(object? sender, int e) {
+            await InitializeData(_keyword);
+        }
+
+
 
         private string? _keyword;
         async Task InitializeData(string? keyword = null) {
             try {
                 using var context = ContextFactory.CreateDbContext();
 
-                var records = await context.Records.AsNoTracking().AsQueryable()
+                var raw = context.Records.AsNoTracking().AsQueryable()
                     .Include(r => r.Agency)
                     .FilterRecord(keyword!)
-                    .OrderByDescending(r => r.DateTimeOfReport)
+                    .OrderByDescending(r => r.DateTimeOfReport);
+
+                Paginator.CalculateMaxPages(await raw.CountAsync());
+
+
+                var records = await raw
+                    .Skip(Paginator.StartIndex)
+                    .Take(Paginator.PageSize)
                     .ToListAsync();
 
                 if (records.Count != 0) Records.Clear();
@@ -122,6 +151,8 @@ namespace ECR.WPF.ViewModels.Tabs {
             }
             catch (Exception) { }
         }
+
+
 
         public ObservableCollection<Record_Item_ViewModel> Records { get; } = [];
 
@@ -210,6 +241,7 @@ namespace ECR.WPF.ViewModels.Tabs {
 
         public async Task Search(string keyword) {
             _keyword = keyword;
+            Paginator.CurrentPage = 1;
             await InitializeData(_keyword);
         }
 
@@ -224,7 +256,7 @@ namespace ECR.WPF.ViewModels.Tabs {
             }
         }
 
-        public int TotalItems => Records.Count;
+        public int ItemsInView => Records.Count;
     }
 
     sealed partial class Records_AgenciesSection : ObservableObject, IRegistrationOpener, ISearchableObject {

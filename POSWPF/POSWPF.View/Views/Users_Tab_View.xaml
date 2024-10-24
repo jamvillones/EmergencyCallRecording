@@ -38,7 +38,8 @@
             </Grid.RowDefinitions>
 
             <TextBlock Foreground="{StaticResource AccentColor.Primary}"
-                       FontWeight="Bold">Logins</TextBlock>
+                       FontWeight="Bold"
+                       FontSize="16">LOGINS</TextBlock>
 
             <!--Search-->
             <Grid Grid.Row="1"

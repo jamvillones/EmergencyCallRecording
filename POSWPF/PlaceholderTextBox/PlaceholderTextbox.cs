@@ -13,6 +13,19 @@ namespace PlaceholderTextBox {
             set { SetValue(PlaceholderTextProperty, value); }
         }
 
+
+
+        public double InitialWidth {
+            get { return (double)GetValue(InitialWidthProperty); }
+            set { SetValue(InitialWidthProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for InitialWidth.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty InitialWidthProperty =
+            DependencyProperty.Register("InitialWidth", typeof(double), typeof(PlaceholderTextbox), new PropertyMetadata(500d));
+
+
+
         public static readonly DependencyProperty PlaceholderTextProperty =
             DependencyProperty.Register("PlaceholderText", typeof(string), typeof(PlaceholderTextbox), new PropertyMetadata(string.Empty));
 

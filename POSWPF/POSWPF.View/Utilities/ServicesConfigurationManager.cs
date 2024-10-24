@@ -47,6 +47,7 @@ namespace ECR.View.Utilities {
 
             services.AddTransient<SignUp_Form_ViewModel>();
             services.AddTransient<EditLogin_Form_ViewModel>();
+            services.AddTransient<IPaginator, Paginator>();
 
             services.AddKeyedTransient<IPasswordHandler, Register_Login_PasswordHandler>(FormSaveType.Register);
             services.AddKeyedTransient<IPasswordHandler, Edit_Login_PasswordHandler>(FormSaveType.Edit);

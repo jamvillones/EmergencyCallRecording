@@ -1,0 +1,113 @@
+﻿<UserControl x:Class="ECR.WPF.Views.UserControls.Pagination_View"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:ECR.WPF.Views.UserControls"
+             mc:Ignorable="d">
+    <UserControl.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Template"
+                    Value="{StaticResource Template.Round.Button}" />
+            <Setter Property="Margin"
+                    Value="2" />
+            <Setter Property="Padding"
+                    Value="7" />
+            <Setter Property="BorderBrush"
+                    Value="#247FFF" />
+            <Setter Property="Background"
+                    Value="#9DC5FF" />
+            <Setter Property="BorderThickness"
+                    Value="1.5" />
+            <Setter Property="Width"
+                    Value="30" />
+            <Setter Property="Height"
+                    Value="30" />
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                CornerRadius="5"
+                                BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter x:Name="contentPresenter"
+                                              Margin="{TemplateBinding Padding}"
+                                              TextElement.Foreground="{TemplateBinding Foreground}"
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsEnabled"
+                                     Value="False">
+                                <Setter Property="TextElement.Foreground"
+                                        TargetName="contentPresenter"
+                                        Value="Gray" />
+                                <Setter Property="Background"
+                                        Value="#D3D3D3" />
+                                <Setter Property="BorderBrush"
+                                        Value="Gray" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+
+        </Style>
+
+        <Style TargetType="Rectangle">
+            <Setter Property="Width"
+                    Value="2" />
+            <Setter Property="Fill"
+                    Value="Black" />
+            <Setter Property="Margin"
+                    Value="10 5" />
+        </Style>
+    </UserControl.Resources>
+
+    <StackPanel  Orientation="Horizontal"
+                 Margin="-2 0">
+        <Button Command="{Binding FirstCommand}"
+                ToolTip="Go To First Page">
+            <Image Source="/Images/NavButtons/double_left_30px.png" />
+        </Button>
+        <Button Command="{Binding PreviousCommand}"
+                ToolTip="Previous Page">
+            <Image Source="/Images/NavButtons/back_30px.png" />
+        </Button>
+        <Button Command="{Binding NextCommand}"
+                ToolTip="Next Page">
+            <Image Source="/Images/NavButtons/forward_30px.png" />
+        </Button>
+        <Button Command="{Binding LastCommand}"
+                ToolTip="Go To Last Page">
+            <Image Source="/Images/NavButtons/double_right_30px.png" />
+        </Button>
+
+        <Rectangle />
+
+        <TextBlock VerticalAlignment="Center"
+                   Foreground="#247FFF">
+            <Run Text="{Binding CurrentPage, Mode=OneWay}" />
+            <Run Text="I" />
+            <Run Text="{Binding MaxPages, Mode=OneWay}" />
+            <Run Text="  -  " />
+            <Run Text="{Binding TotalCount, Mode=OneWay}"
+                 Foreground="Black" />
+            <Run Text="(Total In Record)" />
+        </TextBlock>
+
+        <Rectangle />
+
+        <TextBlock VerticalAlignment="Center">Page Item Count:</TextBlock>
+        <TextBox VerticalAlignment="Center"
+                 Padding="10 5"
+                 VerticalContentAlignment="Center"
+                 Height="auto"
+                 Margin="10 0 0 0"
+                 Background="#D3D3D3"
+                 AcceptsReturn="False"
+                 TextAlignment="Center"
+                 Text="{Binding PageSize, Mode=TwoWay}" />
+    </StackPanel>
+</UserControl>
