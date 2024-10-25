@@ -28,6 +28,8 @@ namespace ECR.WPF.ViewModels.Tabs {
             callsTab.OnEdit += OnEdit;
             agencyTab.OnEdit += OnEdit;
             currentTab = callsTab;
+
+
         }
 
         private void OnEdit(object? sender, object e) {
@@ -40,9 +42,6 @@ namespace ECR.WPF.ViewModels.Tabs {
 
         [ObservableProperty]
         IRegistrationOpener currentTab = null!;
-
-        //[ObservableProperty]
-        //private ObservableObject? _openedForm = null;
 
         public IViewModelFactory ViewModelFactory { get; }
         public IModalViewer ModalViewer { get; }
@@ -113,6 +112,11 @@ namespace ECR.WPF.ViewModels.Tabs {
             Paginator.PageSizeChanged += Paginator_PageSizeChanged;
             _ = InitializeData();
 
+            Records.CollectionChanged += Records_CollectionChanged;
+        }
+
+        private void Records_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e) {
+            OnPropertyChanged(nameof(ItemsInView));
         }
 
         private async void Paginator_PageSizeChanged(object? sender, EventArgs e) {

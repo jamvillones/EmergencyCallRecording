@@ -176,11 +176,14 @@ namespace ECR.WPF.ViewModels {
     }
 
     public partial class Form_Add_Record_ViewModel : BaseRecordForm_ViewModel {
-        public Form_Add_Record_ViewModel(IDBContextFactory dbFactory, IViewModelFactory viewModelFactory, INotificationHandler handler) : base(dbFactory, viewModelFactory, handler) {
+        public Form_Add_Record_ViewModel(IDBContextFactory dbFactory, IViewModelFactory viewModelFactory, INotificationHandler handler, ILoginHandler loginHandler) : base(dbFactory, viewModelFactory, handler) {
+            LoginHandler = loginHandler;
             _ = InitializeAgencyList();
         }
 
         public override FormSaveType SaveType => FormSaveType.Register;
+
+        public ILoginHandler LoginHandler { get; }
 
         public override async Task<bool> Save() {
             if (!await base.Save()) {
@@ -209,6 +212,8 @@ namespace ECR.WPF.ViewModels {
                     Name = a.Name,
                     DateRecorded = a.DateTimeRecorded
                 }).ToList(),
+
+                Login = context.Logins.FirstOrDefault(x => x.Id == LoginHandler.Login!.Id)
             };
 
             await context.Records.AddAsync(record);

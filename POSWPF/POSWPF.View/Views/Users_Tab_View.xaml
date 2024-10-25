@@ -39,7 +39,7 @@
 
             <TextBlock Foreground="{StaticResource AccentColor.Primary}"
                        FontWeight="Bold"
-                       FontSize="16">LOGINS</TextBlock>
+                       FontSize="16">USERS</TextBlock>
 
             <!--Search-->
             <Grid Grid.Row="1"

@@ -6,7 +6,6 @@
         int MaxPages { get; }
         int StartIndex { get; }
         int PageSize { get; }
-
         void CalculateMaxPages(int totalCount);
         void First();
         void Last();

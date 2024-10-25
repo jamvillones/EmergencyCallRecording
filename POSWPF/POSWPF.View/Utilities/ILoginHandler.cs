@@ -2,7 +2,7 @@
 using ECR.View.ViewModels.Contents;
 
 namespace ECR.WPF.Utilities {
-    internal interface ILoginHandler {
+    public interface ILoginHandler {
         Login? Login { get; }
 
         bool IsAdmin { get; }
