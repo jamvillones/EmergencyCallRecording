@@ -108,6 +108,9 @@
                  Background="#D3D3D3"
                  AcceptsReturn="False"
                  TextAlignment="Center"
-                 Text="{Binding PageSize, Mode=TwoWay}" />
+                 KeyDown="TextBox_KeyDown"
+                 Text="{Binding PageSize, Mode=TwoWay, UpdateSourceTrigger=Explicit}">
+            
+        </TextBox>
     </StackPanel>
 </UserControl>

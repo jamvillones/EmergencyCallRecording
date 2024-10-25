@@ -196,16 +196,16 @@ namespace ECR.WPF.ViewModels {
             var record = new Record() {
                 Call = new Caller() {
                     Name = CallerName,
-                    ContactDetail = CallContactDetails.TrimmedAndNullWhenEmpty()!,
-                    Address = CallAddresss.TrimmedAndNullWhenEmpty()!
+                    ContactDetail = CallContactDetails.NullIfEmptyAndWhitespace_TrimIfNot()!,
+                    Address = CallAddresss.NullIfEmptyAndWhitespace_TrimIfNot()!
                 },
 
-                CallType = CallType.TrimmedAndNullWhenEmpty(),
+                CallType = CallType.NullIfEmptyAndWhitespace_TrimIfNot(),
                 Agency = context.Agencies.FirstOrDefault(a => a.Id == SelectedAgency.Agency.Id),
-                IncidentLocation = IncidentLocation.TrimmedAndNullWhenEmpty()!,
+                IncidentLocation = IncidentLocation.NullIfEmptyAndWhitespace_TrimIfNot()!,
                 PriorityLevel = Level,
-                Summary = Summary.TrimmedAndNullWhenEmpty(),
-                Details = Details.TrimmedAndNullWhenEmpty()!,
+                Summary = Summary.NullIfEmptyAndWhitespace_TrimIfNot(),
+                Details = Details.NullIfEmptyAndWhitespace_TrimIfNot()!,
 
                 Audios = Audios.Select(a => new Audio() {
                     FilePath = a.FilePath,
@@ -292,14 +292,14 @@ namespace ECR.WPF.ViewModels {
                 if (toSave is null) return false;
 
                 toSave.Call.Name = CallerName;
-                toSave.Call.ContactDetail = CallContactDetails.TrimmedAndNullWhenEmpty()!;
-                toSave.Call.Address = CallAddresss.TrimmedAndNullWhenEmpty();
+                toSave.Call.ContactDetail = CallContactDetails.NullIfEmptyAndWhitespace_TrimIfNot()!;
+                toSave.Call.Address = CallAddresss.NullIfEmptyAndWhitespace_TrimIfNot();
 
                 toSave.PriorityLevel = Level;
                 toSave.CallType = CallType;
-                toSave.IncidentLocation = IncidentLocation.TrimmedAndNullWhenEmpty()!;
-                toSave.Summary = Summary.TrimmedAndNullWhenEmpty()!;
-                toSave.Details = Details.TrimmedAndNullWhenEmpty()!;
+                toSave.IncidentLocation = IncidentLocation.NullIfEmptyAndWhitespace_TrimIfNot()!;
+                toSave.Summary = Summary.NullIfEmptyAndWhitespace_TrimIfNot()!;
+                toSave.Details = Details.NullIfEmptyAndWhitespace_TrimIfNot()!;
                 toSave.Agency = context.Agencies.FirstOrDefault(a => a.Id == SelectedAgency.Agency.Id);
 
                 ///delete

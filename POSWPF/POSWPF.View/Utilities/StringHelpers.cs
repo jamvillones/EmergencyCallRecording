@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ECR.WPF.Utilities {
     internal static class StringHelpers {
-        public static string? TrimmedAndNullWhenEmpty(this string? value) {
+        public static string? NullIfEmptyAndWhitespace_TrimIfNot(this string? value) {
             if (string.IsNullOrWhiteSpace(value))
                 return null;
 

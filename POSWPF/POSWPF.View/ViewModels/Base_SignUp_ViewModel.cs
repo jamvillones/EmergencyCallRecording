@@ -187,12 +187,12 @@ namespace ECR.WPF.ViewModels {
                     Photo = Photo.ToByteArray(),
                     Username = Username,
                     Name = new Name() {
-                        First = FirstName.TrimmedAndNullWhenEmpty()!,
-                        Middle = MiddleName.TrimmedAndNullWhenEmpty(),
-                        Last = LastName.TrimmedAndNullWhenEmpty()!,
-                        Extension = ExtensionName.TrimmedAndNullWhenEmpty()
+                        First = FirstName.NullIfEmptyAndWhitespace_TrimIfNot()!,
+                        Middle = MiddleName.NullIfEmptyAndWhitespace_TrimIfNot(),
+                        Last = LastName.NullIfEmptyAndWhitespace_TrimIfNot()!,
+                        Extension = ExtensionName.NullIfEmptyAndWhitespace_TrimIfNot()
                     },
-                    Position = Position.TrimmedAndNullWhenEmpty(),
+                    Position = Position.NullIfEmptyAndWhitespace_TrimIfNot(),
                     Password = PasswordHandler.GetPassword
                 };
 
@@ -269,12 +269,12 @@ namespace ECR.WPF.ViewModels {
                 toSave.Username = Username;
                 toSave.Name = new Name() {
                     First = FirstName,
-                    Middle = MiddleName.TrimmedAndNullWhenEmpty(),
-                    Last = LastName.TrimmedAndNullWhenEmpty(),
-                    Extension = ExtensionName.TrimmedAndNullWhenEmpty()
+                    Middle = MiddleName.NullIfEmptyAndWhitespace_TrimIfNot(),
+                    Last = LastName.NullIfEmptyAndWhitespace_TrimIfNot(),
+                    Extension = ExtensionName.NullIfEmptyAndWhitespace_TrimIfNot()
 
                 };
-                toSave.Position = Position.TrimmedAndNullWhenEmpty();
+                toSave.Position = Position.NullIfEmptyAndWhitespace_TrimIfNot();
                 toSave.Password = password;
                 await context.SaveChangesAsync();
 

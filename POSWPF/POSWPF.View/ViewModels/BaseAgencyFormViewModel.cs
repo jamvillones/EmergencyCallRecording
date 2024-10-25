@@ -68,7 +68,7 @@ namespace ECR.WPF.ViewModels {
             var contact = ViewModelFactory.Get<Contact_Item_ViewModel>();
 
             contact.ContactType = ContactType;
-            contact.Value = ContactValue.TrimmedAndNullWhenEmpty()!;
+            contact.Value = ContactValue.NullIfEmptyAndWhitespace_TrimIfNot()!;
             contact.IsDefault = Contacts.Count == 0;
 
             Contacts.Add(contact);
@@ -203,12 +203,12 @@ namespace ECR.WPF.ViewModels {
 
                 var agencyToAdd = new Agency() {
                     Name = new Name() {
-                        First = FirstName.TrimmedAndNullWhenEmpty()!,
-                        Middle = MiddleName.TrimmedAndNullWhenEmpty(),
-                        Last = LastName.TrimmedAndNullWhenEmpty(),
-                        Extension = ExtensionName.TrimmedAndNullWhenEmpty()
+                        First = FirstName.NullIfEmptyAndWhitespace_TrimIfNot()!,
+                        Middle = MiddleName.NullIfEmptyAndWhitespace_TrimIfNot(),
+                        Last = LastName.NullIfEmptyAndWhitespace_TrimIfNot(),
+                        Extension = ExtensionName.NullIfEmptyAndWhitespace_TrimIfNot()
                     },
-                    Address = Address.TrimmedAndNullWhenEmpty(),
+                    Address = Address.NullIfEmptyAndWhitespace_TrimIfNot(),
                     Logo = Logo.ToByteArray(),
                     ContactDetails = Contacts.Select(c =>
                     new ContactDetail() {
@@ -244,11 +244,11 @@ namespace ECR.WPF.ViewModels {
 
         private void SetDetails(Agency agency) {
             FirstName = agency.Name.First;
-            MiddleName = agency.Name.Middle.TrimmedAndNullWhenEmpty();
-            LastName = agency.Name.Last.TrimmedAndNullWhenEmpty();
-            ExtensionName = agency.Name.Extension.TrimmedAndNullWhenEmpty();
+            MiddleName = agency.Name.Middle.NullIfEmptyAndWhitespace_TrimIfNot();
+            LastName = agency.Name.Last.NullIfEmptyAndWhitespace_TrimIfNot();
+            ExtensionName = agency.Name.Extension.NullIfEmptyAndWhitespace_TrimIfNot();
 
-            Address = agency.Address.TrimmedAndNullWhenEmpty();
+            Address = agency.Address.NullIfEmptyAndWhitespace_TrimIfNot();
             Logo = agency.Logo?.ToImageSource();
 
             if (Contacts.Any()) Contacts.Clear();
@@ -296,13 +296,13 @@ namespace ECR.WPF.ViewModels {
                 if (agencyToEdit is null) return;
 
                 agencyToEdit.Name = new Name() {
-                    First = FirstName.TrimmedAndNullWhenEmpty()!,
-                    Middle = MiddleName.TrimmedAndNullWhenEmpty(),
-                    Last = LastName.TrimmedAndNullWhenEmpty(),
-                    Extension = ExtensionName.TrimmedAndNullWhenEmpty()
+                    First = FirstName.NullIfEmptyAndWhitespace_TrimIfNot()!,
+                    Middle = MiddleName.NullIfEmptyAndWhitespace_TrimIfNot(),
+                    Last = LastName.NullIfEmptyAndWhitespace_TrimIfNot(),
+                    Extension = ExtensionName.NullIfEmptyAndWhitespace_TrimIfNot()
                 };
 
-                agencyToEdit.Address = Address.TrimmedAndNullWhenEmpty();
+                agencyToEdit.Address = Address.NullIfEmptyAndWhitespace_TrimIfNot();
                 agencyToEdit.Logo = Logo.ToByteArray();
 
                 ///delete
