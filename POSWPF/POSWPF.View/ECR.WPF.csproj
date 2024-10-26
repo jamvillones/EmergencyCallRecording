@@ -50,6 +50,7 @@
     <None Remove="Images\NavButtons\refresh_30px.png" />
     <None Remove="Images\no_image_96px.png" />
     <None Remove="Images\no_phones_100px.png" />
+    <None Remove="Images\people_skin_type_7_100px.png" />
     <None Remove="Images\person_20px.png" />
     <None Remove="Images\photo_gallery_20px.png" />
     <None Remove="Images\refresh_25px.png" />
@@ -88,6 +89,7 @@
     <Resource Include="Images\Logos\unnamed.png" />
     <Resource Include="Images\no_image_96px.png" />
     <Resource Include="Images\no_phones_100px.png" />
+    <Resource Include="Images\people_skin_type_7_100px.png" />
     <Resource Include="Images\photo_gallery_20px.png" />
     <Resource Include="Images\remove_image_20px.png" />
     <Resource Include="Images\save_close_50px.png" />

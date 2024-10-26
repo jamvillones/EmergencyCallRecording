@@ -120,7 +120,7 @@
                                     Width="150"
                                     Height="150"
                                     BorderThickness="10"
-                                    BorderBrush="#8D8D8D"
+                                    BorderBrush="#808080"
                                     CornerRadius="150"
                                     VerticalAlignment="Center"
                                     HorizontalAlignment="Center">

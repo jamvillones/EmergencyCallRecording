@@ -267,6 +267,7 @@ namespace ECR.WPF.ViewModels {
 
 
                 toSave.Username = Username;
+                toSave.Photo = Photo.ToByteArray();
                 toSave.Name = new Name() {
                     First = FirstName,
                     Middle = MiddleName.NullIfEmptyAndWhitespace_TrimIfNot(),

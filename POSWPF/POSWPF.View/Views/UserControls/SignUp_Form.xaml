@@ -200,7 +200,7 @@
                                     Width="250"
                                     Height="250"
                                     BorderThickness="10"
-                                    BorderBrush="#8D8D8D"
+                                    BorderBrush="#808080"
                                     CornerRadius="150"
                                     VerticalAlignment="Center"
                                     HorizontalAlignment="Center">
@@ -210,7 +210,7 @@
                                              Mode="TwoWay">
                                         <Binding.TargetNullValue>
                                             <ImageBrush Stretch="None"
-                                                        ImageSource="/EMERGENCY OPERATIONS TELECOMMUNICATIONS SYSTEM;component/Images/no_image_96px.png" />
+                                                        ImageSource="/Images/people_skin_type_7_100px.png" />
                                         </Binding.TargetNullValue>
                                     </Binding>
                                 </Border.Background>
@@ -224,6 +224,9 @@
                                     BorderThickness="10"
                                     Background="Transparent"
                                     Margin="0">
+                                <Image Margin="80"
+                                       Opacity="0.5"
+                                       Source="/Images/photo_gallery_20px.png" />
 
                             </Button>
 
@@ -239,7 +242,7 @@
                                     Background="Maroon"
                                     BorderBrush="White"
                                     Margin="10">
-                                <Image Source="/Images/remove_image_20px.png" />
+                                <Image  Source="/Images/remove_image_20px.png" />
                             </Button>
 
                         </Grid>
