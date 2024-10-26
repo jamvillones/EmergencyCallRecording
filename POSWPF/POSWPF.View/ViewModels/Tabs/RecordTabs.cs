@@ -142,7 +142,6 @@ namespace ECR.WPF.ViewModels.Tabs {
 
                 Paginator.CalculateMaxPages(await raw.CountAsync());
 
-
                 var records = await raw
                     .Skip(Paginator.StartIndex)
                     .Take(Paginator.PageSize)

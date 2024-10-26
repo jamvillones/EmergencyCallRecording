@@ -21,6 +21,7 @@
             </ResourceDictionary.MergedDictionaries>
 
             <converter:GetInitialsFromNameConverter x:Key="GetFirstTwo" />
+            <converter:IsSameType x:Key="IsSameType" />
 
             <ControlTemplate x:Key="ArrowToggleButtonTemplate"
                              TargetType="{x:Type ToggleButton}">
@@ -172,9 +173,10 @@
                             <ResourceDictionary Source="/Views/ResourceDictionaries/HorizontalRadioButtonStyle.xaml" />
                         </StackPanel.Resources>
 
-                        <RadioButton IsChecked="True"
+                        <RadioButton IsChecked="{Binding CurrentTab, Mode=OneWay, Converter={StaticResource IsSameType}, ConverterParameter={x:Type tabs:Records_CallsSection}}"
                                      Command="{Binding SwitchToCallsCommand}">Reports</RadioButton>
-                        <RadioButton Command="{Binding SwitchToAgenciesCommand}">Agencies</RadioButton>
+                        <RadioButton IsChecked="{Binding CurrentTab, Mode=OneWay, Converter={StaticResource IsSameType}, ConverterParameter={x:Type tabs:Records_AgenciesSection}}"
+                                     Command="{Binding SwitchToAgenciesCommand}">Agencies</RadioButton>
                     </StackPanel>
                 </Border>
 
@@ -357,7 +359,6 @@
                                                             BorderThickness="2"
                                                             BorderBrush="White">
                                                         <Border.Background>
-
                                                             <Binding Path="Agency.Logo"
                                                                      Converter="{StaticResource ImageToBackgroundConverter}">
                                                                 <Binding.TargetNullValue>
