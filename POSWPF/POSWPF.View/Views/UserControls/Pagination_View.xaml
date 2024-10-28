@@ -12,13 +12,13 @@
             <Setter Property="Margin"
                     Value="2" />
             <Setter Property="Padding"
-                    Value="5" />
+                    Value="6" />
             <Setter Property="BorderBrush"
                     Value="#247FFF" />
             <Setter Property="Background"
                     Value="#9DC5FF" />
             <Setter Property="BorderThickness"
-                    Value="2" />
+                    Value="0" />
             <Setter Property="Width"
                     Value="25" />
             <Setter Property="Height"
@@ -47,8 +47,7 @@
                                         Value="#D3D3D3" />
                                 <Setter Property="BorderBrush"
                                         Value="Gray" />
-                                <Setter Property="BorderThickness"
-                                        Value="0" />
+
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>

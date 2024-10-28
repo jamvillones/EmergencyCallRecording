@@ -324,7 +324,7 @@
 
                                     <DataGridTextColumn Header="Summary"
                                                         HeaderStyle="{StaticResource DataGridColumnHeader.IndividualCell.Style}"
-                                                        Binding="{Binding Summary}"
+                                                        Binding="{Binding Summary, TargetNullValue=--}"
                                                         IsReadOnly="True"
                                                         Width="*">
                                         <DataGridTextColumn.ElementStyle>
