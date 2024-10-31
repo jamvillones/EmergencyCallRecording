@@ -10,8 +10,8 @@
              xmlns:uc="clr-namespace:ECR.WPF.Views.UserControls"
              mc:Ignorable="d"
              Background="White"
-             d:DesignHeight="800"
-             d:DesignWidth="715.113"
+             d:DesignHeight="550"
+             d:DesignWidth="800"
              FocusManager.FocusedElement="{Binding ElementName=searchControl}">
 
     <UserControl.Resources>

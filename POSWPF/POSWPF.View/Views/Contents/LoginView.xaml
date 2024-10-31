@@ -185,7 +185,7 @@
                         <Setter Property="FontSize"
                                 Value="12" />
                         <Setter Property="Foreground"
-                                Value="White" />
+                                Value="Black" />
                     </Style>
                 </StackPanel.Resources>
                 <TextBlock FontWeight="Bold"

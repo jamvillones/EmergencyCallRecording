@@ -25,12 +25,28 @@ namespace ECR.WPF.ViewModels.Tabs {
 
         private string? _keyword = null;
         public ObservableCollection<Login> Logins { get; } = [];
-        public IDBContextFactory DBContextFactory { get; }
-        public IViewModelFactory ViewModelFactory { get; }
-        public IModalViewer ModalViewer { get; }
-        public ILoginHandler LoginHandler { get; }
+        public IDBContextFactory DBContextFactory { get; } = null!;
+        public IViewModelFactory ViewModelFactory { get; } = null!;
+        public IModalViewer ModalViewer { get; } = null!;
+        public ILoginHandler LoginHandler { get; } = null!;
 
         async Task LoadDataAsync(string? keyword = null) {
+            var logins = await GetLogins(keyword);
+
+            if (logins.Length > 0) {
+
+                Logins.Clear();
+
+                foreach (var login in logins)
+                    Logins.Add(login);
+
+                return;
+            }
+
+            MessageBox.Show("No Entries Found!", string.Empty, MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+
+        async Task<Login[]> GetLogins(string? keyword = null) {
             try {
                 using var context = DBContextFactory.CreateDbContext();
                 var logins = await context.Logins.AsNoTracking().AsQueryable()
@@ -38,17 +54,14 @@ namespace ECR.WPF.ViewModels.Tabs {
                     .FilterLogin(keyword)
                     .OrderBy(l => l.Name.First)
                         .ThenBy(l => l.Name.Last)
-                    .ToListAsync();
+                    .ToArrayAsync();
 
-                if (logins.Count != 0) Logins.Clear();
-                foreach (var login in logins)
-                    Logins.Add(login);
+                return logins;
+            }
+            catch {
 
             }
-            catch (Exception) {
-
-                throw;
-            }
+            return [];
         }
 
         [RelayCommand]
@@ -90,11 +103,7 @@ namespace ECR.WPF.ViewModels.Tabs {
                 await context.SaveChangesAsync();
                 Logins.Remove(login);
             }
-            catch (Exception) {
-
-
-            }
-
+            catch (Exception) { }
         }
     }
 }
