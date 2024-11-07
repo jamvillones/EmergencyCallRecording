@@ -72,16 +72,28 @@
             <Grid.Background>
                 <ImageBrush Opacity="0.5"
                             Stretch="UniformToFill"
-                            ImageSource="/Images/background_1.jpg
-             " />
+                            ImageSource="/Images/background_1.jpg" />
             </Grid.Background>
 
-            <Image Source=" /Images/Logos/unnamed.png"
-                   HorizontalAlignment="Left"
-                   VerticalAlignment="Top"
-                   Panel.ZIndex="2"
-                   Margin="20"
-                   Width="150" />
+            <StackPanel Orientation="Horizontal"
+                        VerticalAlignment="Top">
+
+                <Image Source=" /Images/Logos/unnamed.png"
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Top"
+                       Panel.ZIndex="2"
+                       Margin="0"
+                       Width="150" />
+                <TextBlock Foreground="Black"
+                           Grid.Row="0"
+                           TextWrapping="Wrap"
+                           TextAlignment="Center"
+                           VerticalAlignment="Center"
+                           Margin="0"
+                           FontSize="24"
+                           MaxWidth="600"
+                           FontFamily="{StaticResource title.font}">EMERGENCY OPERATIONS TELECOMMUNICATIONS SYSTEM</TextBlock>
+            </StackPanel>
 
             <Border Background="#5affffff"
                     Padding="10"
@@ -138,7 +150,7 @@
                             Background="White"
                             Grid.Row="1"
                             HorizontalAlignment="Center"
-                            Padding="15 50 15 15">
+                            Padding="10 50 10 10">
                         <Border>
                             <Border.Background>
                                 <ImageBrush Stretch="Uniform"
@@ -146,15 +158,6 @@
                             </Border.Background>
                         </Border>
                     </Border>
-
-                    <TextBlock Foreground="Black"
-                               Grid.Row="0"
-                               TextWrapping="Wrap"
-                               TextAlignment="Center"
-                               Margin="0 5"
-                               FontSize="26"
-                               MaxWidth="600"
-                               FontWeight="Bold">EMERGENCY OPERATIONS TELECOMMUNICATIONS SYSTEM</TextBlock>
 
                 </Grid>
             </Grid>

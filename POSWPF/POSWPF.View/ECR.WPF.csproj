@@ -13,6 +13,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Fonts\Miguel De Northern.ttf" />
+    <None Remove="Fonts\THE BOLD FONT - FREE VERSION - 2023.ttf" />
     <None Remove="Images\Add Male User Group_30px.png" />
     <None Remove="Images\Add_20px.png" />
     <None Remove="Images\add_list_20px.png" />
@@ -73,6 +75,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Fonts\Miguel De Northern.ttf">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Fonts\THE BOLD FONT - FREE VERSION - 2023.ttf">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Images\Add_20px.png" />
     <Resource Include="Images\add_list_20px.png" />
     <Resource Include="Images\background_1.jpg" />
