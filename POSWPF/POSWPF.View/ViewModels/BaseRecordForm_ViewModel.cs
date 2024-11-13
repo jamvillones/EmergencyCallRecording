@@ -158,6 +158,11 @@ namespace ECR.WPF.ViewModels {
         [ObservableProperty]
         [NotifyDataErrorInfo]
         [Required(ErrorMessage = REQUIRED_FIELD_STRING)]
+        private string _callReceiver = null!;
+
+        [ObservableProperty]
+        [NotifyDataErrorInfo]
+        [Required(ErrorMessage = REQUIRED_FIELD_STRING)]
         private string? _callType;
 
         [ObservableProperty]
@@ -206,6 +211,7 @@ namespace ECR.WPF.ViewModels {
                 PriorityLevel = Level,
                 Summary = Summary.NullIfEmptyAndWhitespace_TrimIfNot(),
                 Details = Details.NullIfEmptyAndWhitespace_TrimIfNot()!,
+                CallReceiver = CallReceiver.NullIfEmptyAndWhitespace_TrimIfNot()!,
 
                 Audios = Audios.Select(a => new Audio() {
                     FilePath = a.FilePath,
@@ -234,6 +240,7 @@ namespace ECR.WPF.ViewModels {
             IncidentLocation =
             Summary =
             CallType =
+            CallReceiver =
             Details = string.Empty;
 
             Audios.Clear();
@@ -267,6 +274,7 @@ namespace ECR.WPF.ViewModels {
             IncidentLocation = record.IncidentLocation;
             Summary = record.Summary;
             Details = record.Details;
+            CallReceiver = record.CallReceiver;
 
             if (Audios.Any())
                 Audios.Clear();
@@ -300,6 +308,7 @@ namespace ECR.WPF.ViewModels {
                 toSave.IncidentLocation = IncidentLocation.NullIfEmptyAndWhitespace_TrimIfNot()!;
                 toSave.Summary = Summary.NullIfEmptyAndWhitespace_TrimIfNot()!;
                 toSave.Details = Details.NullIfEmptyAndWhitespace_TrimIfNot()!;
+                toSave.CallReceiver = CallReceiver.NullIfEmptyAndWhitespace_TrimIfNot()!;
                 toSave.Agency = context.Agencies.FirstOrDefault(a => a.Id == SelectedAgency.Agency.Id);
 
                 ///delete

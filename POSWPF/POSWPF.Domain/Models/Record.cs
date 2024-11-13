@@ -33,6 +33,8 @@ namespace ECR.Domain.Models {
         /// </summary>
         public Agency? Agency { get; set; } = null;
 
+        public string CallReceiver { get; set; } = null!;
+
         /// <summary>
         /// the one who recorded the record
         /// </summary>

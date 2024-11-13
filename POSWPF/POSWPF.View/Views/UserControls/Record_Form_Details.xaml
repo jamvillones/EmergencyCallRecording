@@ -116,6 +116,10 @@
                 </ComboBox.ItemTemplate>
 
             </ComboBox>
+
+            <TextBlock>Call Receiver:</TextBlock>
+
+            <ph:PlaceholderTextbox Text="{Binding CallReceiver, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></ph:PlaceholderTextbox>
             <Grid Margin="{StaticResource Vertical.Spacing}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
