@@ -1,0 +1,77 @@
+﻿<UserControl x:Class="ECR.WPF.Views.UserControls.AuthenticationForm"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:placeholder="clr-namespace:PlaceholderTextBox;assembly=PlaceholderTextBox"
+             xmlns:local="clr-namespace:ECR.WPF.Views.UserControls"
+             xmlns:views="clr-namespace:ECR.View.Views"
+             xmlns:converter="clr-namespace:ECR.WPF.Utilities.Converters"
+             mc:Ignorable="d">
+    <Grid  Background="#cfffffff">
+        <Border Background="#262626"
+                Width="400"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Center"
+                CornerRadius="5"
+                Padding="20">
+
+            <StackPanel>
+                <StackPanel.Resources>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="Foreground"
+                                Value="White" />
+                    </Style>
+
+                    <converter:ValueConverterGroup x:Key="BoolInvertThenVisibility">
+                        <converter:BoolInvertConverter />
+                        <BooleanToVisibilityConverter />
+                    </converter:ValueConverterGroup>
+                </StackPanel.Resources>
+                <StackPanel Visibility="{Binding OtpRecieved, Mode=OneWay, Converter={StaticResource BoolInvertThenVisibility}}">
+
+                    <TextBlock FontWeight="UltraBlack"
+                               Margin="0 0 0 20">Application not authenticated!</TextBlock>
+                    <TextBlock>Username:</TextBlock>
+                    <placeholder:PlaceholderTextbox Text="{Binding Username, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    <TextBlock>Passowrd:</TextBlock>
+                    <views:BindablePasswordBox Margin="0 0 0 5"
+                                               Password="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    <TextBlock>Receiving Email:</TextBlock>
+                    <placeholder:PlaceholderTextbox Text="{Binding ReceivingEmail, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+                    <StackPanel Orientation="Horizontal"
+                                Margin="0 10 0 0"
+                                HorizontalAlignment="Right">
+                        <Button Width="200"
+                                Background="#1D124C"
+                                Foreground="White"
+                                Command="{Binding AuthenticateCommand}">Authenticate</Button>
+                    </StackPanel>
+                </StackPanel>
+
+                <StackPanel Visibility="{Binding OtpRecieved, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
+
+                    <TextBlock FontWeight="UltraBlack"
+                               Margin="0 0 0 20">
+                       <Run>Authorization was sent to</Run>
+                       <Run Text="{Binding ReceivingEmail}"
+                            Foreground="#9DC5FF" />
+                    </TextBlock>
+                    <TextBlock>Authorization Code:</TextBlock>
+                    <placeholder:PlaceholderTextbox Text="{Binding Otp, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+                    <StackPanel Orientation="Horizontal"
+                                Margin="0 10 0 0"
+                                HorizontalAlignment="Right">
+                        <Button Width="200"
+                                Background="#1D124C"
+                                Foreground="White"
+                                Command="{Binding ValidateCommand}">Validate</Button>
+                    </StackPanel>
+                </StackPanel>
+            </StackPanel>
+        </Border>
+
+    </Grid>
+</UserControl>

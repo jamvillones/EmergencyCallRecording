@@ -3,7 +3,7 @@
                     xmlns:vmContents="clr-namespace:ECR.View.ViewModels.Contents"
                     xmlns:vContents="clr-namespace:ECR.View.Views.Contents"
                     xmlns:tabs="clr-namespace:ECR.WPF.ViewModels.Tabs"
-                    xmlns:vm ="clr-namespace:ECR.WPF.ViewModels"
+                    xmlns:vm="clr-namespace:ECR.WPF.ViewModels"
                     xmlns:usercontrol="clr-namespace:ECR.View.Views"
                     xmlns:views="clr-namespace:ECR.WPF.Views"
                     xmlns:signup="clr-namespace:ECR.WPF.Views.UserControls">
@@ -29,6 +29,10 @@
 
     <DataTemplate DataType="{x:Type vm:SignUp_Form_ViewModel}">
         <signup:SignUp_Form />
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type vm:AuthenticationForm_ViewModel}">
+        <signup:AuthenticationForm />
     </DataTemplate>
 
 </ResourceDictionary>

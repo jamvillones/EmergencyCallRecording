@@ -40,6 +40,7 @@ namespace ECR.View.Utilities {
             services.AddTransient<Form_Edit_Record_ViewModel>();
             services.AddTransient<Form_Add_Agency_ViewModel>();
             services.AddTransient<Form_Edit_Agency_ViewModel>();
+            services.AddTransient<AuthenticationForm_ViewModel>();
 
             services.AddTransient<Agency_Item_ViewModel>();
             services.AddTransient<Record_Item_ViewModel>();

@@ -3,6 +3,7 @@ using Microsoft.Extensions.Hosting;
 using ECR.View.Utilities;
 using ECR.View.ViewModels;
 using System.Windows;
+using ECR.WPF.Utilities;
 
 namespace ECR.View {
     /// <summary>
@@ -22,6 +23,8 @@ namespace ECR.View {
         protected override async void OnStartup(StartupEventArgs e) {
 
             await Host.StartAsync();
+
+            //await PopulateData.Create();
 
             var mainWindow = new MainWindow() { DataContext = Host.Services.GetRequiredService<MainViewModel>() };
             mainWindow.Show();

@@ -161,11 +161,6 @@
                                    Width="50"
                                    Height="50"
                                    Stretch="UniformToFill" />
-                            <TextBlock FontSize="14"
-                                       VerticalAlignment="Center"
-                                       HorizontalAlignment="Center"
-                                       Margin="0 0 0 0"
-                                       Foreground="#C1C1C1">No Items In The List</TextBlock>
                         </StackPanel>
                     </Grid>
                     <ControlTemplate.Triggers>
@@ -341,11 +336,11 @@
         <Setter Property="VerticalContentAlignment"
                 Value="Center" />
         <Setter Property="BorderBrush"
-                Value="{StaticResource AccentColor.Primary}" />
+                Value="Gray" />
         <Setter Property="BorderThickness"
-                Value="0" />
+                Value="0 0 0 1" />
         <Setter Property="Background"
-                Value="#333333" />
+                Value="Transparent" />
         <Setter Property="Foreground"
                 Value="#69717D" />
         <Setter Property="Height"
@@ -358,7 +353,7 @@
                     <Grid>
                         <Border x:Name="culomnCellBorder"
                                 Grid.Column="1"
-                                CornerRadius="5"
+                                CornerRadius="0"
                                 Background="{TemplateBinding Background}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
@@ -395,7 +390,7 @@
         <Setter Property="Background"
                 Value="Transparent" />
         <Setter Property="Foreground"
-                Value="White" />
+                Value="Black" />
         <Setter Property="Padding"
                 Value="{StaticResource Cell.Padding}" />
         <Setter Property="Template">
@@ -444,7 +439,7 @@
         <Setter Property="Background"
                 Value="Transparent" />
         <Setter Property="Foreground"
-                Value="White" />
+                Value="Black" />
         <Setter Property="Padding"
                 Value="10 5" />
         <Setter Property="Template">
@@ -555,7 +550,7 @@
         <Setter Property="BorderBrush"
                 Value="#2E2E2E" />
         <Setter Property="Foreground"
-                Value="White" />
+                Value="Black" />
         <Setter Property="BorderThickness"
                 Value="1" />
         <Setter Property="Template">

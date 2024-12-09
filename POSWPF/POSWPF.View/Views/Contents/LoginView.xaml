@@ -70,7 +70,7 @@
 
         <Grid>
             <Grid.Background>
-                <ImageBrush Opacity="0.5"
+                <ImageBrush Opacity="1"
                             Stretch="UniformToFill"
                             ImageSource="/Images/background_1.jpg" />
             </Grid.Background>
@@ -200,17 +200,6 @@
                            FontSize="16"
                            FontWeight="UltraBlack"
                            MaxWidth="600">EMERGENCY OPERATIONS TELECOMMUNICATIONS SYSTEM</TextBlock>
-                <!--<TextBlock FontWeight="Bold"
-                           Foreground="{StaticResource AccentColor.Primary}"
-                           FontSize="14"
-                           TextWrapping="Wrap"
-                           Margin="0 30 ">
-                        <Run Text="Login"
-                             Foreground="{StaticResource AccentColor.Primary}" />
-                        <Run Text="To Your" />
-                        <Run Foreground="{StaticResource Main.Foreground}"
-                             Text="Account" />
-                </TextBlock>-->
 
                 <TextBlock Foreground="#247FFF"><Run Text="Username:" /></TextBlock>
 
@@ -284,7 +273,7 @@
 
         </Grid>
 
-        <ContentControl Content="{Binding SignupForm}"
+        <ContentControl Content="{Binding ModalObject}"
                         Grid.ColumnSpan="2" />
 
     </Grid>

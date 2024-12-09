@@ -5,14 +5,32 @@ using ECR.Domain.Models;
 using ECR.View.Utilities;
 using ECR.WPF.Utilities;
 using ECR.WPF.ViewModels;
-using Microsoft.EntityFrameworkCore;
 
 namespace ECR.View.ViewModels.Contents {
 
-    sealed partial class LoginViewModel(IDBContextFactory dBContextFactory, IViewModelFactory viewModelFactory, ILoginHandler loginHandler) : ObservableObject {
-        public IDBContextFactory DBContextFactory { get; } = dBContextFactory;
-        public IViewModelFactory ViewModelFactory { get; } = viewModelFactory;
-        public ILoginHandler LoginHandler { get; } = loginHandler;
+    sealed partial class LoginViewModel : ObservableObject {
+        public IDBContextFactory DBContextFactory { get; }
+        public IViewModelFactory ViewModelFactory { get; }
+        public ILoginHandler LoginHandler { get; }
+
+        public LoginViewModel(IDBContextFactory dBContextFactory, IViewModelFactory viewModelFactory, ILoginHandler loginHandler) {
+            DBContextFactory = dBContextFactory;
+            ViewModelFactory = viewModelFactory;
+            LoginHandler = loginHandler;
+
+            var settings = ECR.WPF.Properties.Settings.Default;
+
+            //if (!settings.IsValidated) 
+            if (true) {
+                var AppValidation = ViewModelFactory.Get<AuthenticationForm_ViewModel>();
+                AppValidation.OnClose += AppValidation_OnClose;
+                ModalObject = AppValidation;
+            }
+        }
+
+        private void AppValidation_OnClose(object? sender, EventArgs e) {
+            ModalObject = null;
+        }
 
         public event EventHandler? OnLoginSuccessful;
 
@@ -31,18 +49,20 @@ namespace ECR.View.ViewModels.Contents {
         bool _isLoading = false;
 
         [ObservableProperty]
-        ObservableValidator? signupForm = null;
+        ObservableValidator? modalObject = null;
+
+
 
         [RelayCommand]
         void OpenSignupForm() {
-            SignupForm = ViewModelFactory.Get<SignUp_Form_ViewModel>();
-            if (SignupForm is ICloseableObject closeable) {
+            ModalObject = ViewModelFactory.Get<SignUp_Form_ViewModel>();
+            if (ModalObject is ICloseableObject closeable) {
                 closeable.OnClose += Closeable_OnClose;
             }
         }
 
         private void Closeable_OnClose(object? sender, EventArgs e) {
-            SignupForm = null;
+            ModalObject = null;
         }
 
         bool CanLogin => !string.IsNullOrEmpty(Username) && !string.IsNullOrEmpty(Password);
