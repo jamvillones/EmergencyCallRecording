@@ -68,22 +68,29 @@
                               MinWidth="400" />
         </Grid.ColumnDefinitions>
 
-        <Grid>
+        <Grid Margin="35">
             <Grid.Background>
                 <ImageBrush Opacity="1"
                             Stretch="UniformToFill"
-                            ImageSource="/Images/background_1.jpg" />
+                            ImageSource="/Images/Logos/3a4c55c7-cb28-4a04-b19c-500a1c1b68b1.png" />
             </Grid.Background>
 
-            <StackPanel Orientation="Horizontal"
-                        VerticalAlignment="Top">
+            <Image Source="/Images/background_1.jpg"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Bottom"
+                   Height="150" />
 
-                <Image Source=" /Images/Logos/unnamed.png"
+            <StackPanel Orientation="
+                   Horizontal"
+                        VerticalAlignment="
+                   Top">
+
+                <!--<Image Source=" /Images/Logos/unnamed.png"
                        HorizontalAlignment="Left"
                        VerticalAlignment="Top"
                        Panel.ZIndex="2"
                        Margin="0"
-                       Width="150" />
+                       Width="150" /> -->
 
             </StackPanel>
 
@@ -91,18 +98,20 @@
                     Padding="60 20"
                     CornerRadius="5"
                     VerticalAlignment="Bottom"
-                    HorizontalAlignment="Center"
+                    HorizontalAlignment="Right"
                     Margin="20">
 
                 <StackPanel>
-                    <TextBlock Foreground="Black"
+                    <!--<TextBlock Foreground="Black"
                                FontWeight="Bold"
-                               FontSize="13">MUNICIPALITY OF KALIBO</TextBlock>
+                               FontSize="13">MUNICIPALITY OF KALIBO</TextBlock>-->
                     <UniformGrid Columns="2">
                         <UniformGrid.Resources>
                             <Style TargetType="TextBlock">
                                 <Setter Property="FontSize"
-                                        Value="13" />
+                                        Value="14" />
+                                <Setter Property="FontWeight"
+                                        Value="Bold" />
                             </Style>
                         </UniformGrid.Resources>
                         <TextBlock>Pantelco:</TextBlock>
@@ -154,12 +163,12 @@
                 </Grid>
             </Grid>-->
 
-            <Image Source="/Images/Logos/SOU New (1).png"
+            <!--<Image Source="/Images/Logos/SOU New (1).png"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Top"
                    Panel.ZIndex="2"
                    Margin="20"
-                   Width="100" />
+                   Width="100" />-->
         </Grid>
 
         <Grid Margin="0 0 0 0"
@@ -168,14 +177,14 @@
               Width="320">
 
             <Border CornerRadius="20"
-                    Background="DarkGray"
+                    Background="#E2E2E2"
                     BorderBrush="Black"
-                    BorderThickness="1"
+                    BorderThickness="0.5"
                     SnapsToDevicePixels="True"
                     Width="320">
                 <Border.Effect>
                     <DropShadowEffect BlurRadius="20"
-                                      Opacity="0.7"
+                                      Opacity="0.3"
                                       ShadowDepth="0" />
                 </Border.Effect>
             </Border>
@@ -199,9 +208,13 @@
                            Margin="0 0 0 30"
                            FontSize="16"
                            FontWeight="UltraBlack"
-                           MaxWidth="600">EMERGENCY OPERATIONS TELECOMMUNICATIONS SYSTEM</TextBlock>
+                           MaxWidth="600">
+                   <Run Foreground="{StaticResource Main.Foreground}">EMERGENCY OPERATIONS </Run> 
+                   <Run Foreground="{StaticResource AccentColor.Secondary}">TELECOMMUNICATIONS</Run> 
+                    SYSTEM
+                </TextBlock>
 
-                <TextBlock Foreground="#247FFF"><Run Text="Username:" /></TextBlock>
+                <TextBlock Foreground="Black"><Run Text="Username:" /></TextBlock>
 
                 <Grid Margin="0,0,0,5">
                     <Image Source="/Images/person_20px.png"
@@ -213,13 +226,13 @@
                     <placeholder:PlaceholderTextbox x:Name="usernameField"
                                                     BorderBrush="#247FFF"
                                                     Margin="0"
-                                                    Background="White"
+                                                    Background="Transparent"
                                                     IsEnabled="{Binding IsLoading, Mode=OneWay, Converter={StaticResource BoolInvertConverter}}"
                                                     Text="{Binding Username, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                     Padding="30,10,10,10" />
                 </Grid>
 
-                <TextBlock Foreground="#247FFF"><Run Text="Password:" /></TextBlock>
+                <TextBlock Foreground="Black"><Run Text="Password:" /></TextBlock>
 
                 <views:BindablePasswordBox Password="{Binding Password}"
                                            IsEnabled="{Binding IsLoading, Mode=OneWay, Converter={StaticResource BoolInvertConverter}}" />

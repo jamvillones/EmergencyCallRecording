@@ -12,8 +12,8 @@ namespace ECR.Domain.Data {
 
         public DbContextFactory() {
             optionsBuilder = new();
-            string machineName = System.Environment.MachineName;
-            var connectionString = $"Server={machineName}\\SQLEXPRESS;Database=MDR;TrustServerCertificate=True;Trusted_Connection=True;";
+            string databaseName = System.Environment.MachineName;
+            var connectionString = $"Server={databaseName}\\SQLEXPRESS;Database=MDR;TrustServerCertificate=True;Trusted_Connection=True;";
             optionsBuilder.UseSqlServer(connectionString);
         }
 

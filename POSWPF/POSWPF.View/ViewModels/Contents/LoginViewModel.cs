@@ -6,29 +6,34 @@ using ECR.View.Utilities;
 using ECR.WPF.Utilities;
 using ECR.WPF.ViewModels;
 
-namespace ECR.View.ViewModels.Contents {
+namespace ECR.View.ViewModels.Contents
+{
 
-    sealed partial class LoginViewModel : ObservableObject {
+    sealed partial class LoginViewModel : ObservableObject
+    {
         public IDBContextFactory DBContextFactory { get; }
         public IViewModelFactory ViewModelFactory { get; }
         public ILoginHandler LoginHandler { get; }
 
-        public LoginViewModel(IDBContextFactory dBContextFactory, IViewModelFactory viewModelFactory, ILoginHandler loginHandler) {
+        public LoginViewModel(IDBContextFactory dBContextFactory, IViewModelFactory viewModelFactory, ILoginHandler loginHandler)
+        {
             DBContextFactory = dBContextFactory;
             ViewModelFactory = viewModelFactory;
             LoginHandler = loginHandler;
 
             var settings = ECR.WPF.Properties.Settings.Default;
 
-            //if (!settings.IsValidated) 
-            if (true) {
-                var AppValidation = ViewModelFactory.Get<AuthenticationForm_ViewModel>();
-                AppValidation.OnClose += AppValidation_OnClose;
-                ModalObject = AppValidation;
-            }
+            //if (!settings.IsValidated)
+            //if (true)
+            //{
+            //    var AppValidation = ViewModelFactory.Get<AuthenticationForm_ViewModel>();
+            //    AppValidation.OnClose += AppValidation_OnClose;
+            //    ModalObject = AppValidation;
+            //}
         }
 
-        private void AppValidation_OnClose(object? sender, EventArgs e) {
+        private void AppValidation_OnClose(object? sender, EventArgs e)
+        {
             ModalObject = null;
         }
 
@@ -54,14 +59,17 @@ namespace ECR.View.ViewModels.Contents {
 
 
         [RelayCommand]
-        void OpenSignupForm() {
+        void OpenSignupForm()
+        {
             ModalObject = ViewModelFactory.Get<SignUp_Form_ViewModel>();
-            if (ModalObject is ICloseableObject closeable) {
+            if (ModalObject is ICloseableObject closeable)
+            {
                 closeable.OnClose += Closeable_OnClose;
             }
         }
 
-        private void Closeable_OnClose(object? sender, EventArgs e) {
+        private void Closeable_OnClose(object? sender, EventArgs e)
+        {
             ModalObject = null;
         }
 
@@ -70,11 +78,13 @@ namespace ECR.View.ViewModels.Contents {
 
 
         [RelayCommand(CanExecute = nameof(CanLogin))]
-        async Task Login() {
+        async Task Login()
+        {
             IsLoading = true;
             LoginStatus = LoginStatusType.Pending;
 
-            if (await LoginHandler.TryLoginAsync(Username!, Password!)) {
+            if (await LoginHandler.TryLoginAsync(Username!, Password!))
+            {
                 OnLoginSuccessful?.Invoke(this, EventArgs.Empty);
             }
 

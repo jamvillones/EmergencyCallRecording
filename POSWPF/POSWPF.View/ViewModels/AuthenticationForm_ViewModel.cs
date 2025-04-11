@@ -6,8 +6,10 @@ using System.Text;
 using System.Text.Json;
 using System.Windows.Forms;
 
-namespace ECR.WPF.ViewModels {
-    partial class AuthenticationForm_ViewModel : ObservableValidator, ICloseableObject {
+namespace ECR.WPF.ViewModels
+{
+    partial class AuthenticationForm_ViewModel : ObservableValidator, ICloseableObject
+    {
         [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(AuthenticateCommand))]
         [NotifyDataErrorInfo]
@@ -23,19 +25,26 @@ namespace ECR.WPF.ViewModels {
         [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(AuthenticateCommand))]
         [NotifyDataErrorInfo]
-        [Required(ErrorMessage ="This field is required!")]
+        [Required(ErrorMessage = "This field is required!")]
         [EmailAddress(ErrorMessage = "Please provide a valid email address!")]
         private string receivingEmail = string.Empty;
 
         private bool CanAuthenticate => !HasErrors;
         [RelayCommand(CanExecute = nameof(CanAuthenticate))]
-        async Task Authenticate() {
+        async Task Authenticate()
+        {
 
-            var client = new HttpClient() {
-                BaseAddress = new Uri("http://192.168.1.63:8080/")
+            var client = new HttpClient()
+            {
+                BaseAddress = new Uri("https://app-applicationauthentication-webapi-aca3apcgcqgvbzdy.southeastasia-01.azurewebsites.net/")
             };
+            string apiKey = "1A96152B2A384C6AA2D00EB13E44DD00";
+            //string apiKey = "1A96152B2A384C6AA2D00EB13E44DD01";
 
-            var data = new {
+            client.DefaultRequestHeaders.Add("x-api-key", apiKey);
+
+            var data = new
+            {
                 Username = Username.Trim(),
                 Password = Password.Trim(),
                 To = ReceivingEmail.Trim()
@@ -45,17 +54,20 @@ namespace ECR.WPF.ViewModels {
 
             var response = await client.PostAsync("Authenticate", payload);
 
-            if (response.IsSuccessStatusCode) {
+            if (response.IsSuccessStatusCode)
+            {
                 var content = await response.Content.ReadAsStringAsync();
 
                 receivedOTP = content.Trim('"');
                 OtpRecieved = true;
 
             }
-            else {
-                if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized) {
+            else
+            {
+                if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+                    MessageBox.Show("User Unauthorized", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                else if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
                     MessageBox.Show("Wrong Credentials", "", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                }
                 else
                     MessageBox.Show("Connection not made", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
@@ -72,8 +84,10 @@ namespace ECR.WPF.ViewModels {
         public event EventHandler? OnClose;
 
         [RelayCommand]
-        void Validate() {
-            if (receivedOTP == Otp.Trim()) {
+        void Validate()
+        {
+            if (receivedOTP == Otp.Trim())
+            {
                 MessageBox.Show("App Successfully Validated!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 var settings = Properties.Settings.Default;
                 settings.IsValidated = true;
@@ -82,7 +96,8 @@ namespace ECR.WPF.ViewModels {
             }
         }
 
-        public void Close() {
+        public void Close()
+        {
             OnClose?.Invoke(this, EventArgs.Empty);
         }
     }
