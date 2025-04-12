@@ -44,70 +44,8 @@
 
         </Style>
 
-        <converter:CircularCornerRadiusConverter x:Key="CircularCornerRadiusConverter" />
 
-        <Style x:Key="Button.Circular"
-               TargetType="{x:Type Button}">
-            <Setter Property="OverridesDefaultStyle"
-                    Value="True" />
-            <Setter Property="Cursor"
-                    Value="Hand" />
-            <Setter Property="Width"
-                    Value="140" />
-            <Setter Property="Margin"
-                    Value="0,0,0,0" />
-            <Setter Property="BorderThickness"
-                    Value="2" />
-            <Setter Property="BorderBrush"
-                    Value="Transparent" />
-            <Setter Property="Cursor"
-                    Value="Hand" />
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border x:Name="templateRoot"
-                                Width="{TemplateBinding Width}"
-                                Height="{TemplateBinding Width}"
-                                BorderThickness="{TemplateBinding BorderThickness}"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                Background="{TemplateBinding Background}"
-                                SnapsToDevicePixels="True"
-                                CornerRadius="{TemplateBinding Property=Width, Converter={StaticResource CircularCornerRadiusConverter}}">
 
-                            <Grid>
-
-                                <ContentPresenter Margin="{TemplateBinding Padding}"
-                                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
-
-                                <Border Opacity="0"
-                                        x:Name="mask"
-                                        SnapsToDevicePixels="True"
-                                        BorderThickness="0"
-                                        CornerRadius="{TemplateBinding Property=Width, Converter={StaticResource CircularCornerRadiusConverter}}"
-                                        Background="#dfdfdf" />
-
-                            </Grid>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver"
-                                     Value="True">
-                                <!--<Setter TargetName="templateRoot"
-                                        Property="Background"
-                                        Value="#0f000000" />-->
-                                <Setter Property="Opacity"
-                                        TargetName="mask"
-                                        Value="0.2" />
-
-                                <Setter TargetName="templateRoot"
-                                        Property="BorderBrush"
-                                        Value="maroon" />
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
 
     </UserControl.Resources>
 
@@ -223,12 +161,7 @@
                                     Height="250"
                                     BorderThickness="10"
                                     Background="Transparent"
-                                    Margin="0">
-                                <Image Margin="80"
-                                       Opacity="0.5"
-                                       Source="/Images/photo_gallery_20px.png" />
-
-                            </Button>
+                                    Margin="0" />
 
                             <Button Grid.Row="1"
                                     Command="{Binding RemovePhotoCommand}"

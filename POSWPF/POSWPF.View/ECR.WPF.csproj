@@ -41,7 +41,9 @@
     <None Remove="Images\Ibajaylogo.png" />
     <None Remove="Images\Lock_20px.png" />
     <None Remove="Images\Logos\3a4c55c7-cb28-4a04-b19c-500a1c1b68b1.png" />
+    <None Remove="Images\Logos\Contacts.png" />
     <None Remove="Images\Logos\Kalibo Logo %281%29.png" />
+    <None Remove="Images\Logos\ninotech.png" />
     <None Remove="Images\Logos\SOU New %281%29.png" />
     <None Remove="Images\Logos\unnamed.png" />
     <None Remove="Images\MDRRMO logo.png" />
@@ -94,7 +96,9 @@
     <Resource Include="Images\Empty_Records_100px.png" />
     <Resource Include="Images\GridButtons\copy_20px.png" />
     <Resource Include="Images\Logos\3a4c55c7-cb28-4a04-b19c-500a1c1b68b1.png" />
+    <Resource Include="Images\Logos\Contacts.png" />
     <Resource Include="Images\Logos\Kalibo Logo (1).png" />
+    <Resource Include="Images\Logos\ninotech.png" />
     <Resource Include="Images\Logos\SOU New (1).png" />
     <Resource Include="Images\Logos\unnamed.png" />
     <Resource Include="Images\no_image_96px.png" />

@@ -230,34 +230,23 @@
                                 Data="{Binding}" />
 
     </UserControl.Resources>
+
     <Grid>
-        <!--<Grid.RowDefinitions>
-            <RowDefinition Height="auto" />
-            <RowDefinition />
-        </Grid.RowDefinitions>-->
+
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="auto" />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
 
-        <Button WindowChrome.IsHitTestVisibleInChrome="True"
-                x:Name="userToggle"
-                BorderThickness="0"
-                Background="Transparent"
-                IsTabStop="False"
-                Focusable="False"
-                Panel.ZIndex="1"
-                Cursor="Hand"
-                Margin="10"
-                Padding="0"
-                Width="auto"
-                Height="auto"
-                Command="{Binding ShowCurrentUserCommand}"
-                VerticalAlignment="Top"
-                HorizontalAlignment="Left">
+        <Grid Margin="10"
+              Width="120"
+              Height="120"
+              Panel.ZIndex="10"
+              HorizontalAlignment="Left"
+              VerticalAlignment="Top">
+
             <Border CornerRadius="{Binding RelativeSource={RelativeSource self}, Path=ActualWidth, Converter={StaticResource ValueDividerConverter}, ConverterParameter=2}"
                     Height="{Binding RelativeSource={RelativeSource self},Path=ActualWidth}"
-                    Width="60"
                     BorderThickness="5"
                     SnapsToDevicePixels="True"
                     BorderBrush="White">
@@ -290,7 +279,67 @@
                 </Border.Background>
 
             </Border>
-        </Button>
+
+            <Button Command="{Binding ShowCurrentUserCommand}"
+                    Style="{StaticResource Button.Circular}"
+                    BorderThickness="5"
+                    BorderBrush="Transparent"
+                    Background="Transparent" />
+        </Grid>
+
+
+        <!--<Button WindowChrome.IsHitTestVisibleInChrome="True"
+                Style="{StaticResource Button.Circular}"
+                x:Name="userToggle"
+                BorderThickness="0"
+                Background="Transparent"
+                IsTabStop="False"
+                Focusable="False"
+                Panel.ZIndex="1"
+                Cursor="Hand"
+                Margin="10"
+                Padding="0"
+                Width="auto"
+                Height="auto"
+                Command="{Binding ShowCurrentUserCommand}"
+                VerticalAlignment="Top"
+                HorizontalAlignment="Center">
+            <Border CornerRadius="{Binding RelativeSource={RelativeSource self}, Path=ActualWidth, Converter={StaticResource ValueDividerConverter}, ConverterParameter=2}"
+                    Height="{Binding RelativeSource={RelativeSource self},Path=ActualWidth}"
+                    Width="80"
+                    BorderThickness="5"
+                    SnapsToDevicePixels="True"
+                    BorderBrush="White">
+                <Border.Background>
+                    <Binding Path="CurrentLoginPhoto"
+                             Converter="{StaticResource ImageToBackgroundConverter}">
+                        <Binding.TargetNullValue>
+                            <VisualBrush>
+                                <VisualBrush.Visual>
+                                    <Border Background="{StaticResource Main.Foreground}"
+                                            VerticalAlignment="Center"
+                                            HorizontalAlignment="Center"
+                                            Width="50"
+                                            Height="50"
+                                            Margin="-2"
+                                            BorderThickness="0"
+                                            SnapsToDevicePixels="True"
+                                            CornerRadius="25">
+                                        <TextBlock Foreground="White"
+                                                   FontSize="22"
+                                                   VerticalAlignment="Center"
+                                                   HorizontalAlignment="Center"
+                                                   FontWeight="Bold"
+                                                   Text="{Binding Data.CurrentLoginName, Source={StaticResource proxy}, Converter={StaticResource GetFirstTwoLetterConverter}}" />
+                                    </Border>
+                                </VisualBrush.Visual>
+                            </VisualBrush>
+                        </Binding.TargetNullValue>
+                    </Binding>
+                </Border.Background>
+
+            </Border>
+        </Button>-->
 
         <!--<Popup Placement="Left"
                x:Name="userPopup"
@@ -304,7 +353,7 @@
         </Popup>-->
 
         <Border Grid.Row="1"
-                Margin="0,40,0,0"
+                Margin="0,70,0,0"
                 Width="200"
                 CornerRadius="0,30,0,0"
                 Background="{StaticResource AccentColor.Primary}">
@@ -318,7 +367,7 @@
                 </Grid.RowDefinitions>
 
                 <StackPanel VerticalAlignment="Center"
-                            Margin="20,35,20,10">
+                            Margin="20,65,20,10">
                     <TextBlock Foreground="White"
                                FontSize="16"
                                FontWeight="Bold"
