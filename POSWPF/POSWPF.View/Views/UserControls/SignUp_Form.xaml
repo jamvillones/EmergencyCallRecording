@@ -9,10 +9,19 @@
              xmlns:views="clr-namespace:ECR.View.Views"
              xmlns:vm="clr-namespace:ECR.WPF.ViewModels"
              mc:Ignorable="d"
-             d:DesignHeight="700"
+             d:DesignHeight="980"
              d:DesignWidth="1250">
     <UserControl.Resources>
-        <Thickness x:Key="Vertical.Spacing">0,0,0,20</Thickness>
+        <Thickness x:Key="Vertical.Spacing">0,0,0,10</Thickness>
+
+        <Style TargetType="TextBlock">
+            <Setter Property="Foreground"
+                    Value="#0066CC" />
+            <Setter Property="FontSize"
+                    Value="9" />
+            <Setter Property="FontStyle"
+                    Value="Italic" />
+        </Style>
 
         <Style TargetType="Button">
             <Setter Property="Template"
@@ -32,7 +41,7 @@
         <Style TargetType="Border"
                x:Key="Border.Header.Footer">
             <Setter Property="Background"
-                    Value="#DFDFDF" />
+                    Value="{StaticResource AccentColor.Primary}" />
             <Setter Property="Padding"
                     Value="20" />
             <Setter Property="BorderBrush"
@@ -49,10 +58,10 @@
 
     </UserControl.Resources>
 
-    <Grid Background="#cfffffff">
+    <Grid Background="#afffffff">
         <!--Curtain-->
         <Grid Margin="40"
-              MaxHeight="650"
+              MaxHeight="520"
               MaxWidth="700">
 
             <Border Background="#EFF2F7"
@@ -81,6 +90,7 @@
                         CornerRadius="4 4 0 0"
                         BorderThickness="0 0 0 1">
                     <TextBlock VerticalAlignment="Center"
+                               Foreground="White"
                                FontSize="16"
                                FontWeight="Bold">
                         <TextBlock.Style>
@@ -134,11 +144,22 @@
 
                             <TextBlock>Image:</TextBlock>
 
-                            <Border Grid.Row="1"
+
+                            <Button Style="{StaticResource Button.Circular}"
+                                    Grid.Row="1"
+                                    Command="{Binding PickPhotoCommand}"
                                     Width="250"
                                     Height="250"
                                     BorderThickness="10"
-                                    BorderBrush="#808080"
+                                    BorderBrush="{StaticResource AccentColor.Secondary}"
+                                    Background="White"
+                                    Margin="0" />
+
+                            <Border Width="250"
+                                    Height="250"
+                                    IsHitTestVisible="False"
+                                    BorderThickness="10"
+                                    BorderBrush="Transparent"
                                     CornerRadius="150"
                                     VerticalAlignment="Center"
                                     HorizontalAlignment="Center">
@@ -154,15 +175,6 @@
                                 </Border.Background>
                             </Border>
 
-                            <Button Style="{StaticResource Button.Circular}"
-                                    Grid.Row="1"
-                                    Command="{Binding PickPhotoCommand}"
-                                    Width="250"
-                                    Height="250"
-                                    BorderThickness="10"
-                                    Background="Transparent"
-                                    Margin="0" />
-
                             <Button Grid.Row="1"
                                     Command="{Binding RemovePhotoCommand}"
                                     Style="{StaticResource Button.Circular}"
@@ -172,7 +184,7 @@
                                     VerticalAlignment="Bottom"
                                     Padding="20"
                                     BorderThickness="5"
-                                    Background="Maroon"
+                                    Background="{StaticResource AccentColor.Primary}"
                                     BorderBrush="White"
                                     Margin="10">
                                 <Image  Source="/Images/remove_image_20px.png" />
@@ -266,7 +278,7 @@
                 </Grid>
 
                 <Border Grid.Row="2"
-                        Background="#E0EAFA"
+                        Background="Transparent"
                         CornerRadius="0 0 4 4"
                         BorderThickness="0 1 0 0"
                         Style="{StaticResource Border.Header.Footer}">
@@ -292,6 +304,7 @@
                                            Source="/Images/save_close_50px.png" />
 
                                     <TextBlock Grid.Column="2"
+                                               Foreground="White"
                                                VerticalAlignment="Center"
                                                HorizontalAlignment="Center">
                          Save
@@ -299,8 +312,8 @@
                                 </Grid>
 
                             </Button>
-                            <Button Background="#878787"
-                                    Foreground="White"
+                            <Button Background="{StaticResource AccentColor.Secondary}"
+                                    Foreground="Black"
                                     HorizontalContentAlignment="Stretch"
                                     Padding="10,0"
                                     Command="{Binding ResetCommand}">
@@ -313,6 +326,7 @@
                                            Source="/Images/delete_receipt_50px.png" />
 
                                     <TextBlock Grid.Column="2"
+                                               Foreground="Black"
                                                VerticalAlignment="Center"
                                                HorizontalAlignment="Center">
                          Discard Changes
@@ -321,7 +335,7 @@
                             </Button>
 
                         </StackPanel>
-                        <Button Background="IndianRed"
+                        <Button Background="{StaticResource Main.Foreground}"
                                 Foreground="White"
                                 Grid.Column="1"
                                 Margin="0"
@@ -337,6 +351,7 @@
                                        Source="/Images/close_window_50px.png" />
 
                                 <TextBlock Grid.Column="2"
+                                           Foreground="White"
                                            VerticalAlignment="Center"
                                            HorizontalAlignment="Center">
                              Close

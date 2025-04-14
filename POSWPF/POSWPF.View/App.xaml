@@ -24,7 +24,7 @@
                              Color="#B7B7B7" />
 
             <SolidColorBrush x:Key="AccentColor.Secondary"
-                             Color="#F7CA0D" />
+                             Color="#F9DB5D" />
 
             <SolidColorBrush x:Key="Main.Foreground">Maroon</SolidColorBrush>
 
@@ -749,7 +749,7 @@
 
             <Style TargetType="ph:PlaceholderTextbox">
                 <Setter Property="Padding"
-                        Value="10" />
+                        Value="10 5" />
                 <Setter Property="CornerRadius"
                         Value="3,3,0,0" />
                 <Setter Property="BorderThickness"
@@ -759,7 +759,7 @@
                 <Setter Property="Margin"
                         Value="0,0,0,5" />
                 <Setter Property="Background"
-                        Value="White" />
+                        Value="Transparent" />
 
             </Style>
 

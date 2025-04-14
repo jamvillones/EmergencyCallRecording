@@ -48,6 +48,7 @@
     <None Remove="Images\Logos\unnamed.png" />
     <None Remove="Images\MDRRMO logo.png" />
     <None Remove="Images\menu_20px.png" />
+    <None Remove="Images\MessageBox\error_48px.png" />
     <None Remove="Images\NavButtons\back_30px.png" />
     <None Remove="Images\NavButtons\double_left_30px.png" />
     <None Remove="Images\NavButtons\double_right_30px.png" />
@@ -101,6 +102,7 @@
     <Resource Include="Images\Logos\ninotech.png" />
     <Resource Include="Images\Logos\SOU New (1).png" />
     <Resource Include="Images\Logos\unnamed.png" />
+    <Resource Include="Images\MessageBox\error_48px.png" />
     <Resource Include="Images\no_image_96px.png" />
     <Resource Include="Images\no_phones_100px.png" />
     <Resource Include="Images\people_skin_type_7_100px.png" />

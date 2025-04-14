@@ -501,6 +501,7 @@
                         Margin="10 40 0 0"
                         IsTabStop="False"
                         Focusable="False"
+                        Validation.ErrorTemplate="{x:Null}"
                         Content="{Binding ModalViewer.CurrentModal}" />
 
         <ItemsControl Grid.Column="1"

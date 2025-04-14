@@ -8,11 +8,11 @@
         xmlns:popup="clr-namespace:ECR.View.Views.Popups"
         mc:Ignorable="d"
         WindowStyle="SingleBorderWindow"
-        Title="EMERGENCY OPERATIONS TELECOMMUNICATIONS SYSTEM"
+        Title="C.E.R.S."
         x:Name="_MainWindow"
         WindowStartupLocation="CenterScreen"
-        MinHeight="580"
-        MinWidth="820"
+        MinHeight="720"
+        MinWidth="1280"
         Height="720"
         Width="1280">
 

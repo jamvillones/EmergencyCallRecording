@@ -117,10 +117,52 @@
 
             </ComboBox>
 
-            <TextBlock>Call Receiver:</TextBlock>
+            <TextBlock Grid.Column="2">Priority Level:</TextBlock>
 
-            <ph:PlaceholderTextbox Text="{Binding CallReceiver, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></ph:PlaceholderTextbox>
-            <Grid Margin="{StaticResource Vertical.Spacing}">
+            <Border Grid.Row="1"
+                    Grid.Column="2"
+                    BorderBrush="{StaticResource AccentColor.Primary}"
+                    Margin="{StaticResource Vertical.Spacing}"
+                    Background="White"
+                    VerticalAlignment="Top"
+                    CornerRadius="3,3,0,0"
+                    Padding="10.5"
+                    BorderThickness="0,0,0,1">
+
+                <UniformGrid Columns="6"
+                             VerticalAlignment="Center">
+                    <UniformGrid.Resources>
+                        <Style TargetType="RadioButton">
+                            <Setter Property="HorizontalAlignment"
+                                    Value="Center" />
+
+                            <Setter Property="Cursor"
+                                    Value="Hand" />
+                        </Style>
+
+                        <converter:EnumBooleanConverter x:Key="EnumToBool" />
+
+                    </UniformGrid.Resources>
+                    <RadioButton IsChecked="{Binding Level, Converter={StaticResource EnumToBool}, ConverterParameter=One}">I</RadioButton>
+                    <RadioButton IsChecked="{Binding Level, Converter={StaticResource EnumToBool}, ConverterParameter=Two}">II</RadioButton>
+                    <RadioButton IsChecked="{Binding Level, Converter={StaticResource EnumToBool}, ConverterParameter=Three}">III</RadioButton>
+                    <RadioButton IsChecked="{Binding Level, Converter={StaticResource EnumToBool}, ConverterParameter=Four}">IV</RadioButton>
+                    <RadioButton IsChecked="{Binding Level, Converter={StaticResource EnumToBool}, ConverterParameter=Five}">V</RadioButton>
+                    <RadioButton IsChecked="{Binding Level, Converter={StaticResource EnumToBool}, ConverterParameter=Six}"
+                                 Margin="0">VI</RadioButton>
+
+                </UniformGrid>
+            </Border>
+
+            <TextBlock>Call Receiver:</TextBlock>
+            <ph:PlaceholderTextbox Margin="{StaticResource Vertical.Spacing}"
+                                   Text="{Binding CallReceiver, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></ph:PlaceholderTextbox>
+
+            <TextBlock Grid.Column="0">Incident Location:</TextBlock>
+            <ph:PlaceholderTextbox Margin="{StaticResource Vertical.Spacing}"
+                                   Text="{Binding IncidentLocation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+            <!--<Grid Margin="{StaticResource Vertical.Spacing}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
                     <ColumnDefinition Width="20" />
@@ -132,48 +174,10 @@
                     <RowDefinition />
                 </Grid.RowDefinitions>
 
-                <TextBlock Grid.Column="0">Incident Location:</TextBlock>
-                <ph:PlaceholderTextbox Grid.Row="1"
-                                       Grid.Column="0"
-                                       Margin="0"
-                                       Text="{Binding IncidentLocation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                
 
-                <TextBlock Grid.Column="2">Priority Level:</TextBlock>
 
-                <Border Grid.Row="1"
-                        Grid.Column="2"
-                        BorderBrush="{StaticResource AccentColor.Primary}"
-                        Background="White"
-                        VerticalAlignment="Top"
-                        CornerRadius="3,3,0,0"
-                        Padding="10.5"
-                        BorderThickness="0,0,0,1">
-
-                    <UniformGrid Columns="6"
-                                 VerticalAlignment="Center">
-                        <UniformGrid.Resources>
-                            <Style TargetType="RadioButton">
-                                <Setter Property="HorizontalAlignment"
-                                        Value="Center" />
-
-                                <Setter Property="Cursor"
-                                        Value="Hand" />
-                            </Style>
-
-                            <converter:EnumBooleanConverter x:Key="EnumToBool" />
-
-                        </UniformGrid.Resources>
-                        <RadioButton IsChecked="{Binding Level, Converter={StaticResource EnumToBool}, ConverterParameter=One}">I</RadioButton>
-                        <RadioButton IsChecked="{Binding Level, Converter={StaticResource EnumToBool}, ConverterParameter=Two}">II</RadioButton>
-                        <RadioButton IsChecked="{Binding Level, Converter={StaticResource EnumToBool}, ConverterParameter=Three}">III</RadioButton>
-                        <RadioButton IsChecked="{Binding Level, Converter={StaticResource EnumToBool}, ConverterParameter=Four}">IV</RadioButton>
-                        <RadioButton IsChecked="{Binding Level, Converter={StaticResource EnumToBool}, ConverterParameter=Five}">V</RadioButton>
-                        <RadioButton IsChecked="{Binding Level, Converter={StaticResource EnumToBool}, ConverterParameter=Six}"
-                                     Margin="0">VI</RadioButton>
-
-                    </UniformGrid>
-                </Border>
-            </Grid>
+            </Grid>-->
 
             <TextBlock>Summary:</TextBlock>
             <ph:PlaceholderTextbox Text="{Binding Summary, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
@@ -182,7 +186,7 @@
             <TextBlock>Details of the Report:</TextBlock>
             <ph:PlaceholderTextbox AcceptsReturn="True"
                                    TextWrapping="Wrap"
-                                   MinHeight="200"
+                                   MinHeight="150"
                                    Margin="0"
                                    BorderBrush="{StaticResource AccentColor.Primary}"
                                    Text="{Binding Details , Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />

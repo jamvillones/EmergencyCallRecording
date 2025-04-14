@@ -5,6 +5,7 @@ using ECR.Domain.Models;
 using ECR.View.Utilities;
 using ECR.WPF.Utilities;
 using ECR.WPF.ViewModels;
+using System.Media;
 
 namespace ECR.View.ViewModels.Contents
 {
@@ -41,6 +42,15 @@ namespace ECR.View.ViewModels.Contents
 
         [ObservableProperty]
         LoginStatusType loginStatus = LoginStatusType.Pending;
+
+        //partial void OnLoginStatusChanged(LoginStatusType next)
+        //{
+        //    if (next == LoginStatusType.Failed || next == LoginStatusType.Disconnected)
+        //    {
+        //        SystemSounds.Asterisk.Play();
+
+        //    }
+        //}
 
         [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(LoginCommand))]
@@ -84,11 +94,12 @@ namespace ECR.View.ViewModels.Contents
             LoginStatus = LoginStatusType.Pending;
 
             if (await LoginHandler.TryLoginAsync(Username!, Password!))
-            {
                 OnLoginSuccessful?.Invoke(this, EventArgs.Empty);
-            }
 
             LoginStatus = LoginHandler.LoginStatus;
+            if (LoginStatus == LoginStatusType.Failed || LoginStatus == LoginStatusType.Disconnected)
+                SystemSounds.Asterisk.Play();
+
             IsLoading = false;
         }
     }
